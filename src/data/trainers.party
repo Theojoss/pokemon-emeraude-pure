@@ -16876,15 +16876,84 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_RED ===
 Name: RED
-Class: Rival
+Class: Pkmn Trainer 1
 Pic: Red
 Gender: Male
 Music: Male
 Double Battle: No
+AI: Smart Trainer / Ace Pokemon
 
-Charmander
-Level: 5
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Lapras @ Leftovers
+Ability: Water Absorb
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 SpD / 4 Def
+Bold Nature
+- Ice Beam
+- Surf
+- Toxic
+- Rest
+
+Snorlax @ Leftovers
+Ability: Thick Fat
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 SpD / 4 Def
+Careful Nature
+- Body Slam
+- Earthquake
+- Curse
+- Rest
+
+Venusaur @ Venusaurite
+Ability: Overgrow
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Modest Nature
+- Giga Drain
+- Sludge Bomb
+- Sleep Powder
+- Synthesis
+
+Blastoise @ Assault Vest
+Ability: Torrent
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 SpA / 4 SpD
+Modest Nature
+- Scald
+- Ice Beam
+- Flash Cannon
+- Rapid Spin
+
+Charizard @ Heavy-Duty Boots
+Ability: Blaze
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Fire Blast
+- Air Slash
+- Focus Blast
+- Roost
+
+Pikachu @ Light Ball
+Ability: Static
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Volt Tackle
+- Fake Out
+- Iron Tail
+- Knock Off
 
 === TRAINER_LEAF ===
 Name: LEAF
@@ -16924,7 +16993,7 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_THEOJOSS ===
 Name: THEOJOSS
-Class: Leader
+Class: Pkmn Trainer 1
 Pic: Theojoss
 Gender: Male
 Music: Male
@@ -16934,7 +17003,7 @@ Mugshot: Red
 
 Tropius @ Sitrus Berry
 Ability: Harvest
-Level: 80
+Level: 62
 Ball: Poke
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 EVs: 252 HP / 252 Atk / 4 Def
@@ -16946,7 +17015,7 @@ Adamant Nature
 
 Chimecho
 Ability: Levitate
-Level: 80
+Level: 63
 Ball: Poke
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 EVs: 252 HP / 252 Def / 4 SpD
@@ -16958,7 +17027,7 @@ Bold Nature
 
 Mawile @ Leftovers
 Ability: Intimidate
-Level: 80
+Level: 63
 Ball: Poke
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 EVs: 252 HP / 252 Atk / 4 SpD
@@ -16970,7 +17039,7 @@ Adamant Nature
 
 Sceptile @ Sitrus Berry
 Ability: Unburden
-Level: 80
+Level: 64
 Ball: Poke
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 EVs: 252 Atk / 4 Def / 252 Spe
@@ -16982,7 +17051,7 @@ Jolly Nature
 
 Solrock @ Life Orb
 Ability: Levitate
-Level: 80
+Level: 65
 Ball: Poke
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 EVs: 252 HP / 252 Atk / 4 Def
@@ -16994,7 +17063,7 @@ Adamant Nature
 
 Falinks @ Falinksite
 Ability: Defiant
-Level: 80
+Level: 68
 Ball: Poke
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 EVs: 252 HP / 252 Atk / 4 Def
@@ -17003,3 +17072,1220 @@ Adamant Nature
 - No Retreat
 - Close Combat
 - Rock Slide
+
+=== TRAINER_SILVER ===
+Name: SILVER
+Class: Pkmn Trainer 1
+Pic: Silver
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Smart Trainer / Ace Pokemon
+
+Weavile @ Life Orb
+Ability: Pressure
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Knock Off
+- Ice Shard
+- Icicle Crash
+- Low Kick
+
+Crobat @ Black Sludge
+Ability: Infiltrator
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Brave Bird
+- Cross Poison
+- U-turn
+- Roost
+
+Magnezone @ Choice Specs
+Ability: Magnet Pull
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Modest Nature
+- Thunderbolt
+- Flash Cannon
+- Volt Switch
+- Tri Attack
+
+Gengar @ Life Orb
+Ability: Cursed Body
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Shadow Ball
+- Sludge Wave
+- Focus Blast
+- Nasty Plot
+
+Alakazam @ Twisted Spoon
+Ability: Inner Focus
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Psychic
+- Shadow Ball
+- Focus Blast
+- Calm Mind
+
+Feraligatr @ Feraligite
+Ability: Sheer Force
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- Waterfall
+- Ice Punch
+- Crunch
+- Superpower
+
+=== TRAINER_LANCE ===
+Name: PETER
+Class: Champion
+Pic: Lance
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Smart Trainer / Ace Pokemon
+
+Gyarados @ Leftovers
+Ability: Intimidate
+Level: 80
+Shiny: Yes
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- Waterfall
+- Crunch
+- Earthquake
+- Dragon Dance
+
+Charizard @ Heavy-Duty Boots
+Ability: Blaze
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Fire Blast
+- Air Slash
+- Focus Blast
+- Roost
+
+Aerodactyl @ Life Orb
+Ability: Pressure
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Stone Edge
+- Earthquake
+- Iron Head
+- Aqua Tail
+
+Garchomp @ Choice Band
+Ability: Rough Skin
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Earthquake
+- Dragon Claw
+- Stone Edge
+- Poison Jab
+
+Altaria @ Leftovers
+Ability: Natural Cure
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 SpD / 4 Def
+Bold Nature
+- Dragon Pulse
+- Hyper Voice
+- Roost
+- Defog
+
+Dragonite @ Dragoninite
+Ability: Multiscale
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- Dragon Dance
+- Dragon Claw
+- Extreme Speed
+- Earthquake
+
+=== TRAINER_CYNTHIA ===
+Name: CYNTHIA
+Class: Champion
+Pic: Cynthia
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Smart Trainer / Ace Pokemon
+
+Spiritomb @ Leftovers
+Ability: Pressure
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Def / 4 SpD
+Bold Nature
+- Sucker Punch
+- Dark Pulse
+- Will-O-Wisp
+- Pain Split
+
+Roserade @ Focus Sash
+Ability: Natural Cure
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Sludge Bomb
+- Giga Drain
+- Sleep Powder
+- Shadow Ball
+
+Togekiss @ Leftovers
+Ability: Serene Grace
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 SpD / 4 Def
+Calm Nature
+- Air Slash
+- Dazzling Gleam
+- Nasty Plot
+- Roost
+
+Lucario @ Life Orb
+Ability: Inner Focus
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- Close Combat
+- Extreme Speed
+- Crunch
+- Bullet Punch
+
+Milotic @ Leftovers
+Ability: Marvel Scale
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Def / 4 SpD
+Bold Nature
+- Scald
+- Recover
+- Ice Beam
+- Toxic
+
+Garchomp @ Garchompite
+Ability: Sand Veil
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Earthquake
+- Dragon Claw
+- Swords Dance
+- Stone Edge
+
+=== TRAINER_BARRY_RIVAL ===
+Name: RENE
+Class: Pkmn Trainer 1
+Pic: Barry
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Smart Trainer / Ace Pokemon
+
+Roserade @ Focus Sash
+Ability: Natural Cure
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Sludge Bomb
+- Giga Drain
+- Sleep Powder
+- Shadow Ball
+
+Floatzel @ Life Orb
+Ability: Swift Swim
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Waterfall
+- Aqua Jet
+- Crunch
+- Low Kick
+
+Snorlax @ Leftovers
+Ability: Thick Fat
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 SpD / 4 Def
+Careful Nature
+- Body Slam
+- Earthquake
+- Curse
+- Rest
+
+Staraptor @ Choice Scarf
+Ability: Reckless
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Brave Bird
+- Close Combat
+- U-turn
+- Double-Edge
+
+Heracross @ Heracronite
+Ability: Guts
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- Close Combat
+- Megahorn
+- Knock Off
+- Facade
+
+Torterra @ Leftovers
+Ability: Overgrow
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Atk / 4 SpD
+Adamant Nature
+- Earthquake
+- Wood Hammer
+- Stone Edge
+- Superpower
+
+=== TRAINER_IRIS ===
+Name: IRIS
+Class: Champion
+Pic: Iris
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Smart Trainer / Ace Pokemon
+
+Hydreigon @ Life Orb
+Ability: Levitate
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Draco Meteor
+- Dark Pulse
+- Flash Cannon
+- Fire Blast
+
+Druddigon @ Rocky Helmet
+Ability: Rough Skin
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Atk / 4 Def
+Adamant Nature
+- Outrage
+- Earthquake
+- Superpower
+- Sucker Punch
+
+Archeops @ Choice Scarf
+Ability: Defeatist
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Head Smash
+- Earthquake
+- U-turn
+- Acrobatics
+
+Lapras @ Leftovers
+Ability: Water Absorb
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 SpD / 4 Def
+Bold Nature
+- Ice Beam
+- Surf
+- Toxic
+- Rest
+
+Aggron @ Aggronite
+Ability: Sturdy
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Atk / 4 Def
+Adamant Nature
+- Head Smash
+- Iron Head
+- Earthquake
+- Heavy Slam
+
+Haxorus @ Focus Sash
+Ability: Mold Breaker
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- Outrage
+- Earthquake
+- Iron Head
+- Aqua Tail
+
+=== TRAINER_N ===
+Name: N
+Class: Pkmn Trainer 1
+Pic: N
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Smart Trainer / Ace Pokemon
+
+Carracosta @ White Herb
+Ability: Solid Rock
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- Shell Smash
+- Waterfall
+- Stone Edge
+- Aqua Jet
+
+Vanilluxe @ Choice Specs
+Ability: Ice Body
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Modest Nature
+- Blizzard
+- Flash Cannon
+- Freeze-Dry
+- Autotomize
+
+Archeops @ Life Orb
+Ability: Defeatist
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Head Smash
+- Earthquake
+- U-turn
+- Acrobatics
+
+Zoroark @ Life Orb
+Ability: Illusion
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Nasty Plot
+- Dark Pulse
+- Flamethrower
+- Focus Blast
+
+Klinklang @ Leftovers
+Ability: Clear Body
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Atk / 4 Def
+Adamant Nature
+- Shift Gear
+- Gear Grind
+- Wild Charge
+- Substitute
+
+Reshiram @ Life Orb
+Ability: Turboblaze
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Blue Flare
+- Draco Meteor
+- Earth Power
+- Roost
+
+=== TRAINER_BLUE ===
+Name: BLUE
+Class: Champion
+Pic: Blue
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Smart Trainer / Ace Pokemon
+
+Pidgeot @ Pidgeotite
+Ability: Keen Eye
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Brave Bird
+- Quick Attack
+- U-turn
+- Roost
+
+Alakazam @ Life Orb
+Ability: Inner Focus
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Psychic
+- Shadow Ball
+- Focus Blast
+- Calm Mind
+
+Rhydon @ Choice Band
+Ability: Rock Head
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Atk / 4 SpD
+Adamant Nature
+- Earthquake
+- Megahorn
+- Stone Edge
+- Fire Punch
+
+Gyarados @ Leftovers
+Ability: Intimidate
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- Waterfall
+- Crunch
+- Earthquake
+- Dragon Dance
+
+Exeggutor @ Life Orb
+Ability: Chlorophyll
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Modest Nature
+- Giga Drain
+- Psychic
+- Sleep Powder
+- Leaf Storm
+
+Arcanine @ Life Orb
+Ability: Intimidate
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Flare Blitz
+- Extreme Speed
+- Close Combat
+- Wild Charge
+
+=== TRAINER_ALAIN ===
+Name: ALAIN
+Class: Pkmn Trainer 1
+Pic: Cooltrainer M
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Smart Trainer / Ace Pokemon
+
+Chesnaught @ Rocky Helmet
+Ability: Bulletproof
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Def / 4 SpD
+Impish Nature
+- Spiky Shield
+- Drain Punch
+- Wood Hammer
+- Knock Off
+
+Malamar @ Life Orb
+Ability: Contrary
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- Superpower
+- Knock Off
+- Psycho Cut
+- Substitute
+
+Tyranitar @ Assault Vest
+Ability: Sand Stream
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Atk / 4 SpD
+Adamant Nature
+- Stone Edge
+- Crunch
+- Earthquake
+- Ice Punch
+
+Metagross @ Life Orb
+Ability: Clear Body
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Meteor Mash
+- Zen Headbutt
+- Earthquake
+- Bullet Punch
+
+Unfezant @ Choice Scarf
+Ability: Super Luck
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Air Slash
+- Facade
+- Steel Wing
+- Quick Attack
+
+Charizard @ Charizardite X
+Ability: Blaze
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- Dragon Claw
+- Flare Blitz
+- Dragon Dance
+- Earthquake
+
+=== TRAINER_KORRINA ===
+Name: KORRINA
+Class: Pkmn Trainer 1
+Pic: Korrina
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Smart Trainer / Ace Pokemon
+
+Mienshao @ Life Orb
+Ability: Regenerator
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Close Combat
+- U-turn
+- Knock Off
+- Fake Out
+
+Machamp @ Assault Vest
+Ability: Guts
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Atk / 4 SpD
+Adamant Nature
+- Close Combat
+- Knock Off
+- Ice Punch
+- Bullet Punch
+
+Hawlucha @ Focus Sash
+Ability: Unburden
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Swords Dance
+- Acrobatics
+- High Jump Kick
+- Poison Jab
+
+Sirfetch'd @ Leek
+Ability: Steadfast
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- First Impression
+- Close Combat
+- Knock Off
+- Brave Bird
+
+Gallade @ Life Orb
+Ability: Justified
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- Psycho Cut
+- Close Combat
+- Sacred Sword
+- Ice Punch
+
+Lucario @ Lucarionite
+Ability: Inner Focus
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- Swords Dance
+- Close Combat
+- Extreme Speed
+- Bullet Punch
+
+=== TRAINER_BEDE ===
+Name: BEDE
+Class: Pkmn Trainer 1
+Pic: Bede
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Smart Trainer / Ace Pokemon
+
+Mawile @ Black Glasses
+Ability: Intimidate
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Atk / 4 SpD
+Adamant Nature
+- Sucker Punch
+- Play Rough
+- Iron Head
+- Fire Fang
+
+Rapidash-Galar @ Choice Scarf
+Ability: Pastel Veil
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Psychic
+- Play Rough
+- Focus Blast
+- Trick
+
+Sylveon @ Leftovers
+Ability: Pixilate
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 SpD / 4 Def
+Calm Nature
+- Moonblast
+- Mystical Fire
+- Wish
+- Protect
+
+Gothitelle @ Choice Specs
+Ability: Competitive
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Modest Nature
+- Psychic
+- Shadow Ball
+- Thunderbolt
+- Trick
+
+Hatterene @ Focus Sash
+Ability: Anticipation
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Dazzling Gleam
+- Psychic
+- Nasty Plot
+- Draining Kiss
+
+Gardevoir @ Gardevoirite
+Ability: Trace
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Moonblast
+- Psychic
+- Shadow Ball
+- Calm Mind
+
+=== TRAINER_LEON ===
+Name: TARAK
+Class: Champion
+Pic: Leon
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Smart Trainer / Ace Pokemon
+
+Aegislash @ Leftovers
+Ability: Stance Change
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Atk / 4 SpD
+Adamant Nature
+- King's Shield
+- Iron Head
+- Shadow Ball
+- Sacred Sword
+
+Dragapult @ Choice Specs
+Ability: Clear Body
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Draco Meteor
+- Shadow Ball
+- Fire Blast
+- U-turn
+
+Seismitoad @ Leftovers
+Ability: Water Absorb
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 SpD / 4 Def
+Careful Nature
+- Scald
+- Earthquake
+- Stealth Rock
+- Knock Off
+
+Mr. Rime @ Focus Sash
+Ability: Screen Cleaner
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Icy Wind
+- Psychic
+- Nasty Plot
+- Freeze-Dry
+
+Haxorus @ Choice Band
+Ability: Mold Breaker
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- Outrage
+- Earthquake
+- Iron Head
+- Aqua Tail
+
+Charizard @ Charizardite Y
+Ability: Blaze
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Fire Blast
+- Air Slash
+- Focus Blast
+- Roost
+
+=== TRAINER_LARRY_ICON ===
+Name: LARRY
+Class: Pkmn Trainer 1
+Pic: Larry
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Smart Trainer / Ace Pokemon
+
+Dudunsparce @ Leftovers
+Ability: Serene Grace
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Def / 4 SpD
+Bold Nature
+- Body Slam
+- Boomburst
+- Roost
+- Earth Power
+
+Tropius @ Leftovers
+Ability: Chlorophyll
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Def / 4 SpD
+Impish Nature
+- Air Slash
+- Synthesis
+- Leech Seed
+- Whirlwind
+
+Oricorio-Pom-Pom @ Life Orb
+Ability: Dancer
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Revelation Dance
+- Air Slash
+- Roost
+- Quiver Dance
+
+Altaria @ Altarianite
+Ability: Natural Cure
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 SpD / 4 Def
+Calm Nature
+- Dragon Pulse
+- Hyper Voice
+- Roost
+- Dazzling Gleam
+
+Staraptor @ Staraptite
+Ability: Reckless
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Brave Bird
+- Close Combat
+- U-turn
+- Double-Edge
+
+Flamigo @ Choice Band
+Ability: Scrappy
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Close Combat
+- Brave Bird
+- U-turn
+- Facade
+
+=== TRAINER_STEVEN_ICON ===
+Name: PIERRE
+Class: Pkmn Trainer 1
+Pic: Steven
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Smart Trainer / Ace Pokemon
+
+Skarmory @ Leftovers
+Ability: Sturdy
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Def / 4 SpD
+Impish Nature
+- Spikes
+- Toxic
+- Steel Wing
+- Aerial Ace
+
+Claydol @ Leftovers
+Ability: Levitate
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Def / 4 SpD
+Bold Nature
+- Reflect
+- Light Screen
+- Earthquake
+- Ancient Power
+
+Aggron @ Assault Vest
+Ability: Sturdy
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Atk / 4 SpD
+Adamant Nature
+- Earthquake
+- Heavy Slam
+- Thunder Punch
+- Stone Edge
+
+Cradily @ Leftovers
+Ability: Storm Drain
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 SpD / 4 Def
+Careful Nature
+- Giga Drain
+- Ancient Power
+- Recover
+- Toxic
+
+Armaldo @ Life Orb
+Ability: Battle Armor
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Atk / 4 SpD
+Adamant Nature
+- Stone Edge
+- X-Scissor
+- Aqua Tail
+- Rapid Spin
+
+Metagross @ Metagrossite
+Ability: Clear Body
+Level: 80
+Shiny: Yes
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- Meteor Mash
+- Zen Headbutt
+- Earthquake
+- Bullet Punch
+
+=== TRAINER_GEETA ===
+Name: ALISMA
+Class: Champion
+Pic: Geeta
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Smart Trainer / Ace Pokemon
+
+Espathra @ Focus Sash
+Ability: Speed Boost
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Calm Mind
+- Dazzling Gleam
+- Psychic
+- Shadow Ball
+
+Gogoat @ Assault Vest
+Ability: Sap Sipper
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Atk / 4 SpD
+Adamant Nature
+- Horn Leech
+- Earthquake
+- Rock Slide
+- Zen Headbutt
+
+Veluza @ Choice Band
+Ability: Sharpness
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- Psycho Cut
+- Aqua Cutter
+- Night Slash
+- Liquidation
+
+Avalugg @ Leftovers
+Ability: Sturdy
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Def / 4 SpD
+Impish Nature
+- Avalanche
+- Body Press
+- Recover
+- Rapid Spin
+
+Kingambit @ Leftovers
+Ability: Supreme Overlord
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Atk / 4 SpD
+Adamant Nature
+- Swords Dance
+- Kowtow Cleave
+- Sucker Punch
+- Iron Head
+
+Glimmora @ Glimmoranite
+Ability: Toxic Debris
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Power Gem
+- Sludge Wave
+- Earth Power
+- Stealth Rock
+
+=== TRAINER_DIANTHA ===
+Name: DIANTHEA
+Class: Champion
+Pic: Diantha
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Smart Trainer / Ace Pokemon
+
+Hawlucha @ Focus Sash
+Ability: Unburden
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Jolly Nature
+- Swords Dance
+- Acrobatics
+- High Jump Kick
+- Poison Jab
+
+Tyrantrum @ Choice Band
+Ability: Strong Jaw
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 Spe / 4 HP
+Adamant Nature
+- Head Smash
+- Crunch
+- Outrage
+- Earthquake
+
+Aurorus @ Choice Specs
+Ability: Snow Warning
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Modest Nature
+- Freeze-Dry
+- Ancient Power
+- Thunderbolt
+- Moonblast
+
+Gourgeist @ Leftovers
+Ability: Frisk
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 SpD / 4 Def
+Careful Nature
+- Will-O-Wisp
+- Seed Bomb
+- Leech Seed
+- Synthesis
+
+Goodra @ Assault Vest
+Ability: Sap Sipper
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 SpA / 4 SpD
+Modest Nature
+- Draco Meteor
+- Fire Blast
+- Thunderbolt
+- Sludge Wave
+
+Gardevoir @ Gardevoirite
+Ability: Trace
+Level: 80
+Ball: Poke
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+- Moonblast
+- Psychic
+- Shadow Ball
+- Calm Mind

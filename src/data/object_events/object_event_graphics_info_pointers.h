@@ -133,6 +133,13 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Tate;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Wallace;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Steven;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Theojoss;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Blue;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Lance;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Cynthia;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Iris;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Diantha;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Geeta;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Leon;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Wally;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_RubySapphireLittleBoy;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BrendanFishing;
@@ -622,6 +629,13 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_WALLACE] =                  &gObjectEventGraphicsInfo_Wallace,
     [OBJ_EVENT_GFX_STEVEN] =                   &gObjectEventGraphicsInfo_Steven,
     [OBJ_EVENT_GFX_THEOJOSS] =                  &gObjectEventGraphicsInfo_Theojoss,
+    [OBJ_EVENT_GFX_BLUE] =                     &gObjectEventGraphicsInfo_Blue,
+    [OBJ_EVENT_GFX_LANCE] =                    &gObjectEventGraphicsInfo_Lance,
+    [OBJ_EVENT_GFX_CYNTHIA] =                  &gObjectEventGraphicsInfo_Cynthia,
+    [OBJ_EVENT_GFX_IRIS] =                     &gObjectEventGraphicsInfo_Iris,
+    [OBJ_EVENT_GFX_DIANTHA] =                  &gObjectEventGraphicsInfo_Diantha,
+    [OBJ_EVENT_GFX_GEETA] =                    &gObjectEventGraphicsInfo_Geeta,
+    [OBJ_EVENT_GFX_LEON] =                     &gObjectEventGraphicsInfo_Leon,
     [OBJ_EVENT_GFX_WALLY] =                    &gObjectEventGraphicsInfo_Wally,
     [OBJ_EVENT_GFX_LITTLE_BOY_3] =             &gObjectEventGraphicsInfo_RubySapphireLittleBoy,
     [OBJ_EVENT_GFX_BRENDAN_FISHING] =          &gObjectEventGraphicsInfo_BrendanFishing,

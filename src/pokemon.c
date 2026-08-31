@@ -5288,6 +5288,27 @@ u16 GetBattleBGM(void)
         if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_THEOJOSS)
             return MUS_RG_VS_CHAMPION;
 
+        if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_GEETA
+         || TRAINER_BATTLE_PARAM.opponentA == TRAINER_LEON
+         || TRAINER_BATTLE_PARAM.opponentA == TRAINER_DIANTHA
+         || TRAINER_BATTLE_PARAM.opponentA == TRAINER_IRIS
+         || TRAINER_BATTLE_PARAM.opponentA == TRAINER_CYNTHIA
+         || TRAINER_BATTLE_PARAM.opponentA == TRAINER_LANCE
+         || TRAINER_BATTLE_PARAM.opponentA == TRAINER_BLUE)
+        {
+            switch (VarGet(VAR_RECIF_ROUND))
+            {
+            case 1:
+                return MUS_VS_FRONTIER_BRAIN;
+            case 2:
+                return MUS_RG_VS_GYM_LEADER;
+            case 3:
+                return MUS_VS_ELITE_FOUR;
+            case 4:
+                return MUS_VS_RAYQUAZA;
+            }
+        }
+
         if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER)
             trainerClass = GetFrontierOpponentClass(TRAINER_BATTLE_PARAM.opponentA);
         else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER_HILL)

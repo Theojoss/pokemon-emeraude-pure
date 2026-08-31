@@ -314,6 +314,8 @@ static void DebugAction_Trainers_SetRematchReadiness(u8 taskId);
 static void DebugAction_Trainers_TryBattle(u8 taskId);
 static void DebugAction_Trainers_RechargeVsSeeker(u8 taskId);
 
+static void DebugAction_Tournament_StartBattle(u8 taskId, const void *params);
+
 static void DebugAction_FlagsVars_Flags(u8 taskId);
 static void DebugAction_FlagsVars_FlagsSelect(u8 taskId);
 static void DebugAction_FlagsVars_Vars(u8 taskId);
@@ -744,6 +746,27 @@ static const u8 *const sDebugMenu_Actions_BagUse_Options[] =
     COMPOUND_STRING("Sans SAC: {STR_VAR_1}Valeur invalide"),
 };
 
+static const struct DebugMenuOption sDebugMenu_Actions_Tournament[] =
+{
+    { COMPOUND_STRING("Cynthia"),  DebugAction_Tournament_StartBattle, (void *)TRAINER_CYNTHIA, },
+    { COMPOUND_STRING("N"),        DebugAction_Tournament_StartBattle, (void *)TRAINER_N, },
+    { COMPOUND_STRING("Barry"),    DebugAction_Tournament_StartBattle, (void *)TRAINER_BARRY_RIVAL, },
+    { COMPOUND_STRING("Lance"),    DebugAction_Tournament_StartBattle, (void *)TRAINER_LANCE, },
+    { COMPOUND_STRING("Red"),      DebugAction_Tournament_StartBattle, (void *)TRAINER_RED, },
+    { COMPOUND_STRING("Blue"),     DebugAction_Tournament_StartBattle, (void *)TRAINER_BLUE, },
+    { COMPOUND_STRING("Silver"),   DebugAction_Tournament_StartBattle, (void *)TRAINER_SILVER, },
+    { COMPOUND_STRING("Iris"),     DebugAction_Tournament_StartBattle, (void *)TRAINER_IRIS, },
+    { COMPOUND_STRING("Diantha"),  DebugAction_Tournament_StartBattle, (void *)TRAINER_DIANTHA, },
+    { COMPOUND_STRING("Geeta"),    DebugAction_Tournament_StartBattle, (void *)TRAINER_GEETA, },
+    { COMPOUND_STRING("Leon"),     DebugAction_Tournament_StartBattle, (void *)TRAINER_LEON, },
+    { COMPOUND_STRING("Alain"),    DebugAction_Tournament_StartBattle, (void *)TRAINER_ALAIN, },
+    { COMPOUND_STRING("Korrina"),  DebugAction_Tournament_StartBattle, (void *)TRAINER_KORRINA, },
+    { COMPOUND_STRING("Bede"),     DebugAction_Tournament_StartBattle, (void *)TRAINER_BEDE, },
+    { COMPOUND_STRING("Larry"),    DebugAction_Tournament_StartBattle, (void *)TRAINER_LARRY_ICON, },
+    { COMPOUND_STRING("Steven"),   DebugAction_Tournament_StartBattle, (void *)TRAINER_STEVEN_ICON, },
+    { NULL }
+};
+
 static const struct DebugMenuOption sDebugMenu_Actions_Main[] =
 {
     { COMPOUND_STRING("Outils…"),       DebugAction_OpenSubMenu, sDebugMenu_Actions_Utilities, },
@@ -753,6 +776,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Main[] =
     { COMPOUND_STRING("Joueur…"),       DebugAction_OpenSubMenu, sDebugMenu_Actions_Player, },
     { COMPOUND_STRING("Scripts…"),      DebugAction_OpenSubMenu, sDebugMenu_Actions_Scripts, },
     { COMPOUND_STRING("Dresseurs…"),    DebugAction_OpenSubMenuTrainers, sDebugMenu_Actions_Trainers, },
+    { COMPOUND_STRING("Tournoi…"),      DebugAction_OpenSubMenu, sDebugMenu_Actions_Tournament, },
     { COMPOUND_STRING("Flags & Vars…"), DebugAction_OpenSubMenuFlagsVars, sDebugMenu_Actions_Flags, },
     { COMPOUND_STRING("Son…"),          DebugAction_OpenSubMenu, sDebugMenu_Actions_Sound, },
     { COMPOUND_STRING("Infos ROM…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_ROMInfo2, },
@@ -2285,6 +2309,17 @@ static void DebugAction_Trainers_RechargeVsSeeker(u8 taskId)
     SetTrainerRematchStepCounter(VSSEEKER_RECHARGE_STEPS);
     MapResetTrainerRematches(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
     ScriptContext_SetupScript(EventScript_VsSeekerChargingDone);
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_Tournament_StartBattle(u8 taskId, const void *params)
+{
+    gBattleTypeFlags = BATTLE_TYPE_TRAINER;
+    TRAINER_BATTLE_PARAM.opponentA = (u32)params;
+    TRAINER_BATTLE_PARAM.opponentB = 0xFFFF;
+    gBattleEnvironment = BattleSetup_GetEnvironmentId();
+    CalculateEnemyPartyCount();
+    BattleSetup_StartTrainerBattle_Debug();
     Debug_DestroyMenu_Full(taskId);
 }
 

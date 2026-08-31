@@ -497,6 +497,7 @@ const u8 gText_MenuOptionExit[] = _("RETOUR");
 const u8 gText_SouthernIsland[] = _("ILE DU SUD");
 const u8 gText_BirthIsland[] = _("ILE AURORE");
 const u8 gText_FarawayIsland[] = _("ILE LOINTAINE");
+const u8 gText_RecifDesLegendes[] = _("RECIF DES LEGENDES");
 const u8 gText_NavelRock[] = _("ROC NOMBRI");
 const u8 gText_NormalTagMatch[] = _("MATCH NORMAL");
 const u8 gText_VarietyTagMatch[] = _("MATCH VARIE");

@@ -161,6 +161,11 @@ enum
     OBJ_EVENT_GFX_WALLACE,
     OBJ_EVENT_GFX_STEVEN,
     OBJ_EVENT_GFX_THEOJOSS,
+    OBJ_EVENT_GFX_CYNTHIA,
+    OBJ_EVENT_GFX_IRIS,
+    OBJ_EVENT_GFX_DIANTHA,
+    OBJ_EVENT_GFX_GEETA,
+    OBJ_EVENT_GFX_LEON,
     OBJ_EVENT_GFX_WALLY,
     OBJ_EVENT_GFX_LITTLE_BOY_3,
     OBJ_EVENT_GFX_BRENDAN_FISHING,
@@ -720,6 +725,13 @@ enum
 #define OBJ_EVENT_PAL_TAG_HOENN_F                  0x1173
 #define OBJ_EVENT_PAL_TAG_TEAM_ROCKET_M            0x1174
 #define OBJ_EVENT_PAL_TAG_TEAM_ROCKET_F            0x1175
+#define OBJ_EVENT_PAL_TAG_BLUE                     0x1176
+#define OBJ_EVENT_PAL_TAG_LANCE                    0x1177
+#define OBJ_EVENT_PAL_TAG_CYNTHIA                  0x1178
+#define OBJ_EVENT_PAL_TAG_IRIS                     0x1179
+#define OBJ_EVENT_PAL_TAG_DIANTHA                  0x117A
+#define OBJ_EVENT_PAL_TAG_GEETA                    0x117B
+#define OBJ_EVENT_PAL_TAG_LEON                     0x117C
 // Used as a placeholder follower graphic
 #define OBJ_EVENT_PAL_TAG_SUBSTITUTE              0x7611
 #define OBJ_EVENT_PAL_TAG_LIGHT                   0x8001

@@ -861,12 +861,29 @@
 #define TRAINER_MAY_PLACEHOLDER             854
 #define TRAINER_THEOJOSS                    856
 
+// Île du Tournoi (post-game trainer tournament)
+#define TRAINER_SILVER                      857
+#define TRAINER_LANCE                       858
+#define TRAINER_CYNTHIA                     859
+#define TRAINER_BARRY_RIVAL                 860
+#define TRAINER_IRIS                        861
+#define TRAINER_N                           862
+#define TRAINER_BLUE                        863
+#define TRAINER_ALAIN                       864
+#define TRAINER_KORRINA                     865
+#define TRAINER_BEDE                        866
+#define TRAINER_LEON                        867
+#define TRAINER_LARRY_ICON                  868
+#define TRAINER_STEVEN_ICON                 869
+#define TRAINER_GEETA                       870
+#define TRAINER_DIANTHA                     871
+
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT_EMERALD     857
-#define MAX_TRAINERS_COUNT_EMERALD 864
+#define TRAINERS_COUNT_EMERALD     872
+#define MAX_TRAINERS_COUNT_EMERALD 880
 
 #if IS_FRLG
 #define TRAINERS_COUNT                      TRAINERS_COUNT_FRLG

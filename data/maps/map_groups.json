@@ -601,6 +601,7 @@
     "BirthIsland_Exterior",
     "BirthIsland_Harbor",
     "CreatorIsland",
+    "RecifDesLegendes",
     "TrainerHill_Entrance",
     "TrainerHill_1F",
     "TrainerHill_2F",
@@ -629,7 +630,8 @@
     "NavelRock_Down10",
     "NavelRock_Down11",
     "NavelRock_Bottom",
-    "TrainerHill_Elevator"
+    "TrainerHill_Elevator",
+    "RecifDesLegendes_Indoor"
   ],
   "gMapGroup_IndoorRoute104Prototype": [
     "Route104_Prototype",

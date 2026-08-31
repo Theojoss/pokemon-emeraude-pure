@@ -882,6 +882,15 @@ static void CreateLilycoveSSTidalMultichoice(void)
         }
     }
 
+    if (CheckBagHasItem(ITEM_RECIF_TICKET, 1) == TRUE && FlagGet(FLAG_ENABLE_SHIP_RECIF_DES_LEGENDES) == TRUE)
+    {
+        if (gSpecialVar_0x8004 == 0)
+        {
+            sLilycoveSSTidalSelections[selectionCount] = SSTIDAL_SELECTION_RECIF_DES_LEGENDES;
+            selectionCount++;
+        }
+    }
+
     sLilycoveSSTidalSelections[selectionCount] = SSTIDAL_SELECTION_EXIT;
     selectionCount++;
 

@@ -550,6 +550,7 @@ gStdScripts_End::
 	.include "data/maps/BirthIsland_Exterior/scripts.inc"
 	.include "data/maps/BirthIsland_Harbor/scripts.inc"
 	.include "data/maps/CreatorIsland/scripts.inc"
+	.include "data/maps/RecifDesLegendes/scripts.inc"
 	.include "data/maps/TrainerHill_Entrance/scripts.inc"
 	.include "data/maps/TrainerHill_1F/scripts.inc"
 	.include "data/maps/TrainerHill_2F/scripts.inc"
@@ -1751,3 +1752,5 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/LavaridgeTown_PlayerHouse_Onsen/scripts.inc"
 
 	.include "data/maps/LavaridgeTown_PlayerHouse/scripts.inc"
+
+	.include "data/maps/RecifDesLegendes_Indoor/scripts.inc"

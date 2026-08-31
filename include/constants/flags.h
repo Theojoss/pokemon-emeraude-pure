@@ -1506,18 +1506,18 @@
 
 #define FLAG_RECEIVED_POKEDEX_FROM_BIRCH            (SYSTEM_FLAGS + 0x84)
 
-#define FLAG_UNUSED_0x8E5                           (SYSTEM_FLAGS + 0x85) // Unused Flag
-#define FLAG_UNUSED_0x8E6                           (SYSTEM_FLAGS + 0x86) // Unused Flag
-#define FLAG_UNUSED_0x8E7                           (SYSTEM_FLAGS + 0x87) // Unused Flag
-#define FLAG_UNUSED_0x8E8                           (SYSTEM_FLAGS + 0x88) // Unused Flag
-#define FLAG_UNUSED_0x8E9                           (SYSTEM_FLAGS + 0x89) // Unused Flag
-#define FLAG_UNUSED_0x8EA                           (SYSTEM_FLAGS + 0x8A) // Unused Flag
-#define FLAG_UNUSED_0x8EB                           (SYSTEM_FLAGS + 0x8B) // Unused Flag
-#define FLAG_UNUSED_0x8EC                           (SYSTEM_FLAGS + 0x8C) // Unused Flag
-#define FLAG_UNUSED_0x8ED                           (SYSTEM_FLAGS + 0x8D) // Unused Flag
+#define FLAG_ENABLE_SHIP_RECIF_DES_LEGENDES         (SYSTEM_FLAGS + 0x85)
+#define FLAG_RECEIVED_RECIF_TICKET                  (SYSTEM_FLAGS + 0x86)
+#define FLAG_RECIF_FACED_GEETA                       (SYSTEM_FLAGS + 0x87)
+#define FLAG_RECIF_FACED_LEON                        (SYSTEM_FLAGS + 0x88)
+#define FLAG_RECIF_FACED_DIANTHA                     (SYSTEM_FLAGS + 0x89)
+#define FLAG_RECIF_FACED_IRIS                        (SYSTEM_FLAGS + 0x8A)
+#define FLAG_RECIF_FACED_CYNTHIA                     (SYSTEM_FLAGS + 0x8B)
+#define FLAG_RECIF_FACED_LANCE                       (SYSTEM_FLAGS + 0x8C)
+#define FLAG_RECIF_FACED_BLUE                        (SYSTEM_FLAGS + 0x8D)
 #define FLAG_UNUSED_0x8EE                           (SYSTEM_FLAGS + 0x8E) // Unused Flag
 #define FLAG_UNUSED_0x8EF                           (SYSTEM_FLAGS + 0x8F) // Unused Flag
-#define FLAG_UNUSED_0x8F0                           (SYSTEM_FLAGS + 0x90) // Unused Flag
+#define FLAG_RECIF_NO_WHITEOUT                       (SYSTEM_FLAGS + 0x90)
 #define FLAG_UNUSED_0x8F1                           (SYSTEM_FLAGS + 0x91) // Unused Flag
 #define FLAG_UNUSED_0x8F2                           (SYSTEM_FLAGS + 0x92) // Unused Flag
 #define FLAG_UNUSED_0x8F3                           (SYSTEM_FLAGS + 0x93) // Unused Flag
@@ -1574,7 +1574,7 @@
 #define FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY     (DAILY_FLAGS_START + 0x1)
 #define FLAG_DAILY_SECRET_BASE                      (DAILY_FLAGS_START + 0x2)
 #define FLAG_DAILY_HOUSE_2_RECEIVED_GIFT             (DAILY_FLAGS_START + 0x3)
-#define FLAG_UNUSED_0x924                           (DAILY_FLAGS_START + 0x4)  // Unused Flag
+#define FLAG_RECIF_PLAYED_TODAY                       (DAILY_FLAGS_START + 0x4)
 #define FLAG_UNUSED_0x925                           (DAILY_FLAGS_START + 0x5)  // Unused Flag
 #define FLAG_UNUSED_0x926                           (DAILY_FLAGS_START + 0x6)  // Unused Flag
 #define FLAG_UNUSED_0x927                           (DAILY_FLAGS_START + 0x7)  // Unused Flag

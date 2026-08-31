@@ -17482,6 +17482,23 @@ const struct ItemInfo gItemsInfo[] =
         .iconPic = gItemIcon_OutfitBox,
         .iconPalette = gItemIconPalette_OutfitBox,
     },
+
+    [ITEM_RECIF_TICKET] =
+    {
+        .name = ITEM_NAME("Billet Récif"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "Un billet donnant accès au\n"
+            "Récif des Légendes à bord\n"
+            "du MARINA."
+        ),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_AuroraTicket,
+        .iconPalette = gItemIconPalette_AuroraTicket,
+    },
 };
 
 #undef ITEM_NAME

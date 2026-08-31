@@ -9376,6 +9376,28 @@
       "border_filepath": "data/layouts/LavaridgeTown_PlayerHouse/border.bin",
       "blockdata_filepath": "data/layouts/LavaridgeTown_PlayerHouse/map.bin",
       "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_RECIF_DES_LEGENDES",
+      "name": "RecifDesLegendes_Layout",
+      "width": 30,
+      "height": 30,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_BattleFrontierOutsideWest",
+      "border_filepath": "data/layouts/RecifDesLegendes/border.bin",
+      "blockdata_filepath": "data/layouts/RecifDesLegendes/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_RECIF_DES_LEGENDES_INDOOR",
+      "name": "RecifDesLegendes_Indoor_Layout",
+      "width": 20,
+      "height": 13,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_BattleDome",
+      "border_filepath": "data/layouts/RecifDesLegendes_Indoor/border.bin",
+      "blockdata_filepath": "data/layouts/RecifDesLegendes_Indoor/map.bin",
+      "layout_version": "emerald"
     }
   ]
 }
