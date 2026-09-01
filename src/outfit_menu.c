@@ -579,7 +579,8 @@ static u32 CountAndFilterTotalOutfit(void)
     u32 i = 0, j = OUTFIT_BEGIN;
     while (j < OUTFIT_COUNT)
     {
-        if ((gOutfits[j].isHidden && !GetOutfitStatus(j)))
+        if ((gOutfits[j].isHidden && !GetOutfitStatus(j))
+            || (gOutfits[j].maleOnly && gSaveBlock2Ptr->playerGender != MALE))
         {
             j++;
             continue; // skip
@@ -726,7 +727,8 @@ static u32 BuildOutfitLists(void)
     sOutfitMenu->list = AllocZeroed(CountAndFilterTotalOutfit() * sizeof(u8));
     while (j < OUTFIT_COUNT)
     {
-        if ((gOutfits[j].isHidden && !GetOutfitStatus(j)))
+        if ((gOutfits[j].isHidden && !GetOutfitStatus(j))
+            || (gOutfits[j].maleOnly && gSaveBlock2Ptr->playerGender != MALE))
         {
             j++;
             continue; // skip

@@ -452,6 +452,32 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoMUnder
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoMFishing;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoMWatering;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoMDecorating;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_AnimeMNormal;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_AnimeMMachBike;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_AnimeMAcroBike;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_AnimeMSurfing;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_AnimeMFieldMove;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_AnimeMUnderwater;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_AnimeMFishing;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_AnimeMDecorating;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaMNormal;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaMMachBike;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaMAcroBike;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaMSurfing;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaMFieldMove;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaMUnderwater;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaMFishing;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaMWatering;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaMDecorating;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaFNormal;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaFMachBike;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaFAcroBike;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaFSurfing;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaFFieldMove;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaFUnderwater;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaFFishing;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaFWatering;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaFDecorating;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoFNormal;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoFMachBike;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoFAcroBike;
@@ -788,6 +814,32 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_KANTO_M_FISHING] =          &gObjectEventGraphicsInfo_KantoMFishing,
     [OBJ_EVENT_GFX_KANTO_M_WATERING] =         &gObjectEventGraphicsInfo_KantoMWatering,
     [OBJ_EVENT_GFX_KANTO_M_DECORATING] =       &gObjectEventGraphicsInfo_KantoMDecorating,
+    [OBJ_EVENT_GFX_ANIME_M_NORMAL] =           &gObjectEventGraphicsInfo_AnimeMNormal,
+    [OBJ_EVENT_GFX_ANIME_M_MACH_BIKE] =        &gObjectEventGraphicsInfo_AnimeMMachBike,
+    [OBJ_EVENT_GFX_ANIME_M_ACRO_BIKE] =        &gObjectEventGraphicsInfo_AnimeMAcroBike,
+    [OBJ_EVENT_GFX_ANIME_M_SURFING] =          &gObjectEventGraphicsInfo_AnimeMSurfing,
+    [OBJ_EVENT_GFX_ANIME_M_FIELD_MOVE] =       &gObjectEventGraphicsInfo_AnimeMFieldMove,
+    [OBJ_EVENT_GFX_ANIME_M_UNDERWATER] =       &gObjectEventGraphicsInfo_AnimeMUnderwater,
+    [OBJ_EVENT_GFX_ANIME_M_FISHING] =          &gObjectEventGraphicsInfo_AnimeMFishing,
+    [OBJ_EVENT_GFX_ANIME_M_DECORATING] =       &gObjectEventGraphicsInfo_AnimeMDecorating,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_M_NORMAL] =      &gObjectEventGraphicsInfo_TeamMagmaMNormal,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_M_MACH_BIKE] =   &gObjectEventGraphicsInfo_TeamMagmaMMachBike,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_M_ACRO_BIKE] =   &gObjectEventGraphicsInfo_TeamMagmaMAcroBike,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_M_SURFING] =     &gObjectEventGraphicsInfo_TeamMagmaMSurfing,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_M_FIELD_MOVE] =  &gObjectEventGraphicsInfo_TeamMagmaMFieldMove,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_M_UNDERWATER] =  &gObjectEventGraphicsInfo_TeamMagmaMUnderwater,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_M_FISHING] =     &gObjectEventGraphicsInfo_TeamMagmaMFishing,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_M_WATERING] =    &gObjectEventGraphicsInfo_TeamMagmaMWatering,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_M_DECORATING] =  &gObjectEventGraphicsInfo_TeamMagmaMDecorating,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_F_NORMAL] =      &gObjectEventGraphicsInfo_TeamMagmaFNormal,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_F_MACH_BIKE] =   &gObjectEventGraphicsInfo_TeamMagmaFMachBike,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_F_ACRO_BIKE] =   &gObjectEventGraphicsInfo_TeamMagmaFAcroBike,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_F_SURFING] =     &gObjectEventGraphicsInfo_TeamMagmaFSurfing,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_F_FIELD_MOVE] =  &gObjectEventGraphicsInfo_TeamMagmaFFieldMove,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_F_UNDERWATER] =  &gObjectEventGraphicsInfo_TeamMagmaFUnderwater,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_F_FISHING] =     &gObjectEventGraphicsInfo_TeamMagmaFFishing,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_F_WATERING] =    &gObjectEventGraphicsInfo_TeamMagmaFWatering,
+    [OBJ_EVENT_GFX_TEAM_MAGMA_F_DECORATING] =  &gObjectEventGraphicsInfo_TeamMagmaFDecorating,
     [OBJ_EVENT_GFX_KANTO_F_NORMAL] =           &gObjectEventGraphicsInfo_KantoFNormal,
     [OBJ_EVENT_GFX_KANTO_F_MACH_BIKE] =        &gObjectEventGraphicsInfo_KantoFMachBike,
     [OBJ_EVENT_GFX_KANTO_F_ACRO_BIKE] =        &gObjectEventGraphicsInfo_KantoFAcroBike,

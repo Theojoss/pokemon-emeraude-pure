@@ -559,6 +559,38 @@ const u32 gObjectEventPic_KantoMUnderwater[] = INCGFX_U32("graphics/object_event
 const u32 gObjectEventPic_KantoMFieldMove[] = INCGFX_U32("graphics/object_events/pics/people/kanto_m/field_move.png", ".4bpp", "-mwidth 4 -mheight 4");
 const u32 gObjectEventPic_KantoMFishing[] = INCGFX_U32("graphics/object_events/pics/people/kanto_m/fishing.png", ".4bpp", "-mwidth 4 -mheight 4");
 const u32 gObjectEventPic_KantoMWatering[] = INCGFX_U32("graphics/object_events/pics/people/kanto_m/watering.png", ".4bpp", "-mwidth 4 -mheight 4");
+
+const u32 gObjectEventPic_AnimeMNormalRunning[] = INCBIN_U32("graphics/object_events/pics/people/anime_m/walking.4bpp", "graphics/object_events/pics/people/anime_m/running.4bpp");
+const u16 gObjectEventPal_AnimeM[] = INCGFX_U16("graphics/object_events/pics/people/anime_m/walking.png", ".gbapal");
+const u32 gObjectEventPic_AnimeMMachBike[] = INCGFX_U32("graphics/object_events/pics/people/anime_m/mach_bike.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_AnimeMAcroBike[] = INCGFX_U32("graphics/object_events/pics/people/anime_m/acro_bike.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_AnimeMSurfing[] = INCGFX_U32("graphics/object_events/pics/people/anime_m/surfing.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_AnimeMUnderwater[] = INCGFX_U32("graphics/object_events/pics/people/anime_m/underwater.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_AnimeMFieldMove[] = INCGFX_U32("graphics/object_events/pics/people/anime_m/field_move.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_AnimeMFishing[] = INCGFX_U32("graphics/object_events/pics/people/anime_m/fishing.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_AnimeMDecorating[] = INCGFX_U32("graphics/object_events/pics/people/anime_m/decorating.png", ".4bpp");
+
+const u32 gObjectEventPic_TeamMagmaMNormalRunning[] = INCBIN_U32("graphics/object_events/pics/people/team_magma_m/walking.4bpp", "graphics/object_events/pics/people/team_magma_m/running.4bpp");
+const u16 gObjectEventPal_TeamMagmaM[] = INCGFX_U16("graphics/object_events/pics/people/team_magma_m/walking.png", ".gbapal");
+const u32 gObjectEventPic_TeamMagmaMMachBike[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_m/mach_bike.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_TeamMagmaMAcroBike[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_m/acro_bike.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_TeamMagmaMSurfing[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_m/surfing.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_TeamMagmaMUnderwater[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_m/underwater.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_TeamMagmaMFieldMove[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_m/field_move.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_TeamMagmaMFishing[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_m/fishing.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_TeamMagmaMWatering[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_m/watering.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_TeamMagmaMDecorating[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_m/decorating.png", ".4bpp");
+
+const u32 gObjectEventPic_TeamMagmaFNormalRunning[] = INCBIN_U32("graphics/object_events/pics/people/team_magma_f/walking.4bpp", "graphics/object_events/pics/people/team_magma_f/running.4bpp");
+const u16 gObjectEventPal_TeamMagmaF[] = INCGFX_U16("graphics/object_events/pics/people/team_magma_f/walking.png", ".gbapal");
+const u32 gObjectEventPic_TeamMagmaFMachBike[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_f/mach_bike.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_TeamMagmaFAcroBike[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_f/acro_bike.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_TeamMagmaFSurfing[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_f/surfing.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_TeamMagmaFUnderwater[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_f/underwater.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_TeamMagmaFFieldMove[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_f/field_move.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_TeamMagmaFFishing[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_f/fishing.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_TeamMagmaFWatering[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_f/watering.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_TeamMagmaFDecorating[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_f/decorating.png", ".4bpp");
 const u32 gObjectEventPic_KantoMDecorating[] = INCGFX_U32("graphics/object_events/pics/people/kanto_m/decorating.png", ".4bpp");
 
 // Kanto outfit, female (costume system)

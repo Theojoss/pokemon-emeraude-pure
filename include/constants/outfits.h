@@ -19,11 +19,13 @@
 #define OUTFIT_HOENN       4
 #define OUTFIT_SINNOH      5
 #define OUTFIT_TEAM_ROCKET 6
-#define OUTFIT_COUNT       7
+#define OUTFIT_TEAM_MAGMA  7
+#define OUTFIT_ANIME       8
+#define OUTFIT_COUNT       9
 
 // inclusive
 #define OUTFIT_BEGIN OUTFIT_DEFAULT
-#define OUTFIT_END   OUTFIT_TEAM_ROCKET
+#define OUTFIT_END   OUTFIT_ANIME
 
 #define DEFAULT_OUTFIT OUTFIT_DEFAULT
 

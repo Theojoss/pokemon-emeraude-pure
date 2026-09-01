@@ -267,6 +267,14 @@ const u16 gTrainerPalette_HoennF[] = INCGFX_U16("graphics/trainers/front_pics/ho
 const u32 gTrainerFrontPic_KantoM[] = INCGFX_U32("graphics/trainers/front_pics/kanto_m.png", ".4bpp.smol");
 const u16 gTrainerPalette_KantoM[] = INCGFX_U16("graphics/trainers/front_pics/kanto_m.png", ".gbapal");
 
+const u32 gTrainerFrontPic_AnimeM[] = INCGFX_U32("graphics/trainers/front_pics/anime_m.png", ".4bpp.smol");
+const u16 gTrainerPalette_AnimeM[] = INCGFX_U16("graphics/trainers/front_pics/anime_m.png", ".gbapal");
+
+const u32 gTrainerFrontPic_TeamMagmaM[] = INCGFX_U32("graphics/trainers/front_pics/team_magma_m.png", ".4bpp.smol");
+const u16 gTrainerPalette_TeamMagmaM[] = INCGFX_U16("graphics/trainers/front_pics/team_magma_m.png", ".gbapal");
+const u32 gTrainerFrontPic_TeamMagmaF[] = INCGFX_U32("graphics/trainers/front_pics/team_magma_f.png", ".4bpp.smol");
+const u16 gTrainerPalette_TeamMagmaF[] = INCGFX_U16("graphics/trainers/front_pics/team_magma_f.png", ".gbapal");
+
 const u32 gTrainerFrontPic_KantoF[] = INCGFX_U32("graphics/trainers/front_pics/kanto_f.png", ".4bpp.smol");
 const u16 gTrainerPalette_KantoF[] = INCGFX_U16("graphics/trainers/front_pics/kanto_f.png", ".gbapal");
 
@@ -549,6 +557,9 @@ const u8 gTrainerBackPic_SinnohM[] = INCGFX_U8("graphics/trainers/back_pics/sinn
 const u8 gTrainerBackPic_SinnohF[] = INCGFX_U8("graphics/trainers/back_pics/sinnoh_f.png", ".4bpp");
 const u8 gTrainerBackPic_TeamRocketM[] = INCGFX_U8("graphics/trainers/back_pics/team_rocket_m.png", ".4bpp");
 const u8 gTrainerBackPic_TeamRocketF[] = INCGFX_U8("graphics/trainers/back_pics/team_rocket_f.png", ".4bpp");
+const u8 gTrainerBackPic_AnimeM[] = INCGFX_U8("graphics/trainers/back_pics/anime_m.png", ".4bpp");
+const u8 gTrainerBackPic_TeamMagmaM[] = INCGFX_U8("graphics/trainers/back_pics/team_magma_m.png", ".4bpp");
+const u8 gTrainerBackPic_TeamMagmaF[] = INCGFX_U8("graphics/trainers/back_pics/team_magma_f.png", ".4bpp");
 
 const u16 gTrainerBackPicPalette_Red[] = INCGFX_U16("graphics/trainers/back_pics/red.png", ".gbapal");
 const u16 gTrainerBackPicPalette_Leaf[] = INCGFX_U16("graphics/trainers/back_pics/leaf.png", ".gbapal");
@@ -558,6 +569,9 @@ const u16 gTrainerBackPicPalette_JohtoF[] = INCGFX_U16("graphics/trainers/back_p
 const u16 gTrainerBackPicPalette_HoennM[] = INCGFX_U16("graphics/trainers/back_pics/hoenn_m.png", ".gbapal");
 const u16 gTrainerBackPicPalette_HoennF[] = INCGFX_U16("graphics/trainers/back_pics/hoenn_f.png", ".gbapal");
 const u16 gTrainerBackPicPalette_KantoM[] = INCGFX_U16("graphics/trainers/back_pics/kanto_m.png", ".gbapal");
+const u16 gTrainerBackPicPalette_AnimeM[] = INCGFX_U16("graphics/trainers/back_pics/anime_m.png", ".gbapal");
+const u16 gTrainerBackPicPalette_TeamMagmaM[] = INCGFX_U16("graphics/trainers/back_pics/team_magma_m.png", ".gbapal");
+const u16 gTrainerBackPicPalette_TeamMagmaF[] = INCGFX_U16("graphics/trainers/back_pics/team_magma_f.png", ".gbapal");
 const u16 gTrainerBackPicPalette_KantoF[] = INCGFX_U16("graphics/trainers/back_pics/kanto_f.png", ".gbapal");
 const u16 gTrainerBackPicPalette_SinnohM[] = INCGFX_U16("graphics/trainers/back_pics/sinnoh_m.png", ".gbapal");
 const u16 gTrainerBackPicPalette_SinnohF[] = INCGFX_U16("graphics/trainers/back_pics/sinnoh_f.png", ".gbapal");
@@ -703,6 +717,21 @@ const struct TrainerPicInfo gTrainerPicInfo[TRAINER_PIC_COUNT] =
     {
         .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_KantoM, gTrainerPalette_KantoM),
         .backPic = TRAINER_BACK_PIC(5, gTrainerBackPic_KantoM, gTrainerBackPicPalette_KantoM, sBackAnims_Kanto),
+    },
+    [TRAINER_PIC_ANIME_M] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_AnimeM, gTrainerPalette_AnimeM),
+        .backPic = TRAINER_BACK_PIC(4, gTrainerBackPic_AnimeM, gTrainerBackPicPalette_AnimeM, sBackAnims_Hoenn),
+    },
+    [TRAINER_PIC_TEAM_MAGMA_M] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_TeamMagmaM, gTrainerPalette_TeamMagmaM),
+        .backPic = TRAINER_BACK_PIC(4, gTrainerBackPic_TeamMagmaM, gTrainerBackPicPalette_TeamMagmaM, sBackAnims_Hoenn),
+    },
+    [TRAINER_PIC_TEAM_MAGMA_F] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_TeamMagmaF, gTrainerPalette_TeamMagmaF),
+        .backPic = TRAINER_BACK_PIC(4, gTrainerBackPic_TeamMagmaF, gTrainerBackPicPalette_TeamMagmaF, sBackAnims_Hoenn),
     },
     [TRAINER_PIC_KANTO_F] =
     {

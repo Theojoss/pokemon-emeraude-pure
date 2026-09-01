@@ -1699,6 +1699,186 @@ static const struct SpriteFrameImage sPicTable_KantoMDecorating[] = {
     obj_frame_tiles(gObjectEventPic_KantoMDecorating),
 };
 
+// Anime outfit, male (costume system)
+static const struct SpriteFrameImage sPicTable_AnimeMNormal[] = {
+    overworld_ascending_frames(gObjectEventPic_AnimeMNormalRunning, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_AnimeMMachBike[] = {
+    overworld_ascending_frames(gObjectEventPic_AnimeMMachBike, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_AnimeMAcroBike[] = {
+    overworld_ascending_frames(gObjectEventPic_AnimeMAcroBike, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_AnimeMSurfing[] = {
+    overworld_frame(gObjectEventPic_AnimeMSurfing, 4, 4, 0),
+    overworld_frame(gObjectEventPic_AnimeMSurfing, 4, 4, 2),
+    overworld_frame(gObjectEventPic_AnimeMSurfing, 4, 4, 4),
+    overworld_frame(gObjectEventPic_AnimeMSurfing, 4, 4, 0),
+    overworld_frame(gObjectEventPic_AnimeMSurfing, 4, 4, 0),
+    overworld_frame(gObjectEventPic_AnimeMSurfing, 4, 4, 2),
+    overworld_frame(gObjectEventPic_AnimeMSurfing, 4, 4, 2),
+    overworld_frame(gObjectEventPic_AnimeMSurfing, 4, 4, 4),
+    overworld_frame(gObjectEventPic_AnimeMSurfing, 4, 4, 4),
+    overworld_frame(gObjectEventPic_AnimeMSurfing, 4, 4, 1),
+    overworld_frame(gObjectEventPic_AnimeMSurfing, 4, 4, 3),
+    overworld_frame(gObjectEventPic_AnimeMSurfing, 4, 4, 5),
+};
+
+static const struct SpriteFrameImage sPicTable_AnimeMUnderwater[] = {
+    overworld_frame(gObjectEventPic_AnimeMUnderwater, 4, 4, 0),
+    overworld_frame(gObjectEventPic_AnimeMUnderwater, 4, 4, 1),
+    overworld_frame(gObjectEventPic_AnimeMUnderwater, 4, 4, 2),
+    overworld_frame(gObjectEventPic_AnimeMUnderwater, 4, 4, 0),
+    overworld_frame(gObjectEventPic_AnimeMUnderwater, 4, 4, 0),
+    overworld_frame(gObjectEventPic_AnimeMUnderwater, 4, 4, 1),
+    overworld_frame(gObjectEventPic_AnimeMUnderwater, 4, 4, 1),
+    overworld_frame(gObjectEventPic_AnimeMUnderwater, 4, 4, 2),
+    overworld_frame(gObjectEventPic_AnimeMUnderwater, 4, 4, 2),
+};
+
+static const struct SpriteFrameImage sPicTable_AnimeMFieldMove[] = {
+    overworld_ascending_frames(gObjectEventPic_AnimeMFieldMove, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_AnimeMFishing[] = {
+    overworld_ascending_frames(gObjectEventPic_AnimeMFishing, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_AnimeMDecorating[] = {
+    obj_frame_tiles(gObjectEventPic_AnimeMDecorating),
+};
+
+// Team Magma outfit, male (costume system)
+static const struct SpriteFrameImage sPicTable_TeamMagmaMNormal[] = {
+    overworld_ascending_frames(gObjectEventPic_TeamMagmaMNormalRunning, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_TeamMagmaMMachBike[] = {
+    overworld_ascending_frames(gObjectEventPic_TeamMagmaMMachBike, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_TeamMagmaMAcroBike[] = {
+    overworld_ascending_frames(gObjectEventPic_TeamMagmaMAcroBike, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_TeamMagmaMSurfing[] = {
+    overworld_frame(gObjectEventPic_TeamMagmaMSurfing, 4, 4, 0),
+    overworld_frame(gObjectEventPic_TeamMagmaMSurfing, 4, 4, 2),
+    overworld_frame(gObjectEventPic_TeamMagmaMSurfing, 4, 4, 4),
+    overworld_frame(gObjectEventPic_TeamMagmaMSurfing, 4, 4, 0),
+    overworld_frame(gObjectEventPic_TeamMagmaMSurfing, 4, 4, 0),
+    overworld_frame(gObjectEventPic_TeamMagmaMSurfing, 4, 4, 2),
+    overworld_frame(gObjectEventPic_TeamMagmaMSurfing, 4, 4, 2),
+    overworld_frame(gObjectEventPic_TeamMagmaMSurfing, 4, 4, 4),
+    overworld_frame(gObjectEventPic_TeamMagmaMSurfing, 4, 4, 4),
+    overworld_frame(gObjectEventPic_TeamMagmaMSurfing, 4, 4, 1),
+    overworld_frame(gObjectEventPic_TeamMagmaMSurfing, 4, 4, 3),
+    overworld_frame(gObjectEventPic_TeamMagmaMSurfing, 4, 4, 5),
+};
+
+static const struct SpriteFrameImage sPicTable_TeamMagmaMUnderwater[] = {
+    overworld_frame(gObjectEventPic_TeamMagmaMUnderwater, 4, 4, 0),
+    overworld_frame(gObjectEventPic_TeamMagmaMUnderwater, 4, 4, 1),
+    overworld_frame(gObjectEventPic_TeamMagmaMUnderwater, 4, 4, 2),
+    overworld_frame(gObjectEventPic_TeamMagmaMUnderwater, 4, 4, 0),
+    overworld_frame(gObjectEventPic_TeamMagmaMUnderwater, 4, 4, 0),
+    overworld_frame(gObjectEventPic_TeamMagmaMUnderwater, 4, 4, 1),
+    overworld_frame(gObjectEventPic_TeamMagmaMUnderwater, 4, 4, 1),
+    overworld_frame(gObjectEventPic_TeamMagmaMUnderwater, 4, 4, 2),
+    overworld_frame(gObjectEventPic_TeamMagmaMUnderwater, 4, 4, 2),
+};
+
+static const struct SpriteFrameImage sPicTable_TeamMagmaMFieldMove[] = {
+    overworld_ascending_frames(gObjectEventPic_TeamMagmaMFieldMove, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_TeamMagmaMFishing[] = {
+    overworld_ascending_frames(gObjectEventPic_TeamMagmaMFishing, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_TeamMagmaMWatering[] = {
+    overworld_frame(gObjectEventPic_TeamMagmaMWatering, 4, 4, 0),
+    overworld_frame(gObjectEventPic_TeamMagmaMWatering, 4, 4, 2),
+    overworld_frame(gObjectEventPic_TeamMagmaMWatering, 4, 4, 4),
+    overworld_frame(gObjectEventPic_TeamMagmaMWatering, 4, 4, 1),
+    overworld_frame(gObjectEventPic_TeamMagmaMWatering, 4, 4, 1),
+    overworld_frame(gObjectEventPic_TeamMagmaMWatering, 4, 4, 3),
+    overworld_frame(gObjectEventPic_TeamMagmaMWatering, 4, 4, 3),
+    overworld_frame(gObjectEventPic_TeamMagmaMWatering, 4, 4, 5),
+    overworld_frame(gObjectEventPic_TeamMagmaMWatering, 4, 4, 5),
+};
+
+static const struct SpriteFrameImage sPicTable_TeamMagmaMDecorating[] = {
+    obj_frame_tiles(gObjectEventPic_TeamMagmaMDecorating),
+};
+
+// Team Magma outfit, female (costume system)
+static const struct SpriteFrameImage sPicTable_TeamMagmaFNormal[] = {
+    overworld_ascending_frames(gObjectEventPic_TeamMagmaFNormalRunning, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_TeamMagmaFMachBike[] = {
+    overworld_ascending_frames(gObjectEventPic_TeamMagmaFMachBike, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_TeamMagmaFAcroBike[] = {
+    overworld_ascending_frames(gObjectEventPic_TeamMagmaFAcroBike, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_TeamMagmaFSurfing[] = {
+    overworld_frame(gObjectEventPic_TeamMagmaFSurfing, 4, 4, 0),
+    overworld_frame(gObjectEventPic_TeamMagmaFSurfing, 4, 4, 2),
+    overworld_frame(gObjectEventPic_TeamMagmaFSurfing, 4, 4, 4),
+    overworld_frame(gObjectEventPic_TeamMagmaFSurfing, 4, 4, 0),
+    overworld_frame(gObjectEventPic_TeamMagmaFSurfing, 4, 4, 0),
+    overworld_frame(gObjectEventPic_TeamMagmaFSurfing, 4, 4, 2),
+    overworld_frame(gObjectEventPic_TeamMagmaFSurfing, 4, 4, 2),
+    overworld_frame(gObjectEventPic_TeamMagmaFSurfing, 4, 4, 4),
+    overworld_frame(gObjectEventPic_TeamMagmaFSurfing, 4, 4, 4),
+    overworld_frame(gObjectEventPic_TeamMagmaFSurfing, 4, 4, 1),
+    overworld_frame(gObjectEventPic_TeamMagmaFSurfing, 4, 4, 3),
+    overworld_frame(gObjectEventPic_TeamMagmaFSurfing, 4, 4, 5),
+};
+
+static const struct SpriteFrameImage sPicTable_TeamMagmaFUnderwater[] = {
+    overworld_frame(gObjectEventPic_TeamMagmaFUnderwater, 4, 4, 0),
+    overworld_frame(gObjectEventPic_TeamMagmaFUnderwater, 4, 4, 1),
+    overworld_frame(gObjectEventPic_TeamMagmaFUnderwater, 4, 4, 2),
+    overworld_frame(gObjectEventPic_TeamMagmaFUnderwater, 4, 4, 0),
+    overworld_frame(gObjectEventPic_TeamMagmaFUnderwater, 4, 4, 0),
+    overworld_frame(gObjectEventPic_TeamMagmaFUnderwater, 4, 4, 1),
+    overworld_frame(gObjectEventPic_TeamMagmaFUnderwater, 4, 4, 1),
+    overworld_frame(gObjectEventPic_TeamMagmaFUnderwater, 4, 4, 2),
+    overworld_frame(gObjectEventPic_TeamMagmaFUnderwater, 4, 4, 2),
+};
+
+static const struct SpriteFrameImage sPicTable_TeamMagmaFFieldMove[] = {
+    overworld_ascending_frames(gObjectEventPic_TeamMagmaFFieldMove, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_TeamMagmaFFishing[] = {
+    overworld_ascending_frames(gObjectEventPic_TeamMagmaFFishing, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_TeamMagmaFWatering[] = {
+    overworld_frame(gObjectEventPic_TeamMagmaFWatering, 4, 4, 0),
+    overworld_frame(gObjectEventPic_TeamMagmaFWatering, 4, 4, 2),
+    overworld_frame(gObjectEventPic_TeamMagmaFWatering, 4, 4, 4),
+    overworld_frame(gObjectEventPic_TeamMagmaFWatering, 4, 4, 1),
+    overworld_frame(gObjectEventPic_TeamMagmaFWatering, 4, 4, 1),
+    overworld_frame(gObjectEventPic_TeamMagmaFWatering, 4, 4, 3),
+    overworld_frame(gObjectEventPic_TeamMagmaFWatering, 4, 4, 3),
+    overworld_frame(gObjectEventPic_TeamMagmaFWatering, 4, 4, 5),
+    overworld_frame(gObjectEventPic_TeamMagmaFWatering, 4, 4, 5),
+};
+
+static const struct SpriteFrameImage sPicTable_TeamMagmaFDecorating[] = {
+    obj_frame_tiles(gObjectEventPic_TeamMagmaFDecorating),
+};
+
 // Kanto outfit, female (costume system)
 static const struct SpriteFrameImage sPicTable_KantoFNormal[] = {
     overworld_ascending_frames(gObjectEventPic_KantoFNormalRunning, 2, 4),

@@ -431,6 +431,7 @@ static inline const u16 *GetTrainerBackPicPalette(enum TrainerPicID trainerPic)
 struct Outfit
 {
     u8 isHidden:1; // Will not show up in the outfit menu if locked.
+    u8 maleOnly:1; // Will not show up in the outfit menu for female players.
     u32 prices[GENDER_COUNT];
     const u8 *name;
     const u8 *desc;
