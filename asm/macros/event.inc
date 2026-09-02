@@ -2024,13 +2024,13 @@
 	@ Jumps to \dest if the specified outfit is unlocked.
 	.macro call_if_outfitunlocked outfit:req, dest:req
 	checkoutfitflag \outfit
-	call_if TRUE, \dest
+	call_if_eq VAR_RESULT, TRUE, \dest
 	.endm
 
 	@ Jumps to \dest if the specified outfit is locked.
 	.macro call_if_outfitlocked outfit:req, dest:req
 	checkoutfitflag \outfit
-	call_if FALSE, \dest
+	call_if_eq VAR_RESULT, FALSE, \dest
 	.endm
 
 	@ Displays a multichoice box using the dynmultipush options before it in the script, from which the user can choose a selection, and blocks script execution until a selection is made.

@@ -360,6 +360,7 @@ static void DebugAction_Give_Decoration(u8 taskId);
 static void DebugAction_Give_Decoration_SelectId(u8 taskId);
 static void DebugAction_Give_MaxMoney(u8 taskId);
 static void DebugAction_Give_UnlockGoldOutfit(u8 taskId);
+static void DebugAction_Give_LockAllOutfits(u8 taskId);
 static void DebugAction_Give_MaxCoins(u8 taskId);
 static void DebugAction_Give_MaxBattlePoints(u8 taskId);
 static void DebugAction_Give_DayCareEgg(u8 taskId);
@@ -659,6 +660,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Give[] =
     { COMPOUND_STRING("Donner Déco…"),       DebugAction_Give_Decoration },
     { COMPOUND_STRING("Argent Max"),         DebugAction_Give_MaxMoney },
     { COMPOUND_STRING("Déb. toutes Tenues"), DebugAction_Give_UnlockGoldOutfit },
+    { COMPOUND_STRING("Verr. toutes Tenues"), DebugAction_Give_LockAllOutfits },
     { COMPOUND_STRING("Jetons Max"),         DebugAction_Give_MaxCoins },
     { COMPOUND_STRING("{Pco} Max"),          DebugAction_Give_MaxBattlePoints },
     { COMPOUND_STRING("Œuf de Pension"),     DebugAction_Give_DayCareEgg },
@@ -3804,6 +3806,15 @@ static void DebugAction_Give_UnlockGoldOutfit(u8 taskId)
     for (i = OUTFIT_BEGIN; i <= OUTFIT_END; i++)
         UnlockOutfit(i);
     AddBagItem(ITEM_OUTFIT_BOX, 1);
+}
+
+static void DebugAction_Give_LockAllOutfits(u8 taskId)
+{
+    u32 i;
+    for (i = OUTFIT_BEGIN; i <= OUTFIT_END; i++)
+        LockOutfit(i);
+    UnlockOutfit(OUTFIT_DEFAULT);
+    gSaveBlock2Ptr->currOutfitId = OUTFIT_DEFAULT;
 }
 
 static void DebugAction_Give_MaxCoins(u8 taskId)

@@ -1350,6 +1350,15 @@ Common_EventScript_PlayerHandedOverTheItem::
 	removeitem VAR_0x8004
 	return
 
+Common_EventScript_ObtainedOutfit:: @ expects VAR_0x8004 = OUTFIT_* to unlock
+	bufferoutfitname STR_VAR_1, VAR_0x8004
+	unlockoutfit VAR_0x8004
+	playfanfare MUS_OBTAIN_ITEM
+	message gText_PlayerObtainedOutfit
+	waitmessage
+	waitfanfare
+	return
+
 	.include "data/scripts/elite_four.inc"
 	.include "data/scripts/movement.inc"
 	.include "data/scripts/check_furniture.inc"
@@ -1507,6 +1516,9 @@ gText_SorryRecordCornerPreparation::
 
 gText_PlayerHandedOverTheItem::
     .string "{PLAYER} remet {STR_VAR_1}.$"
+
+gText_PlayerObtainedOutfit::
+    .string "{PLAYER} obtient la tenue\n{STR_VAR_1} !$"
 
 gText_ThankYouForAccessingMysteryGift::
     .string "Merci d'utiliser le système\n"

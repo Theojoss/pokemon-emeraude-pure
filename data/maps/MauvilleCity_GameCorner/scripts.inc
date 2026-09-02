@@ -2,6 +2,7 @@ MauvilleCity_GameCorner_MapScripts::
 	.byte 0
 
 	@ Game Corner prices
+	.set TEAM_ROCKET_OUTFIT_COINS, 3000
 	.set TM_DOUBLE_TEAM_COINS, 1500
 	.set TM_PSYCHIC_COINS, 3500
 	.set TM_FLAMETHROWER_COINS, 4000
@@ -104,9 +105,32 @@ MauvilleCity_GameCorner_EventScript_PrizeCornerDolls::
 	faceplayer
 	msgbox MauvilleCity_GameCorner_Text_ExchangeCoinsForPrizes, MSGBOX_DEFAULT
 	checkitem ITEM_COIN_CASE
-	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_GameCorner_EventScript_ChooseDollPrizeMessage
+	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_PrizeCornerDollsRelease
+	call_if_outfitlocked OUTFIT_TEAM_ROCKET, MauvilleCity_GameCorner_EventScript_OfferTeamRocketOutfit
+	goto MauvilleCity_GameCorner_EventScript_ChooseDollPrizeMessage
+	end
+
+MauvilleCity_GameCorner_EventScript_PrizeCornerDollsRelease::
 	release
 	end
+
+MauvilleCity_GameCorner_EventScript_OfferTeamRocketOutfit::
+	msgbox MauvilleCity_GameCorner_Text_OfferTeamRocketOutfit, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_DeclineTeamRocketOutfit
+	checkcoins VAR_TEMP_2
+	goto_if_lt VAR_TEMP_2, TEAM_ROCKET_OUTFIT_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForOutfit
+	removecoins TEAM_ROCKET_OUTFIT_COINS
+	playse SE_SHOP
+	setvar VAR_0x8004, OUTFIT_TEAM_ROCKET
+	call Common_EventScript_ObtainedOutfit
+	return
+
+MauvilleCity_GameCorner_EventScript_DeclineTeamRocketOutfit::
+	return
+
+MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForOutfit::
+	msgbox MauvilleCity_GameCorner_Text_NotEnoughCoins, MSGBOX_DEFAULT
+	return
 
 MauvilleCity_GameCorner_EventScript_ChooseDollPrizeMessage::
 	message MauvilleCity_GameCorner_Text_WhichPrize
@@ -660,6 +684,12 @@ MauvilleCity_GameCorner_Text_ExchangeCoinsForPrizes:
 	.string "Bienvenue.\p"
 	.string "Vous pouvez échanger vos JETONS\n"
 	.string "contre les prix à gagner ici.$"
+
+MauvilleCity_GameCorner_Text_OfferTeamRocketOutfit:
+	.string "Psst… J'ai aussi une TENUE TEAM\n"
+	.string "ROCKET planquée sous le comptoir.\p"
+	.string "Je vous la laisse pour 3000 JETONS.\n"
+	.string "Ça vous intéresse?$"
 
 MauvilleCity_GameCorner_Text_WhichPrize:
 	.string "Quel prix souhaiteriez-vous recevoir?$"

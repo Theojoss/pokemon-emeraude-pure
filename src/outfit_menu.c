@@ -123,8 +123,8 @@ static void UpdateCursorPosition(void);
 static const u8 sText_OutfitLocked[] = _("???");
 static const u8 sText_OutfitLockedMsg[] =
 _(
-    "You don't have this OUTFIT yet.\n"
-    "Unlock it to be able to use it."
+    "Tu ne possèdes pas encore\n"
+    "cette tenue."
 );
 
 static const u8 sText_OutfitError[] =
@@ -688,7 +688,10 @@ static void ForAllCB_FreeOutfitOverworlds(u32 idx, u32 col, u32 row)
 
     if (gSprites[sOutfitMenu->grid->iconSpriteIds[idx]].inUse)
     {
+        u16 paletteTag = GetSpritePaletteTagByPaletteNum(gSprites[sOutfitMenu->grid->iconSpriteIds[idx]].oam.paletteNum);
         DestroySprite(&gSprites[sOutfitMenu->grid->iconSpriteIds[idx]]);
+        if (paletteTag != TAG_NONE)
+            FreeSpritePaletteByTag(paletteTag);
     }
 
     sOutfitMenu->grid->iconSpriteIds[idx] = SPRITE_NONE;

@@ -124,6 +124,12 @@ MagmaHideout_4F_EventScript_Tabitha::
 	msgbox MagmaHideout_4F_Text_TabithaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+MagmaHideout_4F_EventScript_FindTeamMagmaOutfit::
+	setvar VAR_0x8004, OUTFIT_TEAM_MAGMA
+	call Common_EventScript_ObtainedOutfit
+	setflag FLAG_ITEM_MAGMA_HIDEOUT_4F_OUTFIT
+	end
+
 MagmaHideout_4F_Text_Grunt11Intro:
 	.string "Moi aussi je voudrais voir GROUDON…\n"
 	.string "Mais ils ne me laissent même pas voir\l"

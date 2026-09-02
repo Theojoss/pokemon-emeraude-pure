@@ -345,8 +345,7 @@ const struct Outfit gOutfits[OUTFIT_COUNT] =
         .name = COMPOUND_STRING("TEAM MAGMA"),
         .desc = COMPOUND_STRING(
             "La tenue d'une organisation\n"
-            "cherchant à étendre les terres\n"
-            "émergées."),
+            "cherchant à étendre les terres."),
         .trainerPics = {
             [MALE]   = TRAINER_PIC_TEAM_MAGMA_M,
             [FEMALE] = TRAINER_PIC_TEAM_MAGMA_F,

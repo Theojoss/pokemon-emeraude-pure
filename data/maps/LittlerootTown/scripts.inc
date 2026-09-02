@@ -905,10 +905,7 @@ LittlerootTown_EventScript_GiveRunningShoes::
 	giveitem ITEM_OUTFIT_BOX
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	unlockoutfit OUTFIT_DEFAULT
-	unlockoutfit OUTFIT_KANTO
-	unlockoutfit OUTFIT_GOLD
 	unlockoutfit OUTFIT_HOENN
-	unlockoutfit OUTFIT_SINNOH
 	setflag FLAG_RECEIVED_OUTFIT_BOX
 	delay 30
 	return
