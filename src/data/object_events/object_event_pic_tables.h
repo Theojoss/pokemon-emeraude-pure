@@ -1879,6 +1879,58 @@ static const struct SpriteFrameImage sPicTable_TeamMagmaFDecorating[] = {
     obj_frame_tiles(gObjectEventPic_TeamMagmaFDecorating),
 };
 
+// Rival outfit, male (costume system)
+static const struct SpriteFrameImage sPicTable_KantoRivalMNormal[] = {
+    overworld_ascending_frames(gObjectEventPic_KantoRivalMNormalRunning, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_KantoRivalMMachBike[] = {
+    overworld_ascending_frames(gObjectEventPic_KantoRivalMMachBike, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_KantoRivalMAcroBike[] = {
+    overworld_ascending_frames(gObjectEventPic_KantoRivalMAcroBike, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_KantoRivalMSurfing[] = {
+    overworld_frame(gObjectEventPic_KantoRivalMSurfing, 4, 4, 0),
+    overworld_frame(gObjectEventPic_KantoRivalMSurfing, 4, 4, 2),
+    overworld_frame(gObjectEventPic_KantoRivalMSurfing, 4, 4, 4),
+    overworld_frame(gObjectEventPic_KantoRivalMSurfing, 4, 4, 0),
+    overworld_frame(gObjectEventPic_KantoRivalMSurfing, 4, 4, 0),
+    overworld_frame(gObjectEventPic_KantoRivalMSurfing, 4, 4, 2),
+    overworld_frame(gObjectEventPic_KantoRivalMSurfing, 4, 4, 2),
+    overworld_frame(gObjectEventPic_KantoRivalMSurfing, 4, 4, 4),
+    overworld_frame(gObjectEventPic_KantoRivalMSurfing, 4, 4, 4),
+    overworld_frame(gObjectEventPic_KantoRivalMSurfing, 4, 4, 1),
+    overworld_frame(gObjectEventPic_KantoRivalMSurfing, 4, 4, 3),
+    overworld_frame(gObjectEventPic_KantoRivalMSurfing, 4, 4, 5),
+};
+
+static const struct SpriteFrameImage sPicTable_KantoRivalMUnderwater[] = {
+    overworld_frame(gObjectEventPic_KantoRivalMUnderwater, 4, 4, 0),
+    overworld_frame(gObjectEventPic_KantoRivalMUnderwater, 4, 4, 1),
+    overworld_frame(gObjectEventPic_KantoRivalMUnderwater, 4, 4, 2),
+    overworld_frame(gObjectEventPic_KantoRivalMUnderwater, 4, 4, 0),
+    overworld_frame(gObjectEventPic_KantoRivalMUnderwater, 4, 4, 0),
+    overworld_frame(gObjectEventPic_KantoRivalMUnderwater, 4, 4, 1),
+    overworld_frame(gObjectEventPic_KantoRivalMUnderwater, 4, 4, 1),
+    overworld_frame(gObjectEventPic_KantoRivalMUnderwater, 4, 4, 2),
+    overworld_frame(gObjectEventPic_KantoRivalMUnderwater, 4, 4, 2),
+};
+
+static const struct SpriteFrameImage sPicTable_KantoRivalMFieldMove[] = {
+    overworld_ascending_frames(gObjectEventPic_KantoRivalMFieldMove, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_KantoRivalMFishing[] = {
+    overworld_ascending_frames(gObjectEventPic_KantoRivalMFishing, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_KantoRivalMDecorating[] = {
+    obj_frame_tiles(gObjectEventPic_KantoRivalMDecorating),
+};
+
 // Kanto outfit, female (costume system)
 static const struct SpriteFrameImage sPicTable_KantoFNormal[] = {
     overworld_ascending_frames(gObjectEventPic_KantoFNormalRunning, 2, 4),

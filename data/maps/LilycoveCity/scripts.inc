@@ -387,8 +387,15 @@ LilycoveCity_EventScript_RivalFlyAway::
 	savebgm MUS_DUMMY
 	fadedefaultbgm
 	setflag FLAG_MET_RIVAL_LILYCOVE
+	checkplayergender
+	call_if_eq VAR_RESULT, MALE, LilycoveCity_EventScript_GiveRivalOutfit
 	release
 	end
+
+LilycoveCity_EventScript_GiveRivalOutfit::
+	setvar VAR_0x8004, OUTFIT_KANTO_RIVAL
+	call Common_EventScript_ObtainedOutfit
+	return
 
 LilycoveCity_EventScript_SchoolKidM::
 	lock

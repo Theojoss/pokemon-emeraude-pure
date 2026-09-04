@@ -28,6 +28,8 @@ static const u8 sRegionMapIconGfx_TeamMagmaM[] = INCGFX_U8("graphics/pokenav/reg
 static const u16 sRegionMapIconPal_TeamMagmaM[] = INCGFX_U16("graphics/pokenav/region_map/team_magma_m_icon.png", ".gbapal");
 static const u8 sRegionMapIconGfx_TeamMagmaF[] = INCGFX_U8("graphics/pokenav/region_map/team_magma_f_icon.png", ".4bpp");
 static const u16 sRegionMapIconPal_TeamMagmaF[] = INCGFX_U16("graphics/pokenav/region_map/team_magma_f_icon.png", ".gbapal");
+static const u8 sRegionMapIconGfx_KantoRivalM[] = INCGFX_U8("graphics/pokenav/region_map/kanto_rival_m_icon.png", ".4bpp");
+static const u16 sRegionMapIconPal_KantoRivalM[] = INCGFX_U16("graphics/pokenav/region_map/kanto_rival_m_icon.png", ".gbapal");
 
 const struct Outfit gOutfits[OUTFIT_COUNT] =
 {
@@ -380,6 +382,51 @@ const struct Outfit gOutfits[OUTFIT_COUNT] =
                 [PLAYER_AVATAR_STATE_FISHING]    = OBJ_EVENT_GFX_TEAM_MAGMA_F_FISHING,
                 [PLAYER_AVATAR_STATE_WATERING]   = OBJ_EVENT_GFX_TEAM_MAGMA_F_WATERING,
                 [PLAYER_AVATAR_STATE_VSSEEKER]   = OBJ_EVENT_GFX_TEAM_MAGMA_F_FIELD_MOVE,
+            },
+        },
+    },
+    [OUTFIT_KANTO_RIVAL] = {
+        .isHidden = FALSE,
+        .maleOnly = TRUE,
+        .prices = { 5000, 5000 },
+        .name = COMPOUND_STRING("KANTO (RIVAL)"),
+        .desc = COMPOUND_STRING(
+            "La tenue du rival le plus\n"
+            "arrogant de Kanto."),
+        .trainerPics = {
+            [MALE]   = TRAINER_PIC_KANTO_RIVAL_M,
+            [FEMALE] = TRAINER_PIC_MAY,
+        },
+        .regionMapIconGfx = {
+            [MALE]   = sRegionMapIconGfx_KantoRivalM,
+            [FEMALE] = NULL,
+        },
+        .regionMapIconPal = {
+            [MALE]   = sRegionMapIconPal_KantoRivalM,
+            [FEMALE] = NULL,
+        },
+        .avatarGfxIds = {
+            [MALE] = {
+                [PLAYER_AVATAR_STATE_NORMAL]     = OBJ_EVENT_GFX_KANTO_RIVAL_M_NORMAL,
+                [PLAYER_AVATAR_STATE_MACH_BIKE]  = OBJ_EVENT_GFX_KANTO_RIVAL_M_MACH_BIKE,
+                [PLAYER_AVATAR_STATE_ACRO_BIKE]  = OBJ_EVENT_GFX_KANTO_RIVAL_M_ACRO_BIKE,
+                [PLAYER_AVATAR_STATE_SURFING]    = OBJ_EVENT_GFX_KANTO_RIVAL_M_SURFING,
+                [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_KANTO_RIVAL_M_UNDERWATER,
+                [PLAYER_AVATAR_STATE_FIELD_MOVE] = OBJ_EVENT_GFX_KANTO_RIVAL_M_FIELD_MOVE,
+                [PLAYER_AVATAR_STATE_FISHING]    = OBJ_EVENT_GFX_KANTO_RIVAL_M_FISHING,
+                [PLAYER_AVATAR_STATE_WATERING]   = PLAYER_AVATAR_GFX_MALE_WATERING,
+                [PLAYER_AVATAR_STATE_VSSEEKER]   = OBJ_EVENT_GFX_KANTO_RIVAL_M_FIELD_MOVE,
+            },
+            [FEMALE] = {
+                [PLAYER_AVATAR_STATE_NORMAL]     = PLAYER_AVATAR_GFX_FEMALE_NORMAL,
+                [PLAYER_AVATAR_STATE_MACH_BIKE]  = PLAYER_AVATAR_GFX_FEMALE_MACH_BIKE,
+                [PLAYER_AVATAR_STATE_ACRO_BIKE]  = PLAYER_AVATAR_GFX_FEMALE_ACRO_BIKE,
+                [PLAYER_AVATAR_STATE_SURFING]    = PLAYER_AVATAR_GFX_FEMALE_SURFING,
+                [PLAYER_AVATAR_STATE_UNDERWATER] = PLAYER_AVATAR_GFX_FEMALE_UNDERWATER,
+                [PLAYER_AVATAR_STATE_FIELD_MOVE] = PLAYER_AVATAR_GFX_FEMALE_FIELD_MOVE,
+                [PLAYER_AVATAR_STATE_FISHING]    = PLAYER_AVATAR_GFX_FEMALE_FISHING,
+                [PLAYER_AVATAR_STATE_WATERING]   = PLAYER_AVATAR_GFX_FEMALE_WATERING,
+                [PLAYER_AVATAR_STATE_VSSEEKER]   = PLAYER_AVATAR_GFX_FEMALE_VSSEEKER,
             },
         },
     },

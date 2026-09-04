@@ -478,6 +478,14 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaFU
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaFFishing;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaFWatering;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TeamMagmaFDecorating;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoRivalMNormal;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoRivalMMachBike;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoRivalMAcroBike;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoRivalMSurfing;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoRivalMFieldMove;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoRivalMUnderwater;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoRivalMFishing;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoRivalMDecorating;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoFNormal;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoFMachBike;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KantoFAcroBike;
@@ -840,6 +848,14 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_TEAM_MAGMA_F_FISHING] =     &gObjectEventGraphicsInfo_TeamMagmaFFishing,
     [OBJ_EVENT_GFX_TEAM_MAGMA_F_WATERING] =    &gObjectEventGraphicsInfo_TeamMagmaFWatering,
     [OBJ_EVENT_GFX_TEAM_MAGMA_F_DECORATING] =  &gObjectEventGraphicsInfo_TeamMagmaFDecorating,
+    [OBJ_EVENT_GFX_KANTO_RIVAL_M_NORMAL] =           &gObjectEventGraphicsInfo_KantoRivalMNormal,
+    [OBJ_EVENT_GFX_KANTO_RIVAL_M_MACH_BIKE] =        &gObjectEventGraphicsInfo_KantoRivalMMachBike,
+    [OBJ_EVENT_GFX_KANTO_RIVAL_M_ACRO_BIKE] =        &gObjectEventGraphicsInfo_KantoRivalMAcroBike,
+    [OBJ_EVENT_GFX_KANTO_RIVAL_M_SURFING] =          &gObjectEventGraphicsInfo_KantoRivalMSurfing,
+    [OBJ_EVENT_GFX_KANTO_RIVAL_M_FIELD_MOVE] =       &gObjectEventGraphicsInfo_KantoRivalMFieldMove,
+    [OBJ_EVENT_GFX_KANTO_RIVAL_M_UNDERWATER] =       &gObjectEventGraphicsInfo_KantoRivalMUnderwater,
+    [OBJ_EVENT_GFX_KANTO_RIVAL_M_FISHING] =          &gObjectEventGraphicsInfo_KantoRivalMFishing,
+    [OBJ_EVENT_GFX_KANTO_RIVAL_M_DECORATING] =       &gObjectEventGraphicsInfo_KantoRivalMDecorating,
     [OBJ_EVENT_GFX_KANTO_F_NORMAL] =           &gObjectEventGraphicsInfo_KantoFNormal,
     [OBJ_EVENT_GFX_KANTO_F_MACH_BIKE] =        &gObjectEventGraphicsInfo_KantoFMachBike,
     [OBJ_EVENT_GFX_KANTO_F_ACRO_BIKE] =        &gObjectEventGraphicsInfo_KantoFAcroBike,

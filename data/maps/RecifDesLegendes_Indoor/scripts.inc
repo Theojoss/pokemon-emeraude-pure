@@ -264,7 +264,8 @@ RecifDesLegendes_Indoor_EventScript_TournamentWon::
 	waitse
 	playbgm MUS_VICTORY_LEAGUE, FALSE
 	msgbox RecifDesLegendes_Indoor_Text_PresenterTournamentChampion, MSGBOX_DEFAULT
-	call_if_outfitlocked OUTFIT_ANIME, RecifDesLegendes_Indoor_EventScript_GiveAnimeOutfit
+	checkplayergender
+	call_if_eq VAR_RESULT, MALE, RecifDesLegendes_Indoor_EventScript_CheckGiveAnimeOutfit
 	setflag FLAG_RECIF_PLAYED_TODAY
 	clearflag FLAG_RECIF_FACED_GEETA
 	clearflag FLAG_RECIF_FACED_LEON
@@ -275,6 +276,10 @@ RecifDesLegendes_Indoor_EventScript_TournamentWon::
 	clearflag FLAG_RECIF_FACED_BLUE
 	releaseall
 	end
+
+RecifDesLegendes_Indoor_EventScript_CheckGiveAnimeOutfit::
+	call_if_outfitlocked OUTFIT_ANIME, RecifDesLegendes_Indoor_EventScript_GiveAnimeOutfit
+	return
 
 RecifDesLegendes_Indoor_EventScript_GiveAnimeOutfit::
 	setvar VAR_0x8004, OUTFIT_ANIME

@@ -591,6 +591,16 @@ const u32 gObjectEventPic_TeamMagmaFFieldMove[] = INCGFX_U32("graphics/object_ev
 const u32 gObjectEventPic_TeamMagmaFFishing[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_f/fishing.png", ".4bpp", "-mwidth 4 -mheight 4");
 const u32 gObjectEventPic_TeamMagmaFWatering[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_f/watering.png", ".4bpp", "-mwidth 4 -mheight 4");
 const u32 gObjectEventPic_TeamMagmaFDecorating[] = INCGFX_U32("graphics/object_events/pics/people/team_magma_f/decorating.png", ".4bpp");
+
+const u32 gObjectEventPic_KantoRivalMNormalRunning[] = INCBIN_U32("graphics/object_events/pics/people/kanto_rival_m/walking.4bpp", "graphics/object_events/pics/people/kanto_rival_m/running.4bpp");
+const u16 gObjectEventPal_KantoRivalM[] = INCGFX_U16("graphics/object_events/pics/people/kanto_rival_m/walking.png", ".gbapal");
+const u32 gObjectEventPic_KantoRivalMMachBike[] = INCGFX_U32("graphics/object_events/pics/people/kanto_rival_m/mach_bike.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_KantoRivalMAcroBike[] = INCGFX_U32("graphics/object_events/pics/people/kanto_rival_m/acro_bike.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_KantoRivalMSurfing[] = INCGFX_U32("graphics/object_events/pics/people/kanto_rival_m/surfing.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_KantoRivalMUnderwater[] = INCGFX_U32("graphics/object_events/pics/people/kanto_rival_m/underwater.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_KantoRivalMFieldMove[] = INCGFX_U32("graphics/object_events/pics/people/kanto_rival_m/field_move.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_KantoRivalMFishing[] = INCGFX_U32("graphics/object_events/pics/people/kanto_rival_m/fishing.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_KantoRivalMDecorating[] = INCGFX_U32("graphics/object_events/pics/people/kanto_rival_m/decorating.png", ".4bpp");
 const u32 gObjectEventPic_KantoMDecorating[] = INCGFX_U32("graphics/object_events/pics/people/kanto_m/decorating.png", ".4bpp");
 
 // Kanto outfit, female (costume system)
