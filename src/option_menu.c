@@ -1,6 +1,7 @@
 #include "global.h"
 #include "option_menu.h"
 #include "bg.h"
+#include "event_data.h"
 #include "gpu_regs.h"
 #include "international_string_util.h"
 #include "main.h"
@@ -23,6 +24,9 @@
 #define tSound data[4]
 #define tButtonMode data[5]
 #define tWindowFrameType data[6]
+#define tAutoRun data[7]
+#define tPage data[8]
+#define tFollower data[9]
 
 enum
 {
@@ -32,6 +36,8 @@ enum
     MENUITEM_SOUND,
     MENUITEM_BUTTONMODE,
     MENUITEM_FRAMETYPE,
+    MENUITEM_AUTORUN,
+    MENUITEM_FOLLOWER,
     MENUITEM_CANCEL,
     MENUITEM_COUNT,
 };
@@ -42,12 +48,18 @@ enum
     WIN_OPTIONS
 };
 
-#define YPOS_TEXTSPEED    (MENUITEM_TEXTSPEED * 16)
-#define YPOS_BATTLESCENE  (MENUITEM_BATTLESCENE * 16)
-#define YPOS_BATTLESTYLE  (MENUITEM_BATTLESTYLE * 16)
-#define YPOS_SOUND        (MENUITEM_SOUND * 16)
-#define YPOS_BUTTONMODE   (MENUITEM_BUTTONMODE * 16)
-#define YPOS_FRAMETYPE    (MENUITEM_FRAMETYPE * 16)
+// Row (within its own page) each item is drawn at. Items are grouped into pages
+// by sOptionMenuPages below since only 7 rows fit in the options window at once.
+#define YPOS_TEXTSPEED    (0 * 16)
+#define YPOS_BATTLESCENE  (1 * 16)
+#define YPOS_BATTLESTYLE  (2 * 16)
+#define YPOS_SOUND        (3 * 16)
+#define YPOS_BUTTONMODE   (4 * 16)
+#define YPOS_FRAMETYPE    (5 * 16)
+#define YPOS_AUTORUN      (0 * 16)
+#define YPOS_FOLLOWER     (1 * 16)
+
+#define OPTIONS_PAGE_COUNT 2
 
 static void Task_OptionMenuFadeIn(u8 taskId);
 static void Task_OptionMenuProcessInput(u8 taskId);
@@ -62,17 +74,24 @@ static u8 BattleStyle_ProcessInput(u8 selection);
 static void BattleStyle_DrawChoices(u8 selection);
 static u8 Sound_ProcessInput(u8 selection);
 static void Sound_DrawChoices(u8 selection);
+static u8 AutoRun_ProcessInput(u8 selection);
+static void AutoRun_DrawChoices(u8 selection);
+static u8 Follower_ProcessInput(u8 selection);
+static void Follower_DrawChoices(u8 selection);
 static u8 FrameType_ProcessInput(u8 selection);
 static void FrameType_DrawChoices(u8 selection);
 static u8 ButtonMode_ProcessInput(u8 selection);
 static void ButtonMode_DrawChoices(u8 selection);
-static void DrawHeaderText(void);
-static void DrawOptionMenuTexts(void);
+static void DrawHeaderText(u8 page);
+static void DrawOptionMenuTexts(u8 page);
+static void DrawPageChoices(u8 taskId);
+static void GoToPage(u8 taskId, u8 page);
 static void DrawBgWindowFrames(void);
 
 EWRAM_DATA static bool8 sArrowPressed = FALSE;
 
-static const u8 gText_Option[]             = _("OPTIONS");
+static const u8 gText_OptionPage1[]        = _("OPTIONS (1/2)");
+static const u8 gText_OptionPage2[]        = _("OPTIONS (2/2)");
 static const u8 gText_TextSpeedSlow[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}1");
 static const u8 gText_TextSpeedMid[]       = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}2");
 static const u8 gText_TextSpeedFast[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}3");
@@ -84,6 +103,10 @@ static const u8 gText_BattleStyleShift[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN
 static const u8 gText_BattleStyleSet[]     = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}DEFINI");
 static const u8 gText_SoundMono[]          = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}MONO");
 static const u8 gText_SoundStereo[]        = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}STEREO");
+static const u8 gText_AutoRunOn[]          = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OUI");
+static const u8 gText_AutoRunOff[]         = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}NON");
+static const u8 gText_FollowerOn[]         = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OUI");
+static const u8 gText_FollowerOff[]        = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}NON");
 static const u8 gText_FrameType[]          = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}TYPE ");
 static const u8 gText_FrameTypeNumber[]    = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}");
 static const u8 gText_ButtonTypeNormal[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}NORMAL");
@@ -102,7 +125,47 @@ static const u8 *const sOptionMenuItemsNames[MENUITEM_COUNT] =
     [MENUITEM_SOUND]       = COMPOUND_STRING("SON"),
     [MENUITEM_BUTTONMODE]  = COMPOUND_STRING("MODE BOUTONS"),
     [MENUITEM_FRAMETYPE]   = COMPOUND_STRING("FENETRE"),
+    [MENUITEM_AUTORUN]     = COMPOUND_STRING("COURSE AUTO"),
+    [MENUITEM_FOLLOWER]    = COMPOUND_STRING("POKEMON SUIVEUR"),
     [MENUITEM_CANCEL]      = COMPOUND_STRING("RETOUR"),
+};
+
+// Items are split across pages since only 7 rows fit in the options window at once.
+// New options should be appended to the last page (or a new page added) rather than
+// growing the window past the screen's visible height.
+static const u8 sOptionMenuPage1Items[] =
+{
+    MENUITEM_TEXTSPEED,
+    MENUITEM_BATTLESCENE,
+    MENUITEM_BATTLESTYLE,
+    MENUITEM_SOUND,
+    MENUITEM_BUTTONMODE,
+    MENUITEM_FRAMETYPE,
+};
+
+static const u8 sOptionMenuPage2Items[] =
+{
+    MENUITEM_AUTORUN,
+    MENUITEM_FOLLOWER,
+    MENUITEM_CANCEL,
+};
+
+static const u8 *const sOptionMenuPages[OPTIONS_PAGE_COUNT] =
+{
+    sOptionMenuPage1Items,
+    sOptionMenuPage2Items,
+};
+
+static const u8 sOptionMenuPageCounts[OPTIONS_PAGE_COUNT] =
+{
+    ARRAY_COUNT(sOptionMenuPage1Items),
+    ARRAY_COUNT(sOptionMenuPage2Items),
+};
+
+static const u8 *const sOptionMenuHeaderTexts[OPTIONS_PAGE_COUNT] =
+{
+    gText_OptionPage1,
+    gText_OptionPage2,
 };
 
 static const struct WindowTemplate sOptionMenuWinTemplates[] =
@@ -227,7 +290,7 @@ void CB2_InitOptionMenu(void)
         break;
     case 6:
         PutWindowTilemap(WIN_HEADER);
-        DrawHeaderText();
+        DrawHeaderText(0);
         gMain.state++;
         break;
     case 7:
@@ -235,7 +298,7 @@ void CB2_InitOptionMenu(void)
         break;
     case 8:
         PutWindowTilemap(WIN_OPTIONS);
-        DrawOptionMenuTexts();
+        DrawOptionMenuTexts(0);
         gMain.state++;
     case 9:
         DrawBgWindowFrames();
@@ -246,19 +309,17 @@ void CB2_InitOptionMenu(void)
         u8 taskId = CreateTask(Task_OptionMenuFadeIn, 0);
 
         gTasks[taskId].tMenuSelection = 0;
+        gTasks[taskId].tPage = 0;
         gTasks[taskId].tTextSpeed = gSaveBlock2Ptr->optionsTextSpeed;
         gTasks[taskId].tBattleSceneOff = gSaveBlock2Ptr->optionsBattleSceneOff;
         gTasks[taskId].tBattleStyle = gSaveBlock2Ptr->optionsBattleStyle;
         gTasks[taskId].tSound = gSaveBlock2Ptr->optionsSound;
         gTasks[taskId].tButtonMode = gSaveBlock2Ptr->optionsButtonMode;
         gTasks[taskId].tWindowFrameType = gSaveBlock2Ptr->optionsWindowFrameType;
+        gTasks[taskId].tAutoRun = gSaveBlock2Ptr->optionsAutoRun;
+        gTasks[taskId].tFollower = !FlagGet(B_FLAG_FOLLOWERS_DISABLED);
 
-        TextSpeed_DrawChoices(gTasks[taskId].tTextSpeed);
-        BattleScene_DrawChoices(gTasks[taskId].tBattleSceneOff);
-        BattleStyle_DrawChoices(gTasks[taskId].tBattleStyle);
-        Sound_DrawChoices(gTasks[taskId].tSound);
-        ButtonMode_DrawChoices(gTasks[taskId].tButtonMode);
-        FrameType_DrawChoices(gTasks[taskId].tWindowFrameType);
+        DrawPageChoices(taskId);
         HighlightOptionMenuItem(gTasks[taskId].tMenuSelection);
 
         CopyWindowToVram(WIN_OPTIONS, COPYWIN_FULL);
@@ -281,26 +342,38 @@ static void Task_OptionMenuFadeIn(u8 taskId)
 
 static void Task_OptionMenuProcessInput(u8 taskId)
 {
+    u8 page = gTasks[taskId].tPage;
+    u8 pageItemCount = sOptionMenuPageCounts[page];
+    u8 currentItem = sOptionMenuPages[page][gTasks[taskId].tMenuSelection];
+
     if (JOY_NEW(A_BUTTON))
     {
-        if (gTasks[taskId].tMenuSelection == MENUITEM_CANCEL)
+        if (currentItem == MENUITEM_CANCEL)
             gTasks[taskId].func = Task_OptionMenuSave;
     }
     else if (JOY_NEW(B_BUTTON))
     {
         gTasks[taskId].func = Task_OptionMenuSave;
     }
+    else if (JOY_NEW(R_BUTTON))
+    {
+        GoToPage(taskId, (page + 1) % OPTIONS_PAGE_COUNT);
+    }
+    else if (JOY_NEW(L_BUTTON))
+    {
+        GoToPage(taskId, (page + OPTIONS_PAGE_COUNT - 1) % OPTIONS_PAGE_COUNT);
+    }
     else if (JOY_NEW(DPAD_UP))
     {
         if (gTasks[taskId].tMenuSelection > 0)
             gTasks[taskId].tMenuSelection--;
         else
-            gTasks[taskId].tMenuSelection = MENUITEM_CANCEL;
+            gTasks[taskId].tMenuSelection = pageItemCount - 1;
         HighlightOptionMenuItem(gTasks[taskId].tMenuSelection);
     }
     else if (JOY_NEW(DPAD_DOWN))
     {
-        if (gTasks[taskId].tMenuSelection < MENUITEM_CANCEL)
+        if (gTasks[taskId].tMenuSelection < pageItemCount - 1)
             gTasks[taskId].tMenuSelection++;
         else
             gTasks[taskId].tMenuSelection = 0;
@@ -310,7 +383,7 @@ static void Task_OptionMenuProcessInput(u8 taskId)
     {
         u8 previousOption;
 
-        switch (gTasks[taskId].tMenuSelection)
+        switch (currentItem)
         {
         case MENUITEM_TEXTSPEED:
             previousOption = gTasks[taskId].tTextSpeed;
@@ -339,6 +412,20 @@ static void Task_OptionMenuProcessInput(u8 taskId)
 
             if (previousOption != gTasks[taskId].tSound)
                 Sound_DrawChoices(gTasks[taskId].tSound);
+            break;
+        case MENUITEM_AUTORUN:
+            previousOption = gTasks[taskId].tAutoRun;
+            gTasks[taskId].tAutoRun = AutoRun_ProcessInput(gTasks[taskId].tAutoRun);
+
+            if (previousOption != gTasks[taskId].tAutoRun)
+                AutoRun_DrawChoices(gTasks[taskId].tAutoRun);
+            break;
+        case MENUITEM_FOLLOWER:
+            previousOption = gTasks[taskId].tFollower;
+            gTasks[taskId].tFollower = Follower_ProcessInput(gTasks[taskId].tFollower);
+
+            if (previousOption != gTasks[taskId].tFollower)
+                Follower_DrawChoices(gTasks[taskId].tFollower);
             break;
         case MENUITEM_BUTTONMODE:
             previousOption = gTasks[taskId].tButtonMode;
@@ -374,6 +461,12 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsSound = gTasks[taskId].tSound;
     gSaveBlock2Ptr->optionsButtonMode = gTasks[taskId].tButtonMode;
     gSaveBlock2Ptr->optionsWindowFrameType = gTasks[taskId].tWindowFrameType;
+    gSaveBlock2Ptr->optionsAutoRun = gTasks[taskId].tAutoRun;
+
+    if (gTasks[taskId].tFollower)
+        FlagClear(B_FLAG_FOLLOWERS_DISABLED);
+    else
+        FlagSet(B_FLAG_FOLLOWERS_DISABLED);
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
     gTasks[taskId].func = Task_OptionMenuFadeOut;
@@ -387,6 +480,61 @@ static void Task_OptionMenuFadeOut(u8 taskId)
         FreeAllWindowBuffers();
         SetMainCallback2(gMain.savedCallback);
     }
+}
+
+static void DrawPageChoices(u8 taskId)
+{
+    u8 page = gTasks[taskId].tPage;
+    const u8 *items = sOptionMenuPages[page];
+    u8 count = sOptionMenuPageCounts[page];
+    u8 i;
+
+    for (i = 0; i < count; i++)
+    {
+        switch (items[i])
+        {
+        case MENUITEM_TEXTSPEED:
+            TextSpeed_DrawChoices(gTasks[taskId].tTextSpeed);
+            break;
+        case MENUITEM_BATTLESCENE:
+            BattleScene_DrawChoices(gTasks[taskId].tBattleSceneOff);
+            break;
+        case MENUITEM_BATTLESTYLE:
+            BattleStyle_DrawChoices(gTasks[taskId].tBattleStyle);
+            break;
+        case MENUITEM_SOUND:
+            Sound_DrawChoices(gTasks[taskId].tSound);
+            break;
+        case MENUITEM_BUTTONMODE:
+            ButtonMode_DrawChoices(gTasks[taskId].tButtonMode);
+            break;
+        case MENUITEM_FRAMETYPE:
+            FrameType_DrawChoices(gTasks[taskId].tWindowFrameType);
+            break;
+        case MENUITEM_AUTORUN:
+            AutoRun_DrawChoices(gTasks[taskId].tAutoRun);
+            break;
+        case MENUITEM_FOLLOWER:
+            Follower_DrawChoices(gTasks[taskId].tFollower);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+static void GoToPage(u8 taskId, u8 page)
+{
+    gTasks[taskId].tPage = page;
+    gTasks[taskId].tMenuSelection = 0;
+
+    DrawHeaderText(page);
+    DrawOptionMenuTexts(page);
+    DrawPageChoices(taskId);
+    HighlightOptionMenuItem(0);
+
+    CopyWindowToVram(WIN_HEADER, COPYWIN_FULL);
+    CopyWindowToVram(WIN_OPTIONS, COPYWIN_FULL);
 }
 
 static void HighlightOptionMenuItem(u8 index)
@@ -536,6 +684,52 @@ static void Sound_DrawChoices(u8 selection)
     DrawOptionMenuChoice(gText_SoundStereo, GetStringRightAlignXOffset(FONT_NORMAL, gText_SoundStereo, 198), YPOS_SOUND, styles[1]);
 }
 
+static u8 AutoRun_ProcessInput(u8 selection)
+{
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    {
+        selection ^= 1;
+        sArrowPressed = TRUE;
+    }
+
+    return selection;
+}
+
+static void AutoRun_DrawChoices(u8 selection)
+{
+    u8 styles[2];
+
+    styles[0] = 0;
+    styles[1] = 0;
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(gText_AutoRunOff, 104, YPOS_AUTORUN, styles[0]);
+    DrawOptionMenuChoice(gText_AutoRunOn, GetStringRightAlignXOffset(FONT_NORMAL, gText_AutoRunOn, 198), YPOS_AUTORUN, styles[1]);
+}
+
+static u8 Follower_ProcessInput(u8 selection)
+{
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    {
+        selection ^= 1;
+        sArrowPressed = TRUE;
+    }
+
+    return selection;
+}
+
+static void Follower_DrawChoices(u8 selection)
+{
+    u8 styles[2];
+
+    styles[0] = 0;
+    styles[1] = 0;
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(gText_FollowerOff, 104, YPOS_FOLLOWER, styles[0]);
+    DrawOptionMenuChoice(gText_FollowerOn, GetStringRightAlignXOffset(FONT_NORMAL, gText_FollowerOn, 198), YPOS_FOLLOWER, styles[1]);
+}
+
 static u8 FrameType_ProcessInput(u8 selection)
 {
     if (JOY_NEW(DPAD_RIGHT))
@@ -643,20 +837,22 @@ static void ButtonMode_DrawChoices(u8 selection)
     DrawOptionMenuChoice(gText_ButtonTypeLEqualsA, GetStringRightAlignXOffset(FONT_NORMAL, gText_ButtonTypeLEqualsA, 198), YPOS_BUTTONMODE, styles[2]);
 }
 
-static void DrawHeaderText(void)
+static void DrawHeaderText(u8 page)
 {
     FillWindowPixelBuffer(WIN_HEADER, PIXEL_FILL(1));
-    AddTextPrinterParameterized(WIN_HEADER, FONT_NORMAL, gText_Option, 8, 1, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(WIN_HEADER, FONT_NORMAL, sOptionMenuHeaderTexts[page], 8, 1, TEXT_SKIP_DRAW, NULL);
     CopyWindowToVram(WIN_HEADER, COPYWIN_FULL);
 }
 
-static void DrawOptionMenuTexts(void)
+static void DrawOptionMenuTexts(u8 page)
 {
+    const u8 *items = sOptionMenuPages[page];
+    u8 count = sOptionMenuPageCounts[page];
     u8 i;
 
     FillWindowPixelBuffer(WIN_OPTIONS, PIXEL_FILL(1));
-    for (i = 0; i < MENUITEM_COUNT; i++)
-        AddTextPrinterParameterized(WIN_OPTIONS, FONT_NORMAL, sOptionMenuItemsNames[i], 8, (i * 16) + 1, TEXT_SKIP_DRAW, NULL);
+    for (i = 0; i < count; i++)
+        AddTextPrinterParameterized(WIN_OPTIONS, FONT_NORMAL, sOptionMenuItemsNames[items[i]], 8, (i * 16) + 1, TEXT_SKIP_DRAW, NULL);
     CopyWindowToVram(WIN_OPTIONS, COPYWIN_FULL);
 }
 

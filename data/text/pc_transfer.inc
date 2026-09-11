@@ -31,10 +31,10 @@ gText_PkmnTransferredLanettesPCBoxFull::
 	.string "BOITE appelée “{STR_VAR_1}”.$"
 
 gText_PkmnSentToPCAfterCatch::
-	.string "{STR_VAR_2} was sent to\n"
-	.string "{B_PC_CREATOR_NAME} PC.\p"
-	.string "It was placed in \n"
-	.string "BOX “{STR_VAR_1}”.$"
+	.string "{STR_VAR_2} a été transféré sur le\n"
+	.string "PC de {B_PC_CREATOR_NAME}.\p"
+	.string "Il a été placé dans la BOITE\n"
+	.string "appelée “{STR_VAR_1}”.$"
 
 gText_PlayerObtainedTheMon::
 	.string "{PLAYER} obtained\n"

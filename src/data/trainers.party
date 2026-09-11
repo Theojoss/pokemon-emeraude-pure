@@ -601,15 +601,18 @@ Double Battle: No
 AI: Smart Trainer
 Mugshot: Blue
 
-Mightyena
+Mightyena @ Life Orb
+Ability: Intimidate
 Level: 41
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Crobat
+Crobat @ Black Sludge
+Ability: Infiltrator
 Level: 41
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Sharpedo @ Sharpedonite
+Ability: Rough Skin
 Level: 43
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
@@ -4802,7 +4805,8 @@ Double Battle: No
 AI: Smart Trainer
 Mugshot: Brown
 
-Geodude
+Geodude @ Oran Berry
+Ability: Sturdy
 Level: 12
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Tackle
@@ -4810,15 +4814,17 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Rock Throw
 - Rock Tomb
 
-Geodude
+Lileep @ Sitrus Berry
+Ability: Suction Cups
 Level: 12
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Tackle
-- Defense Curl
-- Rock Throw
+- Acid
+- Ingrain
 - Rock Tomb
+- Ancient Power
 
 Nosepass @ Oran Berry
+Ability: Sturdy
 Level: 15
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Block
@@ -4837,15 +4843,17 @@ Double Battle: No
 AI: Smart Trainer
 Mugshot: Orange
 
-Machop
+Machop @ Black Belt
+Ability: Guts
 Level: 16
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Karate Chop
+- Fake Out
 - Low Kick
 - Seismic Toss
 - Bulk Up
 
-Meditite
+Meditite @ Focus Sash
+Ability: Pure Power
 Level: 16
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Focus Punch
@@ -4854,6 +4862,7 @@ IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 - Bulk Up
 
 Makuhita @ Sitrus Berry
+Ability: Thick Fat
 Level: 19
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Arm Thrust
@@ -4872,7 +4881,8 @@ Double Battle: No
 AI: Smart Trainer
 Mugshot: Yellow
 
-Voltorb
+Voltorb @ Custap Berry
+Ability: Static
 Level: 20
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Rollout
@@ -4880,7 +4890,8 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Self Destruct
 - Shock Wave
 
-Electrike
+Electrike @ Eviolite
+Ability: Lightning Rod
 Level: 20
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Shock Wave
@@ -4888,7 +4899,8 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Quick Attack
 - Howl
 
-Magneton
+Magneton @ Air Balloon
+Ability: Magnet Pull
 Level: 22
 IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
 - Supersonic
@@ -4896,9 +4908,11 @@ IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
 - Thunder Wave
 - Sonic Boom
 
-Manectric @ Sitrus Berry
+Manectric @ Life Orb
+Ability: Lightning Rod
 Level: 24
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
 - Quick Attack
 - Thunder Wave
 - Shock Wave
@@ -4915,15 +4929,17 @@ Double Battle: No
 AI: Smart Trainer
 Mugshot: Red
 
-Numel
+Growlithe @ Sitrus Berry
+Ability: Intimidate
 Level: 24
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Overheat
-- Take Down
-- Magnitude
-- Sunny Day
+- Bite
+- Flame Wheel
+- Roar
+- Fire Fang
 
-Slugma
+Slugma @ Focus Sash
+Ability: Flame Body
 Level: 24
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Overheat
@@ -4931,7 +4947,8 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Light Screen
 - Sunny Day
 
-Camerupt
+Camerupt @ Charcoal
+Ability: Solid Rock
 Level: 26
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Overheat
@@ -4940,6 +4957,7 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Attract
 
 Torkoal @ White Herb
+Ability: Drought
 Level: 29
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Overheat
@@ -4958,15 +4976,17 @@ Double Battle: No
 AI: Smart Trainer
 Mugshot: Gray
 
-Spinda
+Zangoose @ Choice Band
+Ability: Toxic Boost
 Level: 27
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Teeter Dance
-- Psybeam
+- Slash
+- Close Combat
 - Facade
-- Encore
+- Quick Attack
 
-Vigoroth
+Vigoroth @ Silk Scarf
+Ability: Vital Spirit
 Level: 27
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Slash
@@ -4974,7 +4994,8 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Encore
 - Feint Attack
 
-Linoone
+Linoone @ Life Orb
+Ability: Pickup
 Level: 29
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Slash
@@ -4982,7 +5003,8 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Facade
 - Headbutt
 
-Slaking @ Sitrus Berry
+Slaking @ Focus Sash
+Ability: Truant
 Level: 31
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Counter
@@ -5001,7 +5023,8 @@ Double Battle: No
 AI: Smart Trainer
 Mugshot: Cyan
 
-Swablu
+Swablu @ Persim Berry
+Ability: Natural Cure
 Level: 29
 IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Perish Song
@@ -5009,7 +5032,8 @@ IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Safeguard
 - Aerial Ace
 
-Tropius
+Tropius @ Sitrus Berry
+Ability: Chlorophyll
 Level: 29
 IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Sunny Day
@@ -5017,7 +5041,8 @@ IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Solar Beam
 - Synthesis
 
-Pelipper
+Pelipper @ Damp Rock
+Ability: Drizzle
 Level: 30
 IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Water Gun
@@ -5025,7 +5050,8 @@ IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 - Protect
 - Aerial Ace
 
-Skarmory
+Skarmory @ Leftovers
+Ability: Sturdy
 Level: 31
 IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
 - Sand Attack
@@ -5033,9 +5059,11 @@ IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
 - Steel Wing
 - Aerial Ace
 
-Altaria @ Oran Berry
+Altaria @ Leftovers
+Ability: Natural Cure
 Level: 33
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 HP / 252 Def / 4 SpD
 - Earthquake
 - Dragon Breath
 - Dragon Dance
@@ -5052,15 +5080,17 @@ Double Battle: Yes
 AI: Smart Trainer
 Mugshot: Pink
 
-Claydol
+Claydol @ Leftovers
+Ability: Levitate
 Level: 41
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Earthquake
-- Ancient Power
+- Trick Room
 - Psychic
 - Light Screen
 
-Xatu
+Xatu @ Chesto Berry
+Ability: Magic Bounce
 Level: 41
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Psychic
@@ -5069,6 +5099,7 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Calm Mind
 
 Lunatone @ Sitrus Berry
+Ability: Levitate
 Level: 42
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Light Screen
@@ -5077,8 +5108,10 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Calm Mind
 
 Solrock @ Sitrus Berry
+Ability: Levitate
 Level: 42
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+EVs: 252 SpA / 252 HP / 4 SpD
 - Sunny Day
 - Solar Beam
 - Psychic
@@ -5095,15 +5128,17 @@ Double Battle: No
 AI: Smart Trainer
 Mugshot: Blue
 
-Luvdisc
+Relicanth @ Choice Band
+Ability: Rock Head
 Level: 41
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Water Pulse
-- Attract
-- Sweet Kiss
-- Flail
+- Head Smash
+- Earthquake
+- Surf
+- Rest
 
-Whiscash
+Whiscash @ Sitrus Berry
+Ability: Hydration
 Level: 41
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Rain Dance
@@ -5111,7 +5146,8 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Amnesia
 - Earthquake
 
-Sealeo
+Sealeo @ Leftovers
+Ability: Thick Fat
 Level: 43
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Encore
@@ -5119,7 +5155,8 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Aurora Beam
 - Water Pulse
 
-Crawdaunt
+Crawdaunt @ Life Orb
+Ability: Adaptability
 Level: 43
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Water Pulse
@@ -5127,11 +5164,13 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 - Taunt
 - Leer
 
-Kingdra @ Chesto Berry
+Kingdra @ Choice Specs
+Ability: Swift Swim
 Level: 46
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+EVs: 252 SpA / 252 Spe / 4 HP
 - Water Pulse
-- Double Team
+- Draco Meteor
 - Ice Beam
 - Rest
 
@@ -9471,9 +9510,10 @@ Gender: Male
 Music: Male
 Items: Full Restore / Full Restore
 Double Battle: No
-AI: Basic Trainer
+AI: Smart Trainer
 
-Altaria
+Altaria @ Leftovers
+Ability: Natural Cure
 Level: 44
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Aerial Ace
@@ -9481,7 +9521,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Dragon Breath
 - Dragon Dance
 
-Delcatty
+Delcatty @ Sitrus Berry
+Ability: Cute Charm
 Level: 43
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Sing
@@ -9489,7 +9530,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Charm
 - Feint Attack
 
-Roselia
+Roselia @ Black Sludge
+Ability: Natural Cure
 Level: 44
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Magical Leaf
@@ -9497,7 +9539,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Giga Drain
 - Toxic
 
-Magneton
+Magneton @ Air Balloon
+Ability: Sturdy
 Level: 41
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Supersonic
@@ -9506,9 +9549,10 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Screech
 
 Gardevoir @ Gardevoirite
+Ability: Synchronize
 Level: 45
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Double Team
+- Moonblast
 - Calm Mind
 - Psychic
 - Future Sight
@@ -9535,15 +9579,15 @@ Music: Male
 Double Battle: No
 AI: Smart Trainer
 
-Slugma
+Slugma @ Oran Berry
 Level: 18
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Wingull
+Wingull @ Oran Berry
 Level: 18
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Grovyle
+Grovyle @ Sitrus Berry
 Level: 20
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
@@ -9556,15 +9600,18 @@ Music: Male
 Double Battle: No
 AI: Smart Trainer
 
-Slugma
+Slugma @ Focus Sash
+Ability: Flame Body
 Level: 29
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Pelipper
+Pelipper @ Damp Rock
+Ability: Drizzle
 Level: 29
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Grovyle
+Grovyle @ Grass Gem
+Ability: Unburden
 Level: 31
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
@@ -9590,15 +9637,15 @@ Music: Male
 Double Battle: No
 AI: Smart Trainer
 
-Wingull
+Wingull @ Oran Berry
 Level: 18
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Lombre
+Lombre @ Oran Berry
 Level: 18
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Combusken
+Combusken @ Sitrus Berry
 Level: 20
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
@@ -9611,15 +9658,18 @@ Music: Male
 Double Battle: No
 AI: Smart Trainer
 
-Pelipper
+Pelipper @ Damp Rock
+Ability: Keen Eye
 Level: 29
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Lombre
+Lombre @ Eviolite
+Ability: Swift Swim
 Level: 29
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Combusken
+Combusken @ Muscle Band
+Ability: Speed Boost
 Level: 31
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
@@ -9645,15 +9695,15 @@ Music: Male
 Double Battle: No
 AI: Smart Trainer
 
-Lombre
+Lombre @ Oran Berry
 Level: 18
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Slugma
+Slugma @ Oran Berry
 Level: 18
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Marshtomp
+Marshtomp @ Sitrus Berry
 Level: 20
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
@@ -9666,15 +9716,18 @@ Music: Male
 Double Battle: No
 AI: Smart Trainer
 
-Lombre
+Lombre @ Eviolite
+Ability: Swift Swim
 Level: 29
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Slugma
+Slugma @ Focus Sash
+Ability: Flame Body
 Level: 29
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Marshtomp
+Marshtomp @ Muscle Band
+Ability: Torrent
 Level: 31
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
@@ -9700,15 +9753,15 @@ Music: Female
 Double Battle: No
 AI: Smart Trainer
 
-Wingull
+Wingull @ Oran Berry
 Level: 18
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Slugma
+Slugma @ Oran Berry
 Level: 18
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Grovyle
+Grovyle @ Sitrus Berry
 Level: 20
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
@@ -9721,15 +9774,18 @@ Music: Female
 Double Battle: No
 AI: Smart Trainer
 
-Slugma
+Slugma @ Focus Sash
+Ability: Flame Body
 Level: 29
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Lombre
+Lombre @ Eviolite
+Ability: Swift Swim
 Level: 29
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Grovyle
+Grovyle @ Grass Gem
+Ability: Unburden
 Level: 31
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
@@ -9755,15 +9811,15 @@ Music: Female
 Double Battle: No
 AI: Smart Trainer
 
-Wingull
+Wingull @ Oran Berry
 Level: 18
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Lombre
+Lombre @ Oran Berry
 Level: 18
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Combusken
+Combusken @ Sitrus Berry
 Level: 20
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
@@ -9776,15 +9832,18 @@ Music: Female
 Double Battle: No
 AI: Smart Trainer
 
-Pelipper
+Pelipper @ Damp Rock
+Ability: Keen Eye
 Level: 29
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Lombre
+Lombre @ Eviolite
+Ability: Swift Swim
 Level: 29
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Combusken
+Combusken @ Muscle Band
+Ability: Speed Boost
 Level: 31
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
@@ -9810,15 +9869,15 @@ Music: Female
 Double Battle: No
 AI: Smart Trainer
 
-Lombre
+Lombre @ Oran Berry
 Level: 18
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Slugma
+Slugma @ Oran Berry
 Level: 18
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-Marshtomp
+Marshtomp @ Sitrus Berry
 Level: 20
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
@@ -9831,15 +9890,18 @@ Music: Female
 Double Battle: No
 AI: Smart Trainer
 
-Lombre
+Lombre @ Eviolite
+Ability: Swift Swim
 Level: 29
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Slugma
+Slugma @ Focus Sash
+Ability: Flame Body
 Level: 29
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-Marshtomp
+Marshtomp @ Muscle Band
+Ability: Torrent
 Level: 31
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
@@ -10863,11 +10925,11 @@ Music: Male
 Double Battle: No
 AI: Smart Trainer
 
-Lotad
+Lotad @ Oran Berry
 Level: 13
 IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
 
-Torchic
+Torchic @ Oran Berry
 Level: 15
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
@@ -10880,11 +10942,11 @@ Music: Male
 Double Battle: No
 AI: Smart Trainer
 
-Wingull
+Wingull @ Oran Berry
 Level: 13
 IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
 
-Treecko
+Treecko @ Oran Berry
 Level: 15
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
@@ -10987,11 +11049,11 @@ Music: Male
 Double Battle: No
 AI: Smart Trainer
 
-Slugma
+Slugma @ Oran Berry
 Level: 13
 IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
 
-Mudkip
+Mudkip @ Oran Berry
 Level: 15
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
@@ -11004,11 +11066,11 @@ Music: Female
 Double Battle: No
 AI: Smart Trainer
 
-Wingull
+Wingull @ Oran Berry
 Level: 13
 IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
 
-Treecko
+Treecko @ Oran Berry
 Level: 15
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
@@ -11023,15 +11085,18 @@ Double Battle: No
 AI: Smart Trainer
 Mugshot: Red
 
-Mightyena
+Mightyena @ Sitrus Berry
+Ability: Intimidate
 Level: 37
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Crobat
+Crobat @ Black Sludge
+Ability: Infiltrator
 Level: 38
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Camerupt @ Cameruptite
+Ability: Solid Rock
 Level: 39
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
@@ -11046,15 +11111,18 @@ Double Battle: No
 AI: Smart Trainer
 Mugshot: Red
 
-Mightyena
+Mightyena @ Oran Berry
+Ability: Intimidate
 Level: 24
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Zubat
+Zubat @ Oran Berry
+Ability: Infiltrator
 Level: 24
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Camerupt
+Camerupt @ Sitrus Berry
+Ability: Solid Rock
 Level: 25
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
@@ -12067,9 +12135,10 @@ Gender: Male
 Music: Male
 Items: Full Restore / Full Restore
 Double Battle: No
-AI: Basic Trainer
+AI: Smart Trainer
 
-Altaria
+Altaria @ Leftovers
+Ability: Natural Cure
 Level: 47
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Aerial Ace
@@ -12077,7 +12146,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Dragon Breath
 - Dragon Dance
 
-Delcatty
+Delcatty @ Sitrus Berry
+Ability: Cute Charm
 Level: 46
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Sing
@@ -12085,7 +12155,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Charm
 - Feint Attack
 
-Roselia
+Roselia @ Black Sludge
+Ability: Natural Cure
 Level: 47
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Magical Leaf
@@ -12093,7 +12164,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Giga Drain
 - Toxic
 
-Magneton
+Magneton @ Air Balloon
+Ability: Sturdy
 Level: 44
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Supersonic
@@ -12102,9 +12174,10 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Screech
 
 Gardevoir @ Gardevoirite
+Ability: Synchronize
 Level: 48
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Double Team
+- Moonblast
 - Calm Mind
 - Psychic
 - Future Sight
@@ -12117,9 +12190,10 @@ Gender: Male
 Music: Male
 Items: Full Restore / Full Restore
 Double Battle: No
-AI: Basic Trainer
+AI: Smart Trainer
 
-Altaria
+Altaria @ Leftovers
+Ability: Natural Cure
 Level: 50
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Aerial Ace
@@ -12127,7 +12201,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Dragon Breath
 - Dragon Dance
 
-Delcatty
+Delcatty @ Sitrus Berry
+Ability: Cute Charm
 Level: 49
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Sing
@@ -12135,7 +12210,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Charm
 - Feint Attack
 
-Roselia
+Roselia @ Black Sludge
+Ability: Natural Cure
 Level: 50
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Magical Leaf
@@ -12143,7 +12219,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Giga Drain
 - Toxic
 
-Magneton
+Magneton @ Air Balloon
+Ability: Sturdy
 Level: 47
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Supersonic
@@ -12152,9 +12229,10 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Screech
 
 Gardevoir @ Gardevoirite
+Ability: Synchronize
 Level: 51
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Double Team
+- Moonblast
 - Calm Mind
 - Psychic
 - Future Sight
@@ -12167,9 +12245,10 @@ Gender: Male
 Music: Male
 Items: Full Restore / Full Restore
 Double Battle: No
-AI: Basic Trainer
+AI: Smart Trainer
 
-Altaria
+Altaria @ Leftovers
+Ability: Natural Cure
 Level: 53
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Aerial Ace
@@ -12177,7 +12256,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Dragon Breath
 - Dragon Dance
 
-Delcatty
+Delcatty @ Sitrus Berry
+Ability: Cute Charm
 Level: 52
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Sing
@@ -12185,7 +12265,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Charm
 - Feint Attack
 
-Roselia
+Roselia @ Black Sludge
+Ability: Natural Cure
 Level: 53
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Magical Leaf
@@ -12193,7 +12274,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Giga Drain
 - Toxic
 
-Magneton
+Magneton @ Air Balloon
+Ability: Sturdy
 Level: 50
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Supersonic
@@ -12202,9 +12284,10 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Screech
 
 Gardevoir @ Gardevoirite
+Ability: Synchronize
 Level: 54
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Double Team
+- Moonblast
 - Calm Mind
 - Psychic
 - Future Sight
@@ -12217,9 +12300,10 @@ Gender: Male
 Music: Male
 Items: Full Restore / Full Restore
 Double Battle: No
-AI: Basic Trainer
+AI: Smart Trainer
 
-Altaria
+Altaria @ Leftovers
+Ability: Natural Cure
 Level: 56
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Aerial Ace
@@ -12227,7 +12311,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Dragon Breath
 - Dragon Dance
 
-Delcatty
+Delcatty @ Sitrus Berry
+Ability: Cute Charm
 Level: 55
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Sing
@@ -12235,7 +12320,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Charm
 - Feint Attack
 
-Roselia
+Roselia @ Black Sludge
+Ability: Natural Cure
 Level: 56
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Magical Leaf
@@ -12243,7 +12329,8 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Giga Drain
 - Toxic
 
-Magneton
+Magneton @ Air Balloon
+Ability: Sturdy
 Level: 53
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Supersonic
@@ -12252,9 +12339,10 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 - Screech
 
 Gardevoir @ Gardevoirite
+Ability: Synchronize
 Level: 57
 IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Double Team
+- Moonblast
 - Calm Mind
 - Psychic
 - Future Sight
@@ -12268,21 +12356,33 @@ Music: Male
 Double Battle: No
 AI: Smart Trainer
 
-Tropius
+Tropius @ Sitrus Berry
+Ability: Chlorophyll
 Level: 31
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Slugma
+Magcargo @ Charcoal
+Ability: Solid Rock
+Level: 32
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+- Flamethrower
+- Ancient Power
+- Recover
+- Light Screen
+
+Pelipper @ Damp Rock
+Ability: Drizzle
 Level: 32
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Pelipper
-Level: 32
-IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
-
-Grovyle
+Sceptile @ Life Orb
+Ability: Overgrow
 Level: 34
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+- Leaf Blade
+- Dragon Claw
+- Earthquake
+- Detect
 
 === TRAINER_BRENDAN_LILYCOVE_TREECKO ===
 Name: BRICE
@@ -12293,21 +12393,29 @@ Music: Male
 Double Battle: No
 AI: Smart Trainer
 
-Tropius
+Tropius @ Sitrus Berry
+Ability: Chlorophyll
 Level: 31
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Pelipper
+Pelipper @ Damp Rock
+Ability: Keen Eye
 Level: 32
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Ludicolo
+Ludicolo @ Leftovers
+Ability: Swift Swim
 Level: 32
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Combusken
+Blaziken @ Life Orb
+Ability: Speed Boost
 Level: 34
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+- Blaze Kick
+- Brave Bird
+- Earthquake
+- Swords Dance
 
 === TRAINER_BRENDAN_LILYCOVE_TORCHIC ===
 Name: BRICE
@@ -12318,21 +12426,33 @@ Music: Male
 Double Battle: No
 AI: Smart Trainer
 
-Tropius
+Tropius @ Sitrus Berry
+Ability: Chlorophyll
 Level: 31
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Ludicolo
+Ludicolo @ Leftovers
+Ability: Swift Swim
 Level: 32
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Slugma
+Magcargo @ Charcoal
+Ability: Solid Rock
 Level: 32
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+- Flamethrower
+- Ancient Power
+- Recover
+- Light Screen
 
-Marshtomp
+Swampert @ Leftovers
+Ability: Torrent
 Level: 34
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+- Earthquake
+- Surf
+- Ice Punch
+- Stealth Rock
 
 === TRAINER_MAY_LILYCOVE_MUDKIP ===
 Name: FLORA
@@ -12343,21 +12463,33 @@ Music: Female
 Double Battle: No
 AI: Smart Trainer
 
-Tropius
+Tropius @ Sitrus Berry
+Ability: Chlorophyll
 Level: 31
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Slugma
+Magcargo @ Charcoal
+Ability: Solid Rock
+Level: 32
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+- Flamethrower
+- Ancient Power
+- Recover
+- Light Screen
+
+Pelipper @ Damp Rock
+Ability: Drizzle
 Level: 32
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Pelipper
-Level: 32
-IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
-
-Grovyle
+Sceptile @ Life Orb
+Ability: Overgrow
 Level: 34
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+- Leaf Blade
+- Dragon Claw
+- Earthquake
+- Detect
 
 === TRAINER_MAY_LILYCOVE_TREECKO ===
 Name: FLORA
@@ -12368,21 +12500,29 @@ Music: Female
 Double Battle: No
 AI: Smart Trainer
 
-Tropius
+Tropius @ Sitrus Berry
+Ability: Chlorophyll
 Level: 31
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Pelipper
+Pelipper @ Damp Rock
+Ability: Keen Eye
 Level: 32
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Ludicolo
+Ludicolo @ Leftovers
+Ability: Swift Swim
 Level: 32
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Combusken
+Blaziken @ Life Orb
+Ability: Speed Boost
 Level: 34
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+- Blaze Kick
+- Brave Bird
+- Earthquake
+- Swords Dance
 
 === TRAINER_MAY_LILYCOVE_TORCHIC ===
 Name: FLORA
@@ -12393,21 +12533,33 @@ Music: Female
 Double Battle: No
 AI: Smart Trainer
 
-Tropius
+Tropius @ Sitrus Berry
+Ability: Chlorophyll
 Level: 31
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Ludicolo
+Ludicolo @ Leftovers
+Ability: Swift Swim
 Level: 32
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Slugma
+Magcargo @ Charcoal
+Ability: Solid Rock
 Level: 32
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+- Flamethrower
+- Ancient Power
+- Recover
+- Light Screen
 
-Marshtomp
+Swampert @ Leftovers
+Ability: Torrent
 Level: 34
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+- Earthquake
+- Surf
+- Ice Punch
+- Stealth Rock
 
 === TRAINER_JONAH ===
 Name: JONAS
@@ -13551,15 +13703,18 @@ AI: Smart Trainer
 Mugshot: Red
 Multi Party: Half
 
-Mightyena
+Mightyena @ Life Orb
+Ability: Intimidate
 Level: 42
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-Crobat
+Crobat @ Black Sludge
+Ability: Infiltrator
 Level: 43
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
 Camerupt @ Cameruptite
+Ability: Solid Rock
 Level: 44
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
@@ -14144,11 +14299,11 @@ Music: Female
 Double Battle: No
 AI: Smart Trainer
 
-Lotad
+Lotad @ Oran Berry
 Level: 13
 IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
 
-Torchic
+Torchic @ Oran Berry
 Level: 15
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
@@ -14161,11 +14316,11 @@ Music: Female
 Double Battle: No
 AI: Smart Trainer
 
-Torkoal
+Slugma @ Oran Berry
 Level: 13
 IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
 
-Mudkip
+Mudkip @ Oran Berry
 Level: 15
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 

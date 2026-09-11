@@ -4776,7 +4776,7 @@ const struct ItemInfo gItemsInfo[] =
     [ITEM_DRAGON_SCALE] =
     {
         .name = ITEM_NAME("Écaille Draco"),
-        .price = (I_PRICE >= GEN_7) ? 2000 * TREASURE_FACTOR : 2100,
+        .price = 5000,
         .holdEffectParam = 10,
         .description = COMPOUND_STRING(
             "Une écaille épaisse et dure\n"
@@ -4797,7 +4797,7 @@ const struct ItemInfo gItemsInfo[] =
     [ITEM_UPGRADE] =
     {
         .name = ITEM_NAME("Améliorator"),
-        .price = (I_PRICE >= GEN_7) ? 2000 * TREASURE_FACTOR : 2100,
+        .price = 5000,
         .description = COMPOUND_STRING(
             "Un dispositif transparent\n"
             "rempli de données diverses\n"
@@ -10184,13 +10184,7 @@ const struct ItemInfo gItemsInfo[] =
     [ITEM_METAL_COAT] =
     {
         .name = ITEM_NAME("Peau Métal"),
-    #if I_PRICE >= GEN_9
-        .price = 3000,
-    #elif I_PRICE >= GEN_7
-        .price = 2000,
-    #else
-        .price = 100,
-    #endif
+        .price = 5000,
         .holdEffect = HOLD_EFFECT_TYPE_POWER,
         .holdEffectParam = TYPE_BOOST_PARAM,
         .description = COMPOUND_STRING(
@@ -16824,7 +16818,7 @@ const struct ItemInfo gItemsInfo[] =
     [ITEM_LINKING_CORD] =
     {
         .name = ITEM_NAME("Fil de Liaison"),
-        .price = 8000,
+        .price = 5000,
         .description = COMPOUND_STRING(
             "Un fil qui semble abriter une\n"
             "étrange énergie capable de\n"
