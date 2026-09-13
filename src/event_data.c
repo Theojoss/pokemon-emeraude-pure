@@ -125,7 +125,10 @@ void EnableMysteryGift(void)
 
 bool32 IsMysteryGiftEnabled(void)
 {
-    return FlagGet(FLAG_SYS_MYSTERY_GIFT_ENABLE);
+    // Mystery Gift relies on link-cable trades between two consoles and this hack
+    // has no distribution event configured, so the menu option is kept hidden even
+    // if the mart clerk questionnaire flag gets set (see data/scripts/questionnaire.inc).
+    return FALSE;
 }
 
 void ClearMysteryGiftFlags(void)

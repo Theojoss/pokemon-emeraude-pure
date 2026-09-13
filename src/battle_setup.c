@@ -747,6 +747,21 @@ enum BattleEnvironments BattleSetup_GetEnvironmentId(void)
     {
     case MAP_TYPE_TOWN:
     case MAP_TYPE_CITY:
+        // A few towns/cities have surfable water inside their limits, so check
+        // for water before falling back to the generic town background. Most
+        // (e.g. Pacifidlog) sit out on the open ocean, but Sootopolis's lake
+        // and Lilycove's harbor are inland/sheltered bodies of water, not
+        // ocean (all these maps share the same general water tiles, so this
+        // has to be a map check rather than a tile-behavior one).
+        if (MetatileBehavior_IsSurfableWaterOrUnderwater(tileBehavior))
+        {
+            if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SOOTOPOLIS_CITY)
+              && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_SOOTOPOLIS_CITY))
+             || (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_LILYCOVE_CITY)
+              && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_LILYCOVE_CITY)))
+                return BATTLE_ENVIRONMENT_POND;
+            return BATTLE_ENVIRONMENT_WATER;
+        }
         return BATTLE_ENVIRONMENT_TOWN;
     case MAP_TYPE_ROUTE:
         break;

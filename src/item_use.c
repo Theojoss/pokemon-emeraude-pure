@@ -471,10 +471,14 @@ bool8 ItemfinderCheckForHiddenItems(const struct MapEvents *events, u8 taskId)
     }
 
     CheckForHiddenItemsInMapConnection(taskId);
-    if (gTasks[taskId].tItemFound == TRUE || gSprites[gObjectEvents[gPlayerAvatar.objectEventId].fieldEffectSpriteId].tItemFound)
-        return TRUE;
-    else
-        return FALSE;
+
+    // Only read the sprite-side flag in ORAS Dowsing mode: that field is never
+    // written in classic mode, so checking it unconditionally picks up stale
+    // leftover data from an unrelated sprite (e.g. after Surfing/Rock Climb),
+    // causing false "found" results.
+    if (I_ORAS_DOWSING_FLAG != 0)
+        return gSprites[gObjectEvents[gPlayerAvatar.objectEventId].fieldEffectSpriteId].tItemFound;
+    return gTasks[taskId].tItemFound == TRUE;
 }
 
 static bool8 IsHiddenItemPresentAtCoords(const struct MapEvents *events, s16 x, s16 y)

@@ -180,11 +180,8 @@ const struct FieldMoveInfo gFieldMoveInfo[FIELD_MOVES_COUNT] =
         .isUnlockedFunc = IsFieldMoveUnlocked_Dive,
         .moveID = MOVE_DIVE,
         .partyMsgID = PARTY_MSG_CANT_USE_HERE,
-        // Resurfacing uses pressedBButton rather than an A-press interaction
-        // (see TrySetupDiveEmergeScript), so the overworld trigger still needs
-        // a party mon that actually knows Dive; only the party-menu list gets
-        // the capability check.
         .receivedFlag = FLAG_RECEIVED_HM_DIVE,
+        .overworldCapabilityCheck = TRUE,
         .menuCapabilityCheck = TRUE,
     },
 

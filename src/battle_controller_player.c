@@ -594,7 +594,11 @@ static void HideShownTargets(enum BattlerId battler)
     s32 i;
     for (i = 0; i < MAX_BATTLERS_COUNT; i++)
     {
-        if (IsBattlerAlive(i) && gBattleSpritesDataPtr->healthBoxesData[i].healthboxIsBouncing && i != battler)
+        // Note: no `i != battler` check here (unlike an earlier version) — for
+        // TARGET_USER_AND_ALLY moves (e.g. Howl), the user itself is shown as a
+        // blinking target alongside its ally, and excluding it left the user's
+        // sprite blinking indefinitely since it was never un-bounced.
+        if (IsBattlerAlive(i) && gBattleSpritesDataPtr->healthBoxesData[i].healthboxIsBouncing)
         {
             gSprites[gBattlerSpriteIds[i]].callback = SpriteCB_HideAsMoveTarget;
             EndBounceEffect(i, BOUNCE_HEALTHBOX);

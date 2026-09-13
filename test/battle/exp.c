@@ -183,3 +183,33 @@ WILD_BATTLE_TEST("Exp Share(held) gives Experience to mons which did not partici
 }
 
 #endif // I_EXP_SHARE_ITEM
+
+AI_DOUBLE_BATTLE_TEST("Both player mons gain EXP when a spread move KOs a trainer's last two Pokemon at once")
+{
+    GIVEN {
+        PLAYER(SPECIES_WOBBUFFET) { Level(20); };
+        PLAYER(SPECIES_WYNAUT) { Level(20); };
+        OPPONENT(SPECIES_CATERPIE) { Level(10); HP(1); };
+        OPPONENT(SPECIES_WEEDLE) { Level(10); HP(1); };
+    } WHEN {
+        TURN { MOVE(playerLeft, MOVE_EARTHQUAKE); MOVE(playerRight, MOVE_SPLASH); }
+    } THEN {
+        EXPECT_GT(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_EXP), gExperienceTables[gSpeciesInfo[SPECIES_WOBBUFFET].growthRate][20]);
+        EXPECT_GT(GetMonData(&gParties[B_TRAINER_PLAYER][1], MON_DATA_EXP), gExperienceTables[gSpeciesInfo[SPECIES_WYNAUT].growthRate][20]);
+    }
+}
+
+AI_DOUBLE_BATTLE_TEST("Both player mons gain EXP when they sequentially KO a trainer's last two Pokemon in the same turn")
+{
+    GIVEN {
+        PLAYER(SPECIES_WOBBUFFET) { Level(20); };
+        PLAYER(SPECIES_WYNAUT) { Level(20); };
+        OPPONENT(SPECIES_CATERPIE) { Level(10); HP(1); };
+        OPPONENT(SPECIES_WEEDLE) { Level(10); HP(1); };
+    } WHEN {
+        TURN { MOVE(playerLeft, MOVE_SCRATCH, target: opponentLeft); MOVE(playerRight, MOVE_SCRATCH, target: opponentRight); }
+    } THEN {
+        EXPECT_GT(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_EXP), gExperienceTables[gSpeciesInfo[SPECIES_WOBBUFFET].growthRate][20]);
+        EXPECT_GT(GetMonData(&gParties[B_TRAINER_PLAYER][1], MON_DATA_EXP), gExperienceTables[gSpeciesInfo[SPECIES_WYNAUT].growthRate][20]);
+    }
+}
