@@ -2679,6 +2679,20 @@ static void Mugshots_CreateTrainerPics(struct Task *task)
     CalcCenterToCornerVec(playerSprite, SPRITE_SHAPE(64x32), SPRITE_SIZE(64x32), ST_OAM_AFFINE_DOUBLE);
 
     opponentARotationScales = GetTrainerFrontPicMugshotRotation(trainerAPicId);
+    // Despite the name, this is a scale factor, not an angle -
+    // SetOamMatrixRotationScaling below feeds it through
+    // ConvertScaleParam() (src/sprite.c), which computes 65536 / scale. No
+    // trainer in the async code-battle sprite pool has a hand-authored
+    // mugshotRotation (see src/data/graphics/trainers.h - every entry there
+    // defaults this field to 0 unless a trainer explicitly overrides it,
+    // and none of the ~52 trainer pics this pool draws from do), so this
+    // was landing on ConvertScaleParam(0) - an extreme, near-infinite zoom
+    // that showed only a tiny sliver of the sprite (just the top of the
+    // head) instead of the intended bust portrait. 512 is the same
+    // magnitude already proven to render correctly for the player's own
+    // sprite in this exact transition, a few lines down.
+    if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_ASYNC_CODE_BATTLE)
+        opponentARotationScales = 512;
 
     SetOamMatrixRotationScaling(opponentSpriteA->oam.matrixNum, opponentARotationScales, opponentARotationScales, 0);
     SetOamMatrixRotationScaling(playerSprite->oam.matrixNum, -512, 512, 0);

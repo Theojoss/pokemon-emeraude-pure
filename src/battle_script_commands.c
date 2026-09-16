@@ -3827,7 +3827,8 @@ static bool32 BattleTypeAllowsExp(void)
               | BATTLE_TYPE_FRONTIER
               | BATTLE_TYPE_SAFARI
               | BATTLE_TYPE_BATTLE_TOWER
-              | BATTLE_TYPE_EREADER_TRAINER))
+              | BATTLE_TYPE_EREADER_TRAINER
+              | BATTLE_TYPE_ASYNC_CODE_BATTLE))
         return FALSE;
     else
         return TRUE;
@@ -5834,7 +5835,11 @@ static u32 GetTrainerMoneyToGive(u16 trainerId)
     u32 moneyReward;
     u8 trainerMoney = 0;
 
-    if (trainerId == TRAINER_SECRET_BASE)
+    if (trainerId == TRAINER_ASYNC_CODE_BATTLE)
+    {
+        moneyReward = 0; // no rewards for an async code battle
+    }
+    else if (trainerId == TRAINER_SECRET_BASE)
     {
         moneyReward = 20 * gBattleResources->secretBase->party.levels[0] * gBattleStruct->moneyMultiplier;
     }
@@ -5870,6 +5875,13 @@ static void Cmd_getmoneyreward(void)
         if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
             money += GetTrainerMoneyToGive(TRAINER_BATTLE_PARAM.opponentB);
         AddMoney(&gSaveBlock1Ptr->money, money);
+    }
+    else if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_ASYNC_CODE_BATTLE)
+    {
+        // No stakes for an async code battle - losing shouldn't cost the
+        // player money any more than winning rewards them any (see the
+        // TRAINER_ASYNC_CODE_BATTLE case in GetTrainerMoneyToGive above).
+        money = 0;
     }
     else
     {

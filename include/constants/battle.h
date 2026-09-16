@@ -121,7 +121,7 @@ enum BattleSide
 #define BATTLE_TYPE_EREADER_TRAINER    (1 << 11)
 #define BATTLE_TYPE_RAID               (1 << 12)
 #define BATTLE_TYPE_LEGENDARY          (1 << 13)
-#define BATTLE_TYPE_14                 (1 << 14)
+#define BATTLE_TYPE_ASYNC_CODE_BATTLE  (1 << 14) // procedurally-generated opponent from a player-entered code, see async_code_battle.c
 #define BATTLE_TYPE_TWO_OPPONENTS      (1 << 15)
 #define BATTLE_TYPE_DOME               (1 << 16)
 #define BATTLE_TYPE_PALACE             (1 << 17)
@@ -674,6 +674,7 @@ enum BattleEnvironments
     BATTLE_ENVIRONMENT_DISTORTION_WORLD,
     BATTLE_ENVIRONMENT_SPACE,
     BATTLE_ENVIRONMENT_ULTRA_SPACE,
+    BATTLE_ENVIRONMENT_ASYNC_CODE_BATTLE, // Stadium background, "Leader" palette - see async_code_battle.c
     BATTLE_ENVIRONMENT_COUNT,
 };
 

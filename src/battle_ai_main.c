@@ -245,7 +245,18 @@ static u64 GetWildAiFlags(void)
 
 static bool32 IsSmartBattle(void)
 {
-    if (IsSpecialTrainer(TRAINER_BATTLE_PARAM.opponentA))
+    // TRAINER_ASYNC_CODE_BATTLE is in IsSpecialTrainer()'s list purely so
+    // nothing indexes gTrainers[] with it (see include/data.h) - it isn't a
+    // link/record-mixing battle like the other IsSpecialTrainer() sentinels,
+    // so unlike them it shouldn't be excluded from AI here. Without this,
+    // GetAiFlags() below returns 0 for every async code battle, and with no
+    // AI flags at all the only switch heuristic left running
+    // (ShouldSwitchIfAllMovesBad(), src/battle_ai_switch.c - not gated by
+    // any flag) forces a 100% switch whenever the opponent's current mon
+    // simply has no move that's currently super effective/usable - which
+    // happens a lot with these mons' unremarkable level-up movesets, so the
+    // AI ends up switching constantly instead of just fighting.
+    if (IsSpecialTrainer(TRAINER_BATTLE_PARAM.opponentA) && TRAINER_BATTLE_PARAM.opponentA != TRAINER_ASYNC_CODE_BATTLE)
         return FALSE; // Don't set flags for link battle unless Battle Tower link multi mode
 
     return gBattleTypeFlags & BATTLE_TYPE_HAS_AI || IsWildMonSmart();
@@ -275,7 +286,16 @@ static u64 GetAiFlags(u16 trainerId, enum BattlerId battler)
             flags = AI_FLAG_FIRST_BATTLE;
         else if (gBattleTypeFlags & BATTLE_TYPE_FACTORY)
             flags = GetAiScriptsInBattleFactory();
+        else if (gBattleTypeFlags & BATTLE_TYPE_ASYNC_CODE_BATTLE)
+            // Same AI tier as the Elite Four/Champion (AI_FLAG_SMART_TRAINER,
+            // see e.g. the Elite Four's .aiFlags in src/data/trainers.h) -
+            // TRAINER_ASYNC_CODE_BATTLE is a sentinel (see IsSpecialTrainer(),
+            // include/data.h) with no real gTrainers[] entry to read
+            // .aiFlags from, so it's hardcoded here instead.
+            flags = AI_FLAG_SMART_TRAINER;
         else if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_TRAINER_HILL | BATTLE_TYPE_SECRET_BASE))
+            // Same fixed flags as the other trainers here that don't have a
+            // real gTrainers[] entry to read from.
             flags = AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_CHECK_VIABILITY | AI_FLAG_TRY_TO_FAINT;
         else
             flags = GetTrainerAIFlagsFromId(trainerId);

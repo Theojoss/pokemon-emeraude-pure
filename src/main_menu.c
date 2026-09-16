@@ -174,6 +174,8 @@
 
 static EWRAM_DATA bool8 sStartedPokeBallTask = 0;
 static EWRAM_DATA u16 sCurrItemAndOptionMenuCheck = 0;
+static EWRAM_DATA bool8 sNuzlockeModeSelected = FALSE;
+static EWRAM_DATA bool8 sIncreasedShinyRateSelected = FALSE;
 
 static u8 sBirchSpeechMainTaskId;
 
@@ -234,6 +236,13 @@ static void Task_NewGameBirchSpeech_SlidePlatformAway2(u8);
 static void Task_NewGameBirchSpeech_ReshowBirchLotad(u8);
 static void Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter(u8);
 static void Task_NewGameBirchSpeech_AreYouReady(u8);
+static void Task_NewGameBirchSpeech_NuzlockeChallenge(u8);
+static void Task_NewGameBirchSpeech_CreateNuzlockeYesNo(u8);
+static void Task_NewGameBirchSpeech_ProcessNuzlockeYesNoMenu(u8);
+static void Task_NewGameBirchSpeech_ShinyRateChoice(u8);
+static void Task_NewGameBirchSpeech_CreateShinyRateYesNo(u8);
+static void Task_NewGameBirchSpeech_ProcessShinyRateYesNoMenu(u8);
+static void Task_NewGameBirchSpeech_Farewell(u8);
 static void Task_NewGameBirchSpeech_ShrinkPlayer(u8);
 static void SpriteCB_MovePlayerDownWhileShrinking(struct Sprite *);
 static void Task_NewGameBirchSpeech_WaitForPlayerShrink(u8);
@@ -1817,6 +1826,98 @@ static void Task_NewGameBirchSpeech_AreYouReady(u8 taskId)
         NewGameBirchSpeech_StartFadePlatformOut(taskId, 1);
         StringExpandPlaceholders(gStringVar4, gText_Birch_AreYouReady);
         AddTextPrinterForMessage(TRUE);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_NuzlockeChallenge;
+    }
+}
+
+static void Task_NewGameBirchSpeech_NuzlockeChallenge(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+    {
+        NewGameBirchSpeech_ClearWindow(0);
+        StringExpandPlaceholders(gStringVar4, gText_Birch_NuzlockeChallenge);
+        AddTextPrinterForMessage(TRUE);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_CreateNuzlockeYesNo;
+    }
+}
+
+static void Task_NewGameBirchSpeech_CreateNuzlockeYesNo(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+    {
+        // Same placement as CreateYesNoMenuParameterized(2, 1, 0xF3, 0xDF, 2, 15), but defaulting
+        // the cursor to NO (initialCursorPos 1) instead of YES.
+        struct WindowTemplate template = CreateWindowTemplate(0, 2 + 1, 1 + 1, 5, 4, 15, 0xDF);
+        CreateYesNoMenu(&template, 0xF3, 2, 1);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ProcessNuzlockeYesNoMenu;
+    }
+}
+
+static void Task_NewGameBirchSpeech_ProcessNuzlockeYesNoMenu(u8 taskId)
+{
+    switch (Menu_ProcessInputNoWrapClearOnChoose())
+    {
+    case 0: // YES
+        PlaySE(SE_SELECT);
+        sNuzlockeModeSelected = TRUE;
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ShinyRateChoice;
+        break;
+    case MENU_B_PRESSED:
+    case 1: // NO
+        PlaySE(SE_SELECT);
+        sNuzlockeModeSelected = FALSE;
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ShinyRateChoice;
+        break;
+    }
+}
+
+static void Task_NewGameBirchSpeech_ShinyRateChoice(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+    {
+        NewGameBirchSpeech_ClearWindow(0);
+        StringExpandPlaceholders(gStringVar4, gText_Birch_ShinyRateChoice);
+        AddTextPrinterForMessage(TRUE);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_CreateShinyRateYesNo;
+    }
+}
+
+static void Task_NewGameBirchSpeech_CreateShinyRateYesNo(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+    {
+        // Same placement/defaults as the Nuzlocke Yes/No box: cursor defaults to NO (standard rate).
+        struct WindowTemplate template = CreateWindowTemplate(0, 2 + 1, 1 + 1, 5, 4, 15, 0xDF);
+        CreateYesNoMenu(&template, 0xF3, 2, 1);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ProcessShinyRateYesNoMenu;
+    }
+}
+
+static void Task_NewGameBirchSpeech_ProcessShinyRateYesNoMenu(u8 taskId)
+{
+    switch (Menu_ProcessInputNoWrapClearOnChoose())
+    {
+    case 0: // YES - increased rate (1/2048)
+        PlaySE(SE_SELECT);
+        sIncreasedShinyRateSelected = TRUE;
+        gTasks[taskId].func = Task_NewGameBirchSpeech_Farewell;
+        break;
+    case MENU_B_PRESSED:
+    case 1: // NO - standard rate (1/8192)
+        PlaySE(SE_SELECT);
+        sIncreasedShinyRateSelected = FALSE;
+        gTasks[taskId].func = Task_NewGameBirchSpeech_Farewell;
+        break;
+    }
+}
+
+static void Task_NewGameBirchSpeech_Farewell(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+    {
+        NewGameBirchSpeech_ClearWindow(0);
+        StringExpandPlaceholders(gStringVar4, gText_Birch_Farewell);
+        AddTextPrinterForMessage(TRUE);
         gTasks[taskId].func = Task_NewGameBirchSpeech_ShrinkPlayer;
     }
 }
@@ -2333,12 +2434,14 @@ static void NewGameBirchSpeech_ClearGenderWindow(u8 windowId, bool8 copyToVram)
 static void NewGameBirchSpeech_ClearWindow(u8 windowId)
 {
     u8 bgColor = GetFontAttribute(FONT_NORMAL, FONTATTR_COLOR_BACKGROUND);
-    u8 maxCharWidth = GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_WIDTH);
-    u8 maxCharHeight = GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_HEIGHT);
     u8 winWidth = GetWindowAttribute(windowId, WINDOW_WIDTH);
     u8 winHeight = GetWindowAttribute(windowId, WINDOW_HEIGHT);
 
-    FillWindowPixelRect(windowId, bgColor, 0, 0, maxCharWidth * winWidth, maxCharHeight * winHeight);
+    // WINDOW_WIDTH/HEIGHT are in 8x8 tiles, so the pixel rect must scale by the tile size (8), not by
+    // FONTATTR_MAX_LETTER_WIDTH/HEIGHT (a proportional font's glyph metrics, e.g. 6x16 for FONT_NORMAL).
+    // Using the font metrics here under-cleared the window's width by about 25%, leaving a thin
+    // unclaimed strip on the right where a longer previous line's tail end could keep showing through.
+    FillWindowPixelRect(windowId, bgColor, 0, 0, 8 * winWidth, 8 * winHeight);
     CopyWindowToVram(windowId, COPYWIN_GFX);
 }
 
@@ -2369,3 +2472,23 @@ static void Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox(u8 taskId)
 }
 
 #undef tTimer
+
+bool8 WasNuzlockeModeSelected(void)
+{
+    return sNuzlockeModeSelected;
+}
+
+void ClearNuzlockeModeSelection(void)
+{
+    sNuzlockeModeSelected = FALSE;
+}
+
+bool8 WasIncreasedShinyRateSelected(void)
+{
+    return sIncreasedShinyRateSelected;
+}
+
+void ClearIncreasedShinyRateSelection(void)
+{
+    sIncreasedShinyRateSelected = FALSE;
+}

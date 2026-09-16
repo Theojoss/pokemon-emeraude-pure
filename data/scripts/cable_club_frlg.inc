@@ -192,8 +192,8 @@ Movement_PlayerApproachCounter:
 CableClub_EventScript_WelcomeToCableClub_Frlg::
 	message CableClub_Text_WelcomeWhichCableClubService_Frlg
 	waitmessage
-	delay 15
-	goto CableClub_EventScript_SelectCableClubRoom_Frlg
+	waitbuttonpress
+	goto CableClub_EventScript_AsyncCodeChoice_Frlg
 	end
 
 CableClub_EventScript_UnusedWelcomeToCableClub_Frlg::
@@ -211,9 +211,135 @@ CableClub_EventScript_SelectCableClubRoom_Frlg::
 	case MULTI_B_PRESSED, CableClub_EventScript_AbortLink_Frlg
 	end
 
+// Kept as a goto target for CableClub_EventScript_SelectCableClubRoom_Frlg
+// (now unreachable from CableClub_EventScript_WelcomeToCableClub_Frlg - see
+// there) in case anything else still points at it.
 CableClub_EventScript_Colosseum_Frlg::
-	copyvar VAR_0x8007, VAR_LAST_TALKED
-	goto CableClub_EventScript_SelectBattleMode_Frlg
+	goto CableClub_EventScript_AsyncCodeChoice_Frlg
+	end
+
+CableClub_EventScript_AsyncCodeChoice_Frlg::
+	multichoice 0, 0, MULTI_ASYNC_CODE_CHOICE, FALSE
+	switch VAR_RESULT
+	case 0, CableClub_EventScript_ConfirmGenerateCode_Frlg
+	case 1, CableClub_EventScript_EnterFriendCode_Frlg
+	case 2, CableClub_EventScript_RefightLastTrainer_Frlg
+	case MULTI_B_PRESSED, CableClub_EventScript_AbortLink_Frlg
+	end
+
+CableClub_EventScript_ConfirmGenerateCode_Frlg::
+	special CheckAsyncCodePartySize
+	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_NotEnoughMonsForCode_Frlg
+	msgbox CableClub_Text_CodeUsesCurrentTeam_Frlg, MSGBOX_DEFAULT
+	goto CableClub_EventScript_GenerateCode_Frlg
+	end
+
+CableClub_EventScript_EnterFriendCode_Frlg::
+	special EnterCode
+	special GetCodeFeedback
+	goto_if_eq VAR_RESULT, 2, CableClub_EventScript_AsyncCodeCancelled_Frlg
+	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_AsyncCodeInvalid_Frlg
+	special ShowFieldMessageStringVar4
+	waitmessage
+	waitbuttonpress
+	goto CableClub_EventScript_ProceedToArena_Frlg
+	end
+
+// No longer reachable from CableClub_EventScript_AsyncCodeChoice_Frlg's menu
+// (the "(Test) Combattre mon propre code" option was removed once the real
+// friend-to-friend code path was validated) - kept, along with
+// TestBattleOwnCode (src/field_specials.c) and the debug menu's async
+// code-battle entries (src/debug.c), in case this feature needs revisiting.
+CableClub_EventScript_TestOwnCode_Frlg::
+	special TestBattleOwnCode
+	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_NotEnoughMonsForCode_Frlg
+	goto CableClub_EventScript_ProceedToArena_Frlg
+	end
+
+// Lets the player fight the same opponent again without re-typing the code -
+// sDecodedAsyncCodeTrainer/Hash (src/field_specials.c) are still whatever the
+// last successful decode (real code or test-own-code) left them as, so this
+// just re-enters the same cutscene/battle flow a fresh code would.
+CableClub_EventScript_RefightLastTrainer_Frlg::
+	special CheckHasLastAsyncCodeTrainer
+	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_NoLastTrainerToRefight_Frlg
+	goto CableClub_EventScript_ProceedToArena_Frlg
+	end
+
+CableClub_EventScript_NoLastTrainerToRefight_Frlg::
+	msgbox CableClub_Text_NoLastTrainerToRefight_Frlg, MSGBOX_DEFAULT
+	release
+	end
+
+// Same door/counter choreography as the real link battle flow
+// (CableClub_EventScript_EnterColosseum_Frlg below) - every Pokémon Center
+// sharing this attendant has an identical Link Room layout behind the
+// counter, which is what lets that script hardcode metatile/door
+// coordinates like this safely, and why it's safe to reuse here too.
+// Skips EnterColosseum_Frlg's link-only steps (pre-link heal/save/bag-sync,
+// "please wait for the connection" messaging), AND - unlike EnterColosseum_Frlg -
+// uses a plain warp/waitstate instead of SetCableClubWarp/DoCableClubWarp:
+// DoCableClubWarp's transition (src/field_screen_effect.c
+// Task_ReturnToFieldWirelessLink) blocks on IsLinkTaskFinished(), which only
+// ever clears once a real link/RFU partner responds - with no real link
+// established (no TryBattleLinkup anywhere in this flow), it hangs forever
+// (black screen, controls locked, music still playing - the exact bug this
+// replaced). A plain warp doesn't wait on anything link-related.
+CableClub_EventScript_ProceedToArena_Frlg::
+	special SetAsyncOpponentOverworldGfx
+	setvar VAR_ASYNC_CODE_BATTLE_ARENA, 1
+	// This map's own shared CableClub_OnLoad_Frlg/CableClub_OnFrame_Frlg
+	// (top of this file) already know how to reopen the barrier and walk
+	// the player back out through it once VAR_CABLE_CLUB_STATE reads
+	// USING_SINGLE_BATTLE again on return - the exact same mechanism a real
+	// single battle uses. No need to reimplement that half of the round trip.
+	setvar VAR_CABLE_CLUB_STATE, USING_SINGLE_BATTLE
+	call CableClub_EventScript_OpenDirectCornerBarrier_Frlg
+	special DrawWholeMapView
+	playse SE_CLICK
+	delay 60
+	applymovement VAR_LAST_TALKED, Movement_AttendantFaceLeft
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
+	waitmovement 0
+	opendoor 9, 1
+	waitdooranim
+	applymovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
+	waitmovement 0
+	hideplayer
+	closedoor 9, 1
+	waitdooranim
+	release
+	special SetCableClubWarp
+	warp MAP_BATTLE_COLOSSEUM_2P_FRLG, 6, 8
+	waitstate
+	end
+
+CableClub_EventScript_AsyncCodeInvalid_Frlg::
+	msgbox CableClub_Text_AsyncCodeInvalidCode_Frlg, MSGBOX_DEFAULT
+	release
+	end
+
+// Reached when OK is confirmed with nothing typed (see GetCodeFeedback) -
+// the only way to leave NAMING_SCREEN_CODE without a real code (no dedicated
+// cancel button exists on this screen). No error message - the player asked
+// to leave, not to submit a broken code.
+CableClub_EventScript_AsyncCodeCancelled_Frlg::
+	release
+	end
+
+CableClub_EventScript_GenerateCode_Frlg::
+	special GenerateAsyncCode
+	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_NotEnoughMonsForCode_Frlg
+	special ShowFieldMessageStringVar4
+	waitmessage
+	waitbuttonpress
+	release
+	end
+
+CableClub_EventScript_NotEnoughMonsForCode_Frlg::
+	msgbox CableClub_Text_NotEnoughMonsForCode_Frlg, MSGBOX_DEFAULT
+	release
 	end
 
 CableClub_EventScript_SelectBattleMode_Frlg::
@@ -689,18 +815,15 @@ CableClub_EventScript_DoLinkRoomExit_Frlg::
 	special ReturnFromLinkRoom
 	end
 
+// The real Union Room flow below (AskEnterUnionRoom_Frlg onward) is
+// unreachable from here now - the Union Room isn't usable in this hack (no
+// real link partner), so this NPC just says so instead of offering to enter
+// it.
 CableClub_EventScript_UnionRoomAttendant_Frlg::
 	lock
 	faceplayer
-	goto_if_unset FLAG_SYS_POKEDEX_GET, CableClub_EventScript_WirelessClubAdjustements_Frlg
-	specialvar VAR_RESULT, IsBadEggInParty
-	goto_if_eq VAR_RESULT, TRUE, CableClub_EventScript_AbortLinkPlayerHasBadEgg_Frlg
-	copyvar VAR_0x8007, VAR_LAST_TALKED
-	specialvar VAR_RESULT, IsWirelessAdapterConnected
-	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_UnionRoomAdapterNotConnected_Frlg
-	message CableClub_Text_WelcomeUnionRoomEnter_Frlg
-	waitmessage
-	goto CableClub_EventScript_AskEnterUnionRoom_Frlg
+	msgbox CableClub_Text_UnionRoomNotAccessible_Frlg, MSGBOX_DEFAULT
+	release
 	end
 
 CableClub_EventScript_AskEnterUnionRoom_Frlg::
@@ -777,7 +900,6 @@ CableClub_EventScript_UnionRoomAdapterNotConnected_Frlg::
 CableClub_EventScript_WirelessClubAttendant_Frlg::
 	lock
 	faceplayer
-	goto_if_unset FLAG_SYS_POKEDEX_GET, CableClub_EventScript_WirelessClubAdjustements_Frlg
 	msgbox CableClub_Text_AskAboutLinking_Frlg, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, CableClub_EventScript_DontAskAboutLinking_Frlg
 	msgbox CableClub_Text_ExplainWirelessClub_Frlg
@@ -785,14 +907,12 @@ CableClub_EventScript_WirelessClubAttendant_Frlg::
 	return
 
 CableClub_EventScript_DontAskAboutLinking_Frlg::
-	msgbox CableClub_Text_HopeYouEnjoyWirelessSystem_Frlg
 	release
 	return
 
 CableClub_EventScript_DirectCornerAttendant_Frlg::
 	lock
 	faceplayer
-	goto_if_unset FLAG_SYS_POKEDEX_GET, CableClub_EventScript_WirelessClubAdjustements_Frlg
 	specialvar VAR_RESULT, IsBadEggInParty
 	goto_if_eq VAR_RESULT, TRUE, CableClub_EventScript_AbortLinkPlayerHasBadEgg_Frlg
 	specialvar VAR_RESULT, IsWirelessAdapterConnected
@@ -1219,8 +1339,8 @@ TwoIsland_JoyfulGameCorner_EventScript_ShowDodrioBerryPickingRecords::
 	end
 
 CableClub_Text_WelcomeWhichCableClubService_Frlg::
-	.string "Bienvenue au CENTRE TROC\n"
-	.string "du CLUB LINK POKéMON.\p"
+	.string "Bienvenue au CLUB CODES\n"
+	.string "COMBAT.\p"
 	.string "Lequel de nos services\n"
 	.string "souhaiteriez-vous utiliser?$"
 
@@ -1548,6 +1668,28 @@ CableClub_Text_PlayWhichBattleMode_Frlg::
 	.string "A quel mode de combat\n"
 	.string "voulez-vous jouer?$"
 
+CableClub_Text_CodeUsesCurrentTeam_Frlg::
+	.string "Ce code prendra en compte les\n"
+	.string "POKéMON actuellement dans votre\l"
+	.string "équipe.\p"
+	.string "Il comportera 24 caractères,\n"
+	.string "sans espaces.$"
+
+CableClub_Text_AsyncCodeInvalidCode_Frlg::
+	.string "Ce code ne correspond à aucun\n"
+	.string "dresseur…\l"
+	.string "Vérifiez qu'il est bien saisi.$"
+
+CableClub_Text_NotEnoughMonsForCode_Frlg::
+	.string "Il vous faut une équipe complète\n"
+	.string "de 6 POKéMON pour générer un\l"
+	.string "code.$"
+
+CableClub_Text_NoLastTrainerToRefight_Frlg::
+	.string "Vous n'avez encore affronté aucun\n"
+	.string "dresseur depuis la dernière fois\l"
+	.string "que vous avez chargé votre sauvegarde.$"
+
 CableClub_Text_UseBerryCrush_Frlg::
 	.string "Voulez-vous utiliser le\n"
 	.string "BROYEUR DE BAIES?$"
@@ -1590,6 +1732,10 @@ CableClub_Text_ChooseGroupLeader_Frlg::
 	.string "Les autres joueurs devront ensuite\n"
 	.string "choisir “JOINDRE”.$"
 
+CableClub_Text_UnionRoomNotAccessible_Frlg::
+	.string "La SALLE UNION n'est pas\n"
+	.string "accessible dans ce jeu.$"
+
 CableClub_Text_WelcomeUnionRoomEnter_Frlg::
 	.string "Bienvenue à la SALLE UNION du\n"
 	.string "CLUB SANS FIL POKéMON.\p"
@@ -1630,60 +1776,45 @@ CableClub_Text_FirstTimeRightThisWay_Frlg::
 CableClub_Text_ExplainWirelessClubFirstTime_Frlg::
 	.string "Au niveau supérieur, il y a\n"
 	.string "deux salles.\p"
-	.string "Tout d'abord, la salle à gauche\n"
-	.string "est la SALLE UNION.\p"
-	.string "Vous pouvez vous connecter avec\n"
-	.string "les DRESSEURS autour de vous\l"
-	.string "qui sont dans la SALLE UNION.\p"
-	.string "Vous pouvez parler, faire des\n"
-	.string "échanges ou combattre avec eux.\p"
-	.string "Ensuite, la salle à droite\n"
-	.string "est la SALLE LINK DIRECT. \p"
-	.string "Vous pouvez combattre ou faire\n"
-	.string "des échanges avec vos amis.\p"
-	.string "Si l'adaptateur sans fil n'est pas\n"
-	.string "utilisé, vous pouvez toujours vous\l"
-	.string "connecter avec un câble Game Link.\p"
-	.string "Si c'est le cas, allez directement\n"
-	.string "dans la SALLE LINK DIRECT.\p"
+	.string "La salle à gauche, la SALLE\n"
+	.string "UNION, n'est pas accessible\l"
+	.string "dans ce jeu.\p"
+	.string "La salle à droite est le\n"
+	.string "CLUB CODES COMBAT.\p"
+	.string "Vous pourrez y entrer un code\n"
+	.string "pour affronter l'équipe d'un\l"
+	.string "ami à distance.\p"
 	.string "J'espère que vous apprécierez\n"
-	.string "le système sans fil.$"
+	.string "le CLUB CODES COMBAT.$"
 
 CableClub_Text_AskAboutLinking_Frlg::
 	.string "Bonjour {PLAYER}!\p"
 	.string "Je suis ZADIA, je m'occupe du 1er\n"
 	.string "étage du CENTRE POKéMON.\p"
 	.string "Y a-t-il quelque chose que vous\n"
-	.string "aimeriez savoir sur la connexion?$"
+	.string "aimeriez savoir sur cet étage?$"
 
 CableClub_Text_ExplainWirelessClub_Frlg::
-	.string "Laissez-moi vous décrire le\n"
-	.string "CLUB SANS FIL POKéMON.\p"
-	.string "Au niveau supérieur, il y a\n"
-	.string "deux salles.\p"
-	.string "Tout d'abord, la salle à gauche\n"
-	.string "est la SALLE UNION.\p"
-	.string "Vous pouvez vous connecter avec\n"
-	.string "les DRESSEURS autour de vous\l"
-	.string "qui sont dans la SALLE UNION.\p"
-	.string "Vous pouvez parler, faire des\n"
-	.string "échanges ou combattre avec eux.\p"
-	.string "Ensuite, la salle à droite\n"
-	.string "est la SALLE LINK DIRECT. \p"
-	.string "Vous pouvez combattre ou faire\n"
-	.string "des échanges avec vos amis.\p"
-	.string "Dans certains cas, vous ne\n"
-	.string "pourrez vous connecter avec\l"
-	.string "vos amis dans aucune des salles.\p"
-	.string "Si c'est le cas, rapprochez-vous\n"
-	.string "de vos amis.\p"
-	.string "Si l'adaptateur sans fil n'est pas\n"
-	.string "utilisé, vous pouvez toujours vous\l"
-	.string "connecter avec un câble Game Link.\p"
-	.string "Si c'est le cas, allez directement\n"
-	.string "dans la SALLE LINK DIRECT.\p"
+	.string "La salle à gauche, la SALLE\n"
+	.string "UNION, n'est pas accessible\l"
+	.string "dans ce jeu.\p"
+	.string "La salle à droite est le\n"
+	.string "CLUB CODES COMBAT.\p"
+	.string "Vous pourrez y entrer un code\n"
+	.string "pour affronter l'équipe d'un\l"
+	.string "dresseur à distance.\p"
+	.string "Ses POKéMONS auront le niveau\n"
+	.string "moyen des POKéMONs de votre\l"
+	.string "équipe.\p"
+	.string "Vous pouvez également générer\n"
+	.string "votre propre code pour le\l"
+	.string "partager à un autre dresseur.\p"
+	.string "Votre code prendra en compte\n"
+	.string "votre équipe actuelle.\p"
+	.string "Elle devra obligatoirement\n"
+	.string "contenir 6 POKéMONS.\p"
 	.string "J'espère que vous apprécierez\n"
-	.string "le système sans fil.$"
+	.string "le CLUB CODES COMBAT.$"
 
 CableClub_Text_HopeYouEnjoyWirelessSystem_Frlg::
 	.string "J'espère que vous apprécierez\n"

@@ -65,8 +65,8 @@
 #define FLAG_HOUSE_2_ENTERED_ONCE    0x2B // Set the first time the player enters House 2 in Lavaridge Town after buying it
 #define FLAG_HIDE_LAVARIDGE_TOWN_HOUSE_2_NPC    0x2C // Object event visibility flag for House 2's real estate NPC, hidden for good once the player has entered
 #define FLAG_HIDE_SOOTOPOLIS_CITY_HOUSE_1_NPC    0x2D // Object event visibility flag for House 1's real estate NPC, hidden for good once the player has entered
-#define FLAG_UNUSED_0x02E    0x2E // Unused Flag
-#define FLAG_UNUSED_0x02F    0x2F // Unused Flag
+#define FLAG_NUZLOCKE        0x2E // Nuzlocke Challenge active
+#define FLAG_INCREASED_SHINY_RATE    0x2F // Increased shiny odds chosen at Birch's speech
 #define FLAG_UNUSED_0x030    0x30 // Unused Flag
 #define FLAG_UNUSED_0x031    0x31 // Unused Flag
 #define FLAG_UNUSED_0x032    0x32 // Unused Flag
@@ -1308,8 +1308,8 @@
 #define FLAG_UNUSED_0x4E6                                           0x4E6 // Unused Flag
 #define FLAG_UNUSED_0x4E7                                           0x4E7 // Unused Flag
 #define FLAG_UNUSED_0x4E8                                           0x4E8 // Unused Flag
-#define FLAG_UNUSED_0x4E9                                           0x4E9 // Unused Flag
-#define FLAG_UNUSED_0x4EA                                           0x4EA // Unused Flag
+#define FLAG_HIDE_ASYNC_ARENA_OPPONENT                              0x4E9 // Object event visibility flag for the async code-battle opponent NPC in BattleColosseum_2P[_Frlg] - set by default on every entry (see the map's OnTransition script), cleared only for the cutscene that reveals it. Verified free in both flags.h and flags_frlg.h before reuse (include/constants/flags_frlg.h's FLAG_0x4E9) - low numbers here are densely double-booked between the Hoenn and Kanto flag sets.
+#define FLAG_HIDE_LINK_ATTENDANT_FOR_ASYNC                          0x4EA // Object event visibility flag for the Cable Club attendant NPC in BattleColosseum_2P[_Frlg] - set (as a spawn-time gate, checked before the object ever loads/renders) only when arriving for an async code battle, so the player never sees it appear then vanish. Stays unset for real link battles.
 #define FLAG_UNUSED_0x4EB                                           0x4EB // Unused Flag
 #define FLAG_UNUSED_0x4EC                                           0x4EC // Unused Flag
 #define FLAG_UNUSED_0x4ED                                           0x4ED // Unused Flag

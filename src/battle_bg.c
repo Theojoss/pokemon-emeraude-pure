@@ -915,6 +915,10 @@ static u8 GetBattleEnvironmentOverride(void)
             return gBattleEnvironment;
         }
     }
+    else if (gBattleTypeFlags & BATTLE_TYPE_ASYNC_CODE_BATTLE)
+    {
+        return BATTLE_ENVIRONMENT_ASYNC_CODE_BATTLE;
+    }
     else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
     {
         u32 trainerClass;

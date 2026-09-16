@@ -1,4 +1,5 @@
 #include "global.h"
+#include "async_code_battle.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
@@ -52,6 +53,7 @@ void AllocateBattleResources(void)
 
     gBattleResources = AllocZeroed(sizeof(*gBattleResources));
     gBattleResources->secretBase = AllocZeroed(sizeof(*gBattleResources->secretBase));
+    gBattleResources->asyncCodeBattle = AllocZeroed(sizeof(*gBattleResources->asyncCodeBattle));
     gBattleResources->battleScriptsStack = AllocZeroed(sizeof(*gBattleResources->battleScriptsStack));
     gBattleResources->battleCallbackStack = AllocZeroed(sizeof(*gBattleResources->battleCallbackStack));
     gBattleResources->beforeLvlUp = AllocZeroed(sizeof(*gBattleResources->beforeLvlUp));
@@ -65,6 +67,10 @@ void AllocateBattleResources(void)
     {
         u16 currSecretBaseId = VarGet(VAR_CURRENT_SECRET_BASE);
         CreateSecretBaseEnemyParty(&gSaveBlock1Ptr->secretBases[currSecretBaseId]);
+    }
+    else if (gBattleTypeFlags & BATTLE_TYPE_ASYNC_CODE_BATTLE)
+    {
+        BuildAsyncOpponentParty(GetPendingAsyncCodeBattleTrainer(), GetPendingAsyncCodeBattleHash());
     }
 }
 
@@ -86,6 +92,7 @@ void FreeBattleResources(void)
         FREE_AND_SET_NULL(gBattleHistory);
 
         FREE_AND_SET_NULL(gBattleResources->secretBase);
+        FREE_AND_SET_NULL(gBattleResources->asyncCodeBattle);
         FREE_AND_SET_NULL(gBattleResources->battleScriptsStack);
         FREE_AND_SET_NULL(gBattleResources->battleCallbackStack);
         FREE_AND_SET_NULL(gBattleResources->beforeLvlUp);

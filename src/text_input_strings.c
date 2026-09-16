@@ -15,6 +15,18 @@ const u8 gText_NamingScreenKeyboard_ABCDEF[] = _("{CLEAR 11}A{CLEAR 6}B{CLEAR 6}
 const u8 gText_NamingScreenKeyboard_GHIJKL[] = _("{CLEAR 11}I{CLEAR 6}J{CLEAR 6}K{CLEAR 6}L{CLEAR 20}M{CLEAR 6}N{CLEAR 6}O{CLEAR 6}P{CLEAR 20},");
 const u8 gText_NamingScreenKeyboard_MNOPQRS[] = _("{CLEAR 11}Q{CLEAR 6}R{CLEAR 6}S{CLEAR 6}T{CLEAR 20}U{CLEAR 6}V{CLEAR 6}W{CLEAR 6}X{CLEAR 20} ");
 const u8 gText_NamingScreenKeyboard_TUVWXYZ[] = _("{CLEAR 11}Y{CLEAR 6}Z{CLEAR 6} {CLEAR 9} {CLEAR 23}-{CLEAR 6} {CLEAR 6} {CLEAR 6} {CLEAR 20} ");
+// Async code-battle screen only (KEYBOARD_CODE) - same A-Z layout as the
+// ABCDEF/GHIJKL/MNOPQRS/TUVWXYZ rows above, but with '.'/','/'-' moved to
+// the end of rows 1-3 (one each) instead of their original single-column
+// spots, and '1'/'2'/'3' grouped together on row 4 under the U/V/W column.
+// No '0' - this font renders '0' and capital 'O' identically. This has to
+// be every character sAsyncCodeCharset uses (see there) - not "typing
+// convenience" symbols, a generated code can genuinely contain any of them.
+const u8 gText_NamingScreenKeyboardCode_ABCDEFGH[] = _("{CLEAR 11}A{CLEAR 6}B{CLEAR 6}C{CLEAR 6}D{CLEAR 20}E{CLEAR 6}F{CLEAR 6}G{CLEAR 6}H{CLEAR 20}-");
+const u8 gText_NamingScreenKeyboardCode_IJKLMNOP[] = _("{CLEAR 11}I{CLEAR 6}J{CLEAR 6}K{CLEAR 6}L{CLEAR 20}M{CLEAR 6}N{CLEAR 6}O{CLEAR 6}P{CLEAR 20}.");
+const u8 gText_NamingScreenKeyboardCode_QRSTUVWX[] = _("{CLEAR 11}Q{CLEAR 6}R{CLEAR 6}S{CLEAR 6}T{CLEAR 20}U{CLEAR 6}V{CLEAR 6}W{CLEAR 6}X{CLEAR 20},");
+const u8 gText_NamingScreenKeyboardCode_YZ123[] = _("{CLEAR 11}Y{CLEAR 6}Z{CLEAR 6} {CLEAR 9} {CLEAR 23}1{CLEAR 6}2{CLEAR 6}3{CLEAR 6} {CLEAR 20} ");
+
 const u8 gText_NamingScreenKeyboard_01234[] = _("{CLEAR 11}0{CLEAR 16}1{CLEAR 16}2{CLEAR 16}3{CLEAR 16}4{CLEAR 16} ");
 const u8 gText_NamingScreenKeyboard_56789[] = _("{CLEAR 11}5{CLEAR 16}6{CLEAR 16}7{CLEAR 16}8{CLEAR 16}9{CLEAR 16} ");
 const u8 gText_NamingScreenKeyboard_Symbols1[] = _("{CLEAR 12}!{CLEAR 17}?{CLEAR 16}♂{CLEAR 16}♀{CLEAR 16}/{CLEAR 16} ");

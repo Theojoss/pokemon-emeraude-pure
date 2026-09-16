@@ -1,5 +1,6 @@
 #include "global.h"
 #include "malloc.h"
+#include "async_code_battle.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_ai_record.h"
@@ -2981,6 +2982,14 @@ static const u8 *BattleStringGetOpponentNameByTrainerId(u16 trainerId, u8 *text,
         ConvertInternationalString(text, gBattleResources->secretBase->language);
         toCpy = text;
     }
+    else if (gBattleTypeFlags & BATTLE_TYPE_ASYNC_CODE_BATTLE)
+    {
+        u32 i;
+        for (i = 0; i < ASYNC_CODE_NAME_LENGTH; i++)
+            text[i] = gBattleResources->asyncCodeBattle->decoded.trainerName[i];
+        text[i] = EOS;
+        toCpy = text;
+    }
     else if (trainerId == TRAINER_UNION_ROOM)
     {
         toCpy = gLinkPlayers[multiplayerId ^ BIT_SIDE].name;
@@ -3124,6 +3133,8 @@ static const u8 *BattleStringGetGenderNeutralOpponentClassByTrainerId(u16 traine
         toCpy = gTrainerClasses[GetEreaderTrainerClassId()].name;
     else if (trainerId == TRAINER_LINK_OPPONENT)
         toCpy = gTrainerClasses[TRAINER_NONE].name;
+    else if (trainerId == TRAINER_ASYNC_CODE_BATTLE)
+        toCpy = gTrainerClasses[TRAINER_NONE].name; // no authored class, just show the name
 
     return toCpy;
 }

@@ -63,6 +63,7 @@
 #include "tv.h"
 #include "util.h"
 #include "wild_encounter.h"
+#include "nuzlocke.h"
 #include "window.h"
 #include "constants/abilities.h"
 #include "constants/battle_ai.h"
@@ -2006,8 +2007,8 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)
     u8 retVal;
     bool32 halfTeam = (BattleSideHasTwoTrainers(GetBattlerTrainerFromParty(party) & BIT_SIDE) && !AreMultiPartiesFullTeams());
 
-    if (trainerNum == TRAINER_SECRET_BASE)
-        return 0;
+    if (trainerNum == TRAINER_SECRET_BASE || trainerNum == TRAINER_ASYNC_CODE_BATTLE)
+        return 0; // party already built (CreateSecretBaseEnemyParty / BuildAsyncOpponentParty)
     if (GetTrainerStructFromId(trainerNum)->overrideTrainer)
     {
         struct Trainer tempTrainer;
@@ -5329,6 +5330,12 @@ static void HandleEndTurn_BattleWon(void)
         else
             PlayBGM(MUS_VICTORY_TRAINER);
     }
+    else if (gBattleTypeFlags & BATTLE_TYPE_ASYNC_CODE_BATTLE)
+    {
+        BattleStopLowHpSound();
+        gBattlescriptCurrInstr = BattleScript_LocalTrainerBattleWon;
+        PlayBGM(MUS_VICTORY_TRAINER);
+    }
     else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && !(gBattleTypeFlags & BATTLE_TYPE_LINK))
     {
         BattleStopLowHpSound();
@@ -5677,6 +5684,8 @@ static void ReturnFromBattleToOverworld(void)
 
     if (gBattleTypeFlags & BATTLE_TYPE_LINK && gReceivedRemoteLinkPlayers)
         return;
+
+    NuzlockeMarkLocationEncountered();
 
     gSpecialVar_Result = gBattleOutcome;
     gMain.inBattle = FALSE;

@@ -1068,6 +1068,64 @@ EventScript_WhiteOut::
 
 EventScript_AfterWhiteOutHeal::
 	lockall
+	goto_if_unset FLAG_NUZLOCKE, EventScript_AfterWhiteOutHeal_Normal
+	specialvar VAR_RESULT, NuzlockeHasAnyLivingPokemon
+	goto_if_eq VAR_RESULT, FALSE, EventScript_AfterWhiteOutHeal_ForcedDisable
+	msgbox gText_NuzlockeWhiteOut, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, EventScript_AfterWhiteOutHeal_DisableNuzlocke
+	goto EventScript_AfterWhiteOutHeal_ContinueNuzlocke
+
+EventScript_AfterWhiteOutHeal_ForcedDisable::
+	clearflag FLAG_NUZLOCKE
+	message gText_NuzlockeNoMonsLeft
+	waitmessage
+	delay 90
+	msgbox gText_FirstShouldRestoreMonsHealth
+	call EventScript_PkmnCenterNurse_TakeAndHealPkmn
+	call_if_unset FLAG_DEFEATED_RUSTBORO_GYM, EventScript_AfterWhiteOutHealMsgPreFirstBoss
+	call_if_set FLAG_DEFEATED_RUSTBORO_GYM, EventScript_AfterWhiteOutHealMsg
+	message gText_DataWillBeSaved
+	waitmessage
+	special NuzlockeSilentSave
+	message gText_SaveCompleted
+	waitmessage
+	delay 90
+	applymovement VAR_LAST_TALKED, Movement_PkmnCenterNurse_Bow
+	waitmovement 0
+	fadedefaultbgm
+	releaseall
+	end
+
+EventScript_AfterWhiteOutHeal_DisableNuzlocke::
+	clearflag FLAG_NUZLOCKE
+	message gText_NuzlockeDisabled
+	waitmessage
+	delay 90
+	msgbox gText_FirstShouldRestoreMonsHealth
+	call EventScript_PkmnCenterNurse_TakeAndHealPkmn
+	call_if_unset FLAG_DEFEATED_RUSTBORO_GYM, EventScript_AfterWhiteOutHealMsgPreFirstBoss
+	call_if_set FLAG_DEFEATED_RUSTBORO_GYM, EventScript_AfterWhiteOutHealMsg
+	message gText_DataWillBeSaved
+	waitmessage
+	special NuzlockeSilentSave
+	message gText_SaveCompleted
+	waitmessage
+	delay 90
+	applymovement VAR_LAST_TALKED, Movement_PkmnCenterNurse_Bow
+	waitmovement 0
+	fadedefaultbgm
+	releaseall
+	end
+
+EventScript_AfterWhiteOutHeal_ContinueNuzlocke::
+	msgbox gText_ContinueNuzlockeMode, MSGBOX_DEFAULT
+	applymovement VAR_LAST_TALKED, Movement_PkmnCenterNurse_Bow
+	waitmovement 0
+	fadedefaultbgm
+	releaseall
+	end
+
+EventScript_AfterWhiteOutHeal_Normal::
 	msgbox gText_FirstShouldRestoreMonsHealth
 	call EventScript_PkmnCenterNurse_TakeAndHealPkmn
 	call_if_unset FLAG_DEFEATED_RUSTBORO_GYM, EventScript_AfterWhiteOutHealMsgPreFirstBoss
@@ -1091,6 +1149,56 @@ EventScript_AfterWhiteOutMomHeal::
 	textcolor NPC_TEXT_COLOR_FEMALE
 	applymovement LOCALID_PLAYERS_HOUSE_1F_MOM, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
+	goto_if_unset FLAG_NUZLOCKE, EventScript_AfterWhiteOutMomHeal_Normal
+	specialvar VAR_RESULT, NuzlockeHasAnyLivingPokemon
+	goto_if_eq VAR_RESULT, FALSE, EventScript_AfterWhiteOutMomHeal_ForcedDisable
+	msgbox gText_NuzlockeWhiteOut, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, EventScript_AfterWhiteOutMomHeal_DisableNuzlocke
+	goto EventScript_AfterWhiteOutMomHeal_ContinueNuzlocke
+
+EventScript_AfterWhiteOutMomHeal_ForcedDisable::
+	clearflag FLAG_NUZLOCKE
+	message gText_NuzlockeNoMonsLeft
+	waitmessage
+	delay 90
+	msgbox gText_HadQuiteAnExperienceTakeRest
+	call Common_EventScript_OutOfCenterPartyHeal
+	msgbox gText_MomExplainHPGetPotions
+	message gText_DataWillBeSaved
+	waitmessage
+	special NuzlockeSilentSave
+	message gText_SaveCompleted
+	waitmessage
+	delay 90
+	fadedefaultbgm
+	releaseall
+	end
+
+EventScript_AfterWhiteOutMomHeal_DisableNuzlocke::
+	clearflag FLAG_NUZLOCKE
+	message gText_NuzlockeDisabled
+	waitmessage
+	delay 90
+	msgbox gText_HadQuiteAnExperienceTakeRest
+	call Common_EventScript_OutOfCenterPartyHeal
+	msgbox gText_MomExplainHPGetPotions
+	message gText_DataWillBeSaved
+	waitmessage
+	special NuzlockeSilentSave
+	message gText_SaveCompleted
+	waitmessage
+	delay 90
+	fadedefaultbgm
+	releaseall
+	end
+
+EventScript_AfterWhiteOutMomHeal_ContinueNuzlocke::
+	msgbox gText_ContinueNuzlockeMode, MSGBOX_DEFAULT
+	fadedefaultbgm
+	releaseall
+	end
+
+EventScript_AfterWhiteOutMomHeal_Normal::
 	msgbox gText_HadQuiteAnExperienceTakeRest
 	call Common_EventScript_OutOfCenterPartyHeal
 	msgbox gText_MomExplainHPGetPotions
@@ -1439,6 +1547,39 @@ gText_MonsHealed::
 	.string "Vos POKéMON ont été soignés.\p"
 	.string "Nous vous souhaitons\n"
 	.string "bonne chance.$"
+
+gText_NuzlockeWhiteOut::
+	.string "Oh là là! Toute ton équipe s'est\n"
+	.string "évanouie pendant un DÉFI NUZLOCKE.\p"
+	.string "Si tu as des POKéMON en bonne santé\n"
+	.string "dans ton PC, tu peux les échanger\l"
+	.string "avec ton équipe et réessayer.\p"
+	.string "Je peux aussi désactiver le\n"
+	.string "DÉFI NUZLOCKE si tu préfères\l"
+	.string "continuer ton aventure normalement.\p"
+	.string "Veux-tu que je désactive\n"
+	.string "le DÉFI NUZLOCKE pour cette partie?$"
+
+gText_NuzlockeDisabled::
+	.string "Tu as échoué le DÉFI NUZLOCKE.\p"
+	.string "Cette décision est définitive.$"
+
+gText_NuzlockeNoMonsLeft::
+	.string "Il ne te reste plus aucun POKéMON\n"
+	.string "valide, que ce soit dans ton équipe\l"
+	.string "ou dans ton PC.\p"
+	.string "Tu as échoué le DÉFI NUZLOCKE.\p"
+	.string "Je désactive automatiquement le défi\n"
+	.string "pour que tu puisses continuer\l"
+	.string "ton aventure.$"
+
+gText_ContinueNuzlockeMode::
+	.string "Voilà qui est courageux! Fais\n"
+	.string "attention à toi, là-dehors.\p"
+	.string "Pense à faire le plein de POTIONS\n"
+	.string "et d'objets de soin.\p"
+	.string "Reviens me voir quand tu seras\n"
+	.string "prêt, je soignerai ton équipe.$"
 
 gText_HadQuiteAnExperienceTakeRest::
 	.string "MAMAN: Comment ça va, \n"

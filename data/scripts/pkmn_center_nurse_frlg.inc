@@ -1,6 +1,64 @@
 EventScript_AfterWhiteOutHeal_Frlg::
 	lockall
 	textcolor NPC_TEXT_COLOR_FEMALE
+	goto_if_unset FLAG_NUZLOCKE, EventScript_AfterWhiteOutHeal_Frlg_Normal
+	specialvar VAR_RESULT, NuzlockeHasAnyLivingPokemon
+	goto_if_eq VAR_RESULT, FALSE, EventScript_AfterWhiteOutHeal_Frlg_ForcedDisable
+	msgbox gText_NuzlockeWhiteOut, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, EventScript_AfterWhiteOutHeal_Frlg_DisableNuzlocke
+	goto EventScript_AfterWhiteOutHeal_Frlg_ContinueNuzlocke
+
+EventScript_AfterWhiteOutHeal_Frlg_ForcedDisable::
+	clearflag FLAG_NUZLOCKE
+	message gText_NuzlockeNoMonsLeft
+	waitmessage
+	delay 90
+	msgbox gText_FirstShouldRestoreMonsHealth
+	call EventScript_PkmnCenterNurse_TakeAndHealPkmn_Frlg
+	call_if_unset FLAG_DEFEATED_BROCK, EventScript_AfterWhiteOutHealMsgPreFirstBoss
+	call_if_set FLAG_DEFEATED_BROCK, EventScript_AfterWhiteOutHealMsg
+	message gText_DataWillBeSaved
+	waitmessage
+	special NuzlockeSilentSave
+	message gText_SaveCompleted
+	waitmessage
+	delay 90
+	applymovement VAR_LAST_TALKED, Movement_Bow
+	waitmovement 0
+	fadedefaultbgm
+	releaseall
+	end
+
+EventScript_AfterWhiteOutHeal_Frlg_DisableNuzlocke::
+	clearflag FLAG_NUZLOCKE
+	message gText_NuzlockeDisabled
+	waitmessage
+	delay 90
+	msgbox gText_FirstShouldRestoreMonsHealth
+	call EventScript_PkmnCenterNurse_TakeAndHealPkmn_Frlg
+	call_if_unset FLAG_DEFEATED_BROCK, EventScript_AfterWhiteOutHealMsgPreFirstBoss
+	call_if_set FLAG_DEFEATED_BROCK, EventScript_AfterWhiteOutHealMsg
+	message gText_DataWillBeSaved
+	waitmessage
+	special NuzlockeSilentSave
+	message gText_SaveCompleted
+	waitmessage
+	delay 90
+	applymovement VAR_LAST_TALKED, Movement_Bow
+	waitmovement 0
+	fadedefaultbgm
+	releaseall
+	end
+
+EventScript_AfterWhiteOutHeal_Frlg_ContinueNuzlocke::
+	msgbox gText_ContinueNuzlockeMode, MSGBOX_DEFAULT
+	applymovement VAR_LAST_TALKED, Movement_Bow
+	waitmovement 0
+	fadedefaultbgm
+	releaseall
+	end
+
+EventScript_AfterWhiteOutHeal_Frlg_Normal::
 	msgbox gText_FirstShouldRestoreMonsHealth
 	call EventScript_PkmnCenterNurse_TakeAndHealPkmn_Frlg
 	call_if_unset FLAG_DEFEATED_BROCK, EventScript_AfterWhiteOutHealMsgPreFirstBoss

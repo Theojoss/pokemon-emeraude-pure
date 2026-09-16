@@ -125,9 +125,13 @@ MagmaHideout_4F_EventScript_Tabitha::
 	end
 
 MagmaHideout_4F_EventScript_FindTeamMagmaOutfit::
+	lock
+	faceplayer
 	setvar VAR_0x8004, OUTFIT_TEAM_MAGMA
 	call Common_EventScript_ObtainedOutfit
+	removeobject VAR_LAST_TALKED
 	setflag FLAG_ITEM_MAGMA_HIDEOUT_4F_OUTFIT
+	release
 	end
 
 MagmaHideout_4F_Text_Grunt11Intro:

@@ -98,6 +98,15 @@ enum {
     KEYBOARD_LETTERS_LOWER,
     KEYBOARD_LETTERS_UPPER,
     KEYBOARD_SYMBOLS,
+    // Async code-battle screen only (NAMING_SCREEN_CODE) - same A-Z/space grid
+    // as KEYBOARD_LETTERS_UPPER, but with '.', ',' and '-' swapped for
+    // '1', '2', '3' (see CurrentPageToKeyboardId's NAMING_SCREEN_CODE
+    // override, and async_code_battle.c's sAsyncCodeCharset which must stay
+    // in sync with this same swap). Never reached via the normal page-swap
+    // cycle (SwapKeyboardPage blocks that entirely for this screen) - the
+    // few tables below that are indexed by this enum just need a 4th slot.
+    KEYBOARD_CODE,
+    KEYBOARD_ID_COUNT,
 };
 
 // This set is used for getting the gfx/pal tags of the page's swap button
@@ -159,7 +168,7 @@ struct NamingScreenData
     u8 tilemapBuffer1[0x800];
     u8 tilemapBuffer2[0x800];
     u8 tilemapBuffer3[0x800];
-    u8 textBuffer[16];
+    u8 textBuffer[32]; // was 16 - CODE_NAME_LENGTH (24) + EOS needs more room than the original ~11-char screens ever did
     u8 tileBuffer[0x600];
     u8 state;
     u8 windows[WIN_COUNT];
@@ -231,6 +240,14 @@ static const struct BgTemplate sBgTemplates[] =
     }
 };
 
+// DrawTextEntry() converts inputCharBaseXPos (screen-global pixels) to a
+// window-local X by subtracting this same left edge (in pixels) - keep
+// these two in sync with the actual tilemapLeft in use (see
+// GetTextEntryTilemapLeft() below - NAMING_SCREEN_CODE uses the WIDE window,
+// every other screen the original NARROW one).
+#define WIN_TEXT_ENTRY_TILEMAP_LEFT_NARROW 8
+#define WIN_TEXT_ENTRY_TILEMAP_LEFT_WIDE   3
+
 static const struct WindowTemplate sWindowTemplates[WIN_COUNT + 1] =
 {
     [WIN_KB_PAGE_1] = {
@@ -251,9 +268,15 @@ static const struct WindowTemplate sWindowTemplates[WIN_COUNT + 1] =
         .paletteNum = 10,
         .baseBlock = 0x0C8
     },
+    // Original size, used by every screen except NAMING_SCREEN_CODE (see
+    // sWindowTemplates_TextEntryWide below and where these two are chosen
+    // between, in the window-creation loop and GetTextEntryTilemapLeft()) -
+    // widening these unconditionally to fit CODE_NAME_LENGTH (24 chars) once
+    // left every other screen's much shorter input (7 chars max) with a
+    // visibly oversized blank box either side of the text.
     [WIN_TEXT_ENTRY] = {
         .bg = 3,
-        .tilemapLeft = 8,
+        .tilemapLeft = WIN_TEXT_ENTRY_TILEMAP_LEFT_NARROW,
         .tilemapTop = 6,
         .width = 17,
         .height = 2,
@@ -262,7 +285,7 @@ static const struct WindowTemplate sWindowTemplates[WIN_COUNT + 1] =
     },
     [WIN_TEXT_ENTRY_BOX] = {
         .bg = 3,
-        .tilemapLeft = 8,
+        .tilemapLeft = WIN_TEXT_ENTRY_TILEMAP_LEFT_NARROW,
         .tilemapTop = 4,
         .width = 17,
         .height = 2,
@@ -281,10 +304,40 @@ static const struct WindowTemplate sWindowTemplates[WIN_COUNT + 1] =
     DUMMY_WIN_TEMPLATE
 };
 
+// NAMING_SCREEN_CODE-only replacements for WIN_TEXT_ENTRY/WIN_TEXT_ENTRY_BOX
+// above, wide enough to fit CODE_NAME_LENGTH (24 chars, the longest input
+// this screen needs - see async_code_battle). tilemapLeft=3/width=25
+// comfortably contains the dynamically-centered text (inputCharBaseXPos) for
+// any maxChars up to 24 within the 30-tile-wide screen, with a tile of
+// margin on each side. WIN_TEXT_ENTRY_BOX's baseBlock is pushed out to
+// 0x030 + 25*2 = 0x062 so the two windows (both on bg=3) don't share
+// overlapping tilemap ranges now that WIN_TEXT_ENTRY is bigger.
+static const struct WindowTemplate sWindowTemplate_TextEntryWide =
+{
+    .bg = 3,
+    .tilemapLeft = WIN_TEXT_ENTRY_TILEMAP_LEFT_WIDE,
+    .tilemapTop = 6,
+    .width = 25,
+    .height = 2,
+    .paletteNum = 10,
+    .baseBlock = 0x030
+};
+
+static const struct WindowTemplate sWindowTemplate_TextEntryBoxWide =
+{
+    .bg = 3,
+    .tilemapLeft = WIN_TEXT_ENTRY_TILEMAP_LEFT_WIDE,
+    .tilemapTop = 4,
+    .width = 25,
+    .height = 2,
+    .paletteNum = 10,
+    .baseBlock = 0x062
+};
+
 // This handles what characters get inserted when a key is pressed
 // The keys shown on the keyboard are handled separately by sNamingScreenKeyboardText
 //!< French Difference
-static const u8 sKeyboardChars[KBPAGE_COUNT][KBROW_COUNT][KBCOL_COUNT] = {
+static const u8 sKeyboardChars[KEYBOARD_ID_COUNT][KBROW_COUNT][KBCOL_COUNT] = {
     [KEYBOARD_LETTERS_LOWER] = {
         __("abcdefgh."),
         __("ijklmnop,"),
@@ -302,18 +355,26 @@ static const u8 sKeyboardChars[KBPAGE_COUNT][KBROW_COUNT][KBCOL_COUNT] = {
         __("56789    "),
         __("!?♂♀/    "),
         __("…“”‘'    "),
+    },
+    [KEYBOARD_CODE] = {
+        __("ABCDEFGH-"),
+        __("IJKLMNOP."),
+        __("QRSTUVWX,"),
+        __("YZ  123  "),
     }
 };
 
-static const u8 sPageColumnCounts[KBPAGE_COUNT] = {
+static const u8 sPageColumnCounts[KEYBOARD_ID_COUNT] = {
     [KEYBOARD_LETTERS_LOWER] = KBCOL_COUNT,
     [KEYBOARD_LETTERS_UPPER] = KBCOL_COUNT,
-    [KEYBOARD_SYMBOLS]       = 6
+    [KEYBOARD_SYMBOLS]       = 6,
+    [KEYBOARD_CODE]          = KBCOL_COUNT
 };
-static const u8 sPageColumnXPos[KBPAGE_COUNT][KBCOL_COUNT] = {
+static const u8 sPageColumnXPos[KEYBOARD_ID_COUNT][KBCOL_COUNT] = {
     [KEYBOARD_LETTERS_LOWER] = {0, 12, 24, 36, 62, 74, 86, 98, 123},
     [KEYBOARD_LETTERS_UPPER] = {0, 12, 24, 36, 62, 74, 86, 98, 123},
-    [KEYBOARD_SYMBOLS]       = {0, 22, 44, 66, 88, 110}
+    [KEYBOARD_SYMBOLS]       = {0, 22, 44, 66, 88, 110},
+    [KEYBOARD_CODE]          = {0, 12, 24, 36, 62, 74, 86, 98, 123}
 };
 
 static const struct NamingScreenTemplate *const sNamingScreenTemplates[];
@@ -330,7 +391,7 @@ static const struct SpriteTemplate sSpriteTemplate_Cursor;
 static const struct SpriteTemplate sSpriteTemplate_InputArrow;
 static const struct SpriteTemplate sSpriteTemplate_Underscore;
 static const struct SpriteTemplate sSpriteTemplate_PCIcon;
-static const u8 *const sNamingScreenKeyboardText[KBPAGE_COUNT][KBROW_COUNT];
+static const u8 *const sNamingScreenKeyboardText[KEYBOARD_ID_COUNT][KBROW_COUNT];
 static const struct SpriteSheet sSpriteSheets[];
 static const struct SpritePalette sSpritePalettes[];
 
@@ -344,6 +405,7 @@ static bool8 MainState_WaitFadeIn(void);
 static bool8 MainState_HandleInput(void);
 static bool8 MainState_MoveToOKButton(void);
 static bool8 MainState_PressedOKButton(void);
+static bool8 CancelNamingScreenCode(void);
 static bool8 MainState_FadeOut(void);
 static bool8 MainState_Exit(void);
 static void DisplaySentToPCMessage(void);
@@ -527,8 +589,19 @@ static void NamingScreen_InitBGs(void)
     InitStandardTextBoxWindows();
     InitTextBoxGfxAndPrinters();
 
+    // NAMING_SCREEN_CODE needs the wider WIN_TEXT_ENTRY/WIN_TEXT_ENTRY_BOX to
+    // fit its 24-character input - every other screen uses the original,
+    // narrower sWindowTemplates entries (see the two sWindowTemplate_*Wide
+    // templates and the comment on sWindowTemplates for why).
     for (i = 0; i < WIN_COUNT; i++)
-        sNamingScreen->windows[i] = AddWindow(&sWindowTemplates[i]);
+    {
+        if (sNamingScreen->templateNum == NAMING_SCREEN_CODE && i == WIN_TEXT_ENTRY)
+            sNamingScreen->windows[i] = AddWindow(&sWindowTemplate_TextEntryWide);
+        else if (sNamingScreen->templateNum == NAMING_SCREEN_CODE && i == WIN_TEXT_ENTRY_BOX)
+            sNamingScreen->windows[i] = AddWindow(&sWindowTemplate_TextEntryBoxWide);
+        else
+            sNamingScreen->windows[i] = AddWindow(&sWindowTemplates[i]);
+    }
 
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
     SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2);
@@ -623,17 +696,68 @@ static u8 CurrentPageToNextKeyboardId(void)
 
 static u8 CurrentPageToKeyboardId(void)
 {
+    // NAMING_SCREEN_CODE never leaves KBPAGE_LETTERS_UPPER (SwapKeyboardPage
+    // blocks the only way to change pages for this screen) - it just gets
+    // its own keyboard layout (KEYBOARD_CODE, digits instead of some
+    // punctuation) drawn in place of the normal KEYBOARD_LETTERS_UPPER one.
+    if (sNamingScreen->templateNum == NAMING_SCREEN_CODE)
+        return KEYBOARD_CODE;
     return sPageToKeyboardId[sNamingScreen->currentPage];
+}
+
+// gNamingScreenBackground_Tilemap draws its rounded text-entry frame as fixed
+// pre-baked tile art (graphics/naming_screen/background.bin), sized for the
+// original 17-tile-wide box - it doesn't know about CODE_NAME_LENGTH being
+// widened to fit 24 characters. Rather than hand-editing that binary tilemap
+// (real asset work we can't visually verify blind), this redraws the exact
+// same border tiles (indices/flips read directly out of that same .bin: 9 =
+// side wall, 10 = top corner, 11 = top/bottom edge, 12 = bottom corner, 13 =
+// interior fill - each mirrored via BG_TILE_H_FLIP/V_FLIP for the opposite
+// side, same as the original art) at the wider span our text windows now use.
+// Only for NAMING_SCREEN_CODE - every other template keeps the original,
+// narrower pre-baked frame untouched.
+#define CODE_BORDER_TILE_SIDE          9
+#define CODE_BORDER_TILE_CORNER_TOP    10
+#define CODE_BORDER_TILE_EDGE          11
+#define CODE_BORDER_TILE_CORNER_BOTTOM 12
+#define CODE_BORDER_TILE_FILL          13
+#define CODE_BORDER_LEFT_COL   1
+#define CODE_BORDER_RIGHT_COL  28
+#define CODE_BORDER_TOP_ROW    3
+#define CODE_BORDER_BOTTOM_ROW 8
+
+static void DrawWidenedCodeScreenBorder(void)
+{
+    u8 innerLeft = CODE_BORDER_LEFT_COL + 1;
+    u8 innerWidth = CODE_BORDER_RIGHT_COL - CODE_BORDER_LEFT_COL - 1;
+    u8 row;
+
+    FillBgTilemapBufferRect(3, CODE_BORDER_TILE_CORNER_TOP, CODE_BORDER_LEFT_COL, CODE_BORDER_TOP_ROW, 1, 1, 0);
+    FillBgTilemapBufferRect(3, CODE_BORDER_TILE_EDGE, innerLeft, CODE_BORDER_TOP_ROW, innerWidth, 1, 0);
+    FillBgTilemapBufferRect(3, BG_TILE_H_FLIP(CODE_BORDER_TILE_CORNER_TOP), CODE_BORDER_RIGHT_COL, CODE_BORDER_TOP_ROW, 1, 1, 0);
+
+    for (row = CODE_BORDER_TOP_ROW + 1; row < CODE_BORDER_BOTTOM_ROW; row++)
+    {
+        FillBgTilemapBufferRect(3, CODE_BORDER_TILE_SIDE, CODE_BORDER_LEFT_COL, row, 1, 1, 0);
+        FillBgTilemapBufferRect(3, CODE_BORDER_TILE_FILL, innerLeft, row, innerWidth, 1, 0);
+        FillBgTilemapBufferRect(3, BG_TILE_H_FLIP(CODE_BORDER_TILE_SIDE), CODE_BORDER_RIGHT_COL, row, 1, 1, 0);
+    }
+
+    FillBgTilemapBufferRect(3, CODE_BORDER_TILE_CORNER_BOTTOM, CODE_BORDER_LEFT_COL, CODE_BORDER_BOTTOM_ROW, 1, 1, 0);
+    FillBgTilemapBufferRect(3, BG_TILE_V_FLIP(CODE_BORDER_TILE_EDGE), innerLeft, CODE_BORDER_BOTTOM_ROW, innerWidth, 1, 0);
+    FillBgTilemapBufferRect(3, BG_TILE_H_FLIP(CODE_BORDER_TILE_CORNER_BOTTOM), CODE_BORDER_RIGHT_COL, CODE_BORDER_BOTTOM_ROW, 1, 1, 0);
 }
 
 static bool8 MainState_FadeIn(void)
 {
     DrawBgTilemap(3, gNamingScreenBackground_Tilemap);
+    if (sNamingScreen->templateNum == NAMING_SCREEN_CODE)
+        DrawWidenedCodeScreenBorder();
     sNamingScreen->currentPage = KBPAGE_LETTERS_UPPER;
     DrawBgTilemap(2, gNamingScreenKeyboardLower_Tilemap);
     DrawBgTilemap(1, gNamingScreenKeyboardUpper_Tilemap);
     PrintKeyboardKeys(sNamingScreen->windows[WIN_KB_PAGE_2], KEYBOARD_LETTERS_LOWER);
-    PrintKeyboardKeys(sNamingScreen->windows[WIN_KB_PAGE_1], KEYBOARD_LETTERS_UPPER);
+    PrintKeyboardKeys(sNamingScreen->windows[WIN_KB_PAGE_1], CurrentPageToKeyboardId());
     NamingScreen_Dummy(2, KEYBOARD_LETTERS_LOWER);
     NamingScreen_Dummy(1, KEYBOARD_LETTERS_UPPER);
     DrawTextEntry();
@@ -678,6 +802,27 @@ static bool8 MainState_MoveToOKButton(void)
 static bool8 MainState_PressedOKButton(void)
 {
     SaveInputText();
+    SetInputState(INPUT_STATE_DISABLED);
+    SetCursorFlashing(FALSE);
+    TryStartButtonFlash(BUTTON_COUNT, FALSE, TRUE);
+    sNamingScreen->state = STATE_FADE_OUT;
+    return TRUE;
+}
+
+// NAMING_SCREEN_CODE only (see HandleKeyboardEvent) - this screen has no
+// dedicated cancel button (nothing in this engine does - every other naming
+// screen is only ever cancelled by the calling script asking first, before
+// DoNamingScreen is even called), so B here closes the screen outright
+// instead of backspacing one character, discarding whatever was typed.
+// Deliberately skips SaveInputText() - forces destBuffer empty instead, so
+// the caller (GetCodeFeedback, src/field_specials.c) sees an empty code and
+// treats this as a cancel rather than an invalid one. Per-character
+// backspacing (fixing a typo without leaving) still works via the on-screen
+// keyboard's own backspace key (KeyboardKeyHandler_Backspace) - only the
+// physical B shortcut changes meaning on this screen.
+static bool8 CancelNamingScreenCode(void)
+{
+    sNamingScreen->destBuffer[0] = EOS;
     SetInputState(INPUT_STATE_DISABLED);
     SetCursorFlashing(FALSE);
     TryStartButtonFlash(BUTTON_COUNT, FALSE, TRUE);
@@ -1511,6 +1656,14 @@ static bool8 HandleKeyboardEvent(void)
     }
     else if (input == INPUT_B_BUTTON)
     {
+        // NAMING_SCREEN_CODE: B backspaces normally like everywhere else,
+        // but once there's nothing left to delete, one more B closes the
+        // screen outright instead of just doing nothing - matches how
+        // backing out of a text field with repeated presses of Back/Cancel
+        // reads elsewhere in the game, rather than the START-then-confirm-empty
+        // shortcut this used to require (see CancelNamingScreenCode).
+        if (sNamingScreen->templateNum == NAMING_SCREEN_CODE && sNamingScreen->textBuffer[0] == EOS)
+            return CancelNamingScreenCode();
         DeleteTextCharacter();
         return FALSE;
     }
@@ -1547,6 +1700,13 @@ static bool8 KeyboardKeyHandler_Character(u8 input)
 static void SwapKeyboardToLowerAfterFirstCapitalLetter(void)
 {
     if (AUTO_LOWERCASE_KEYBOARD < GEN_6)
+        return;
+
+    // The async code-battle alphabet is uppercase-only (single keyboard page,
+    // by design - see async_code_battle.c) - auto-swapping to lowercase after
+    // the first letter would silently start typing characters our decoder
+    // doesn't recognize.
+    if (sNamingScreen->templateNum == NAMING_SCREEN_CODE)
         return;
 
     if (sNamingScreen->currentPage != KBPAGE_LETTERS_UPPER)
@@ -1590,6 +1750,14 @@ static bool8 KeyboardKeyHandler_OK(u8 input)
 
 static bool8 SwapKeyboardPage(void)
 {
+    // The async code alphabet only exists on KEYBOARD_CODE (see
+    // CurrentPageToKeyboardId) - letting the player swap away from it (SELECT,
+    // or navigating to the on-screen Page button) would land them on a
+    // keyboard whose characters aren't in AsyncCodeBattle_TryDecode's
+    // alphabet. Single page by design (see async_code_battle.c) - actually
+    // enforced here instead of just relying on nobody pressing Select.
+    if (sNamingScreen->templateNum == NAMING_SCREEN_CODE)
+        return FALSE;
     sNamingScreen->state = STATE_START_PAGE_SWAP;
     return TRUE;
 }
@@ -1980,7 +2148,14 @@ static void DrawTextEntry(void)
     u8 temp[2];
     u16 extraWidth;
     u8 maxChars = sNamingScreen->template->maxChars;
-    u16 x = sNamingScreen->inputCharBaseXPos - 0x40;
+    // Converts inputCharBaseXPos (screen-global) to WIN_TEXT_ENTRY-local
+    // pixel space - must match whichever tilemapLeft WIN_TEXT_ENTRY was
+    // actually created with above (WIDE for NAMING_SCREEN_CODE, NARROW for
+    // everything else - see the window-creation loop). Getting this out of
+    // sync with the actual window is what used to make typed characters not
+    // appear until several characters in and land in the wrong slot.
+    u16 x = sNamingScreen->inputCharBaseXPos - (sNamingScreen->templateNum == NAMING_SCREEN_CODE
+        ? WIN_TEXT_ENTRY_TILEMAP_LEFT_WIDE : WIN_TEXT_ENTRY_TILEMAP_LEFT_NARROW) * 8;
 
     FillWindowPixelBuffer(sNamingScreen->windows[WIN_TEXT_ENTRY], PIXEL_FILL(1));
 
@@ -2005,18 +2180,20 @@ ALIGNED(4) static const u8 sTextColorStruct[3][4] =
     {TEXT_DYNAMIC_COLOR_6, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY}
 };
 
-static const u8 sFillValues[KBPAGE_COUNT] =
+static const u8 sFillValues[KEYBOARD_ID_COUNT] =
 {
     [KEYBOARD_LETTERS_LOWER] = PIXEL_FILL(14),
     [KEYBOARD_LETTERS_UPPER] = PIXEL_FILL(13),
-    [KEYBOARD_SYMBOLS]       = PIXEL_FILL(15)
+    [KEYBOARD_SYMBOLS]       = PIXEL_FILL(15),
+    [KEYBOARD_CODE]          = PIXEL_FILL(13)
 };
 
-static const u8 *const sKeyboardTextColors[KBPAGE_COUNT] =
+static const u8 *const sKeyboardTextColors[KEYBOARD_ID_COUNT] =
 {
     [KEYBOARD_LETTERS_LOWER] = sTextColorStruct[1],
     [KEYBOARD_LETTERS_UPPER] = sTextColorStruct[0],
-    [KEYBOARD_SYMBOLS]       = sTextColorStruct[2]
+    [KEYBOARD_SYMBOLS]       = sTextColorStruct[2],
+    [KEYBOARD_CODE]          = sTextColorStruct[0]
 };
 
 static void PrintKeyboardKeys(u8 window, u8 page)
@@ -2204,7 +2381,7 @@ static const struct NamingScreenTemplate sCodeScreenTemplate =
 {
     .copyExistingString = FALSE,
     .maxChars = CODE_NAME_LENGTH,
-    .iconFunction = 5,
+    .iconFunction = 0, // NamingScreen_NoIcon - was 5 (NamingScreen_CreateCodeIcon, the walking overworld sprite), irrelevant here
     .addGenderIcon = FALSE,
     .initialPage = KBPAGE_LETTERS_UPPER,
     .unused = 35,
@@ -2603,7 +2780,7 @@ static const struct SpriteTemplate sSpriteTemplate_PCIcon =
     .images = sImageTable_PCIcon,
 };
 
-static const u8 *const sNamingScreenKeyboardText[KBPAGE_COUNT][KBROW_COUNT] =
+static const u8 *const sNamingScreenKeyboardText[KEYBOARD_ID_COUNT][KBROW_COUNT] =
 {
     [KEYBOARD_LETTERS_LOWER] =
     {
@@ -2625,6 +2802,13 @@ static const u8 *const sNamingScreenKeyboardText[KBPAGE_COUNT][KBROW_COUNT] =
         gText_NamingScreenKeyboard_56789,
         gText_NamingScreenKeyboard_Symbols1,
         gText_NamingScreenKeyboard_Symbols2
+    },
+    [KEYBOARD_CODE] =
+    {
+        gText_NamingScreenKeyboardCode_ABCDEFGH,
+        gText_NamingScreenKeyboardCode_IJKLMNOP,
+        gText_NamingScreenKeyboardCode_QRSTUVWX,
+        gText_NamingScreenKeyboardCode_YZ123
     },
 };
 

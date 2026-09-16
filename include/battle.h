@@ -300,9 +300,12 @@ struct StatsArray
     u16 learnMultipleMoves:1;
 };
 
+struct AsyncBattleResource; // full definition in include/async_code_battle.h
+
 struct BattleResources
 {
     struct SecretBase *secretBase;
+    struct AsyncBattleResource *asyncCodeBattle;
     struct BattleScriptsStack *battleScriptsStack;
     struct BattleCallbacksStack *battleCallbackStack;
     struct StatsArray *beforeLvlUp;

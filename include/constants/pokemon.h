@@ -102,6 +102,7 @@ enum __attribute__((packed)) Stat
 
 // Shiny odds
 #define SHINY_ODDS 8 // Actual probability is SHINY_ODDS/65536
+#define SHINY_ODDS_INCREASED 32 // Actual probability is SHINY_ODDS_INCREASED/65536 (1/2048) - chosen at Birch's speech via FLAG_INCREASED_SHINY_RATE
 
 // Ribbon IDs used by TV and Pokénav
 #define CHAMPION_RIBBON       0

@@ -169,6 +169,7 @@ enum
     MULTI_HOF_VICTORIES_QUIT,
     MULTI_EGGS_VICTORIES_QUIT,
     MULTI_HOF_EGGS_VICTORIES_QUIT,
+    MULTI_ASYNC_CODE_CHOICE, // Générer / Entrer un code de combat - see CableClub_EventScript_AsyncCodeChoice
 };
 
 #define MULTI_NONE 255

@@ -52,6 +52,8 @@
 #include "tx_registered_items_menu.h"
 #include "difficulty.h"
 #include "follower_npc.h"
+#include "main_menu.h"
+#include "constants/flags.h"
 
 extern const u8 EventScript_ResetAllMapFlags[];
 extern const u8 EventScript_ResetAllMapFlagsFrlg[];
@@ -236,6 +238,18 @@ void NewGameInitData(void)
     ResetItemFlags();
     ResetDexNav();
     ClearFollowerNPCData();
+
+    if (WasNuzlockeModeSelected())
+    {
+        FlagSet(FLAG_NUZLOCKE);
+        ClearNuzlockeModeSelection();
+    }
+
+    if (WasIncreasedShinyRateSelected())
+    {
+        FlagSet(FLAG_INCREASED_SHINY_RATE);
+        ClearIncreasedShinyRateSelection();
+    }
 }
 
 static void ResetMiniGamesRecords(void)

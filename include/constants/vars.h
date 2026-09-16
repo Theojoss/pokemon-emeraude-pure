@@ -180,7 +180,7 @@
 #define VAR_MOSSDEEP_SPACE_CENTER_STAIR_GUARD_STATE      0x409E
 #define VAR_MOSSDEEP_SPACE_CENTER_STATE                  0x409F
 #define VAR_SLATEPORT_HARBOR_STATE                       0x40A0
-#define VAR_UNUSED_0x40A1                                0x40A1 // Unused var
+#define VAR_ASYNC_CODE_BATTLE_ARENA                      0x40A1 // 0 = idle, 1 = play the opponent-arrival cutscene next time BattleColosseum_2P[_Frlg] loads (see async code-battle feature, data/scripts/cable_club.inc). Verified free in both vars.h and vars_frlg.h before reuse.
 #define VAR_SEAFLOOR_CAVERN_STATE                        0x40A2
 #define VAR_CABLE_CAR_STATION_STATE                      0x40A3
 #define VAR_SAFARI_ZONE_STATE                            0x40A4  // 0: In or out of SZ, 1: Player exiting SZ, 2: Player entering SZ
@@ -238,7 +238,7 @@
 #define VAR_SOOTOPOLIS_WALLACE_STATE                     0x40D8
 #define VAR_HAS_TALKED_TO_SEAFLOOR_CAVERN_ENTRANCE_GRUNT 0x40D9
 #define VAR_REGISTER_BIRCH_STATE                         0x40DA
-#define VAR_UNUSED_0x40DB                                0x40DB // Unused Var
+#define VAR_NUZLOCKE_ENCOUNTERS_9                        0x40DB // Nuzlocke: bit-tracks 1st-encounter status of the 139 wild-encounter areas
 #define VAR_UNUSED_0x40DC                                0x40DC // Unused Var
 #define VAR_GIFT_PICHU_SLOT                              0x40DD
 #define VAR_GIFT_UNUSED_1                                0x40DE // Var is written to, but never read
@@ -267,14 +267,14 @@
 #define VAR_SCOTT_BF_CALL_STEP_COUNTER                   0x40F5
 #define VAR_RIVAL_RAYQUAZA_CALL_STEP_COUNTER             0x40F6
 #define VAR_RECIF_ROUND                                  0x40F7
-#define VAR_UNUSED_0x40F8                                0x40F8 // Unused Var
-#define VAR_UNUSED_0x40F9                                0x40F9 // Unused Var
-#define VAR_UNUSED_0x40FA                                0x40FA // Unused Var
-#define VAR_UNUSED_0x40FB                                0x40FB // Unused Var
-#define VAR_UNUSED_0x40FC                                0x40FC // Unused Var
-#define VAR_UNUSED_0x40FD                                0x40FD // Unused Var
-#define VAR_UNUSED_0x40FE                                0x40FE // Unused Var
-#define VAR_UNUSED_0x40FF                                0x40FF // Unused Var
+#define VAR_NUZLOCKE_ENCOUNTERS_1                        0x40F8 // Nuzlocke: bit-tracks 1st-encounter status of the 139 wild-encounter areas
+#define VAR_NUZLOCKE_ENCOUNTERS_2                        0x40F9 // Nuzlocke: bit-tracks 1st-encounter status of the 139 wild-encounter areas
+#define VAR_NUZLOCKE_ENCOUNTERS_3                        0x40FA // Nuzlocke: bit-tracks 1st-encounter status of the 139 wild-encounter areas
+#define VAR_NUZLOCKE_ENCOUNTERS_4                        0x40FB // Nuzlocke: bit-tracks 1st-encounter status of the 139 wild-encounter areas
+#define VAR_NUZLOCKE_ENCOUNTERS_5                        0x40FC // Nuzlocke: bit-tracks 1st-encounter status of the 139 wild-encounter areas
+#define VAR_NUZLOCKE_ENCOUNTERS_6                        0x40FD // Nuzlocke: bit-tracks 1st-encounter status of the 139 wild-encounter areas
+#define VAR_NUZLOCKE_ENCOUNTERS_7                        0x40FE // Nuzlocke: bit-tracks 1st-encounter status of the 139 wild-encounter areas
+#define VAR_NUZLOCKE_ENCOUNTERS_8                        0x40FF // Nuzlocke: bit-tracks 1st-encounter status of the 139 wild-encounter areas
 
 #define VARS_END                                         0x40FF
 #define VARS_COUNT                                       (VARS_END - VARS_START + 1)

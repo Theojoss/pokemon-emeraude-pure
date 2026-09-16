@@ -123,6 +123,8 @@ gSpecials::
 	def_special GiveMonArtistRibbon
 	def_special TryContestGModeLinkup, waitstate=TRUE
 	def_special SaveGame, waitstate=TRUE
+	def_special NuzlockeSilentSave
+	def_special NuzlockeHasAnyLivingPokemon
 	def_special DoWateringBerryTreeAnim, waitstate=TRUE
 	def_special ShowEasyChatScreen
 	def_special ShowEasyChatProfile
@@ -571,8 +573,14 @@ gSpecials::
 	def_special Script_GetChosenMonOffensiveIVs
 	def_special Script_GetChosenMonDefensiveIVs
 	def_special UseBlankMessageToCancelPokemonPic
-	def_special EnterCode
+	def_special EnterCode, waitstate=TRUE
 	def_special GetCodeFeedback
+	def_special StartAsyncCodeBattle
+	def_special SetAsyncOpponentOverworldGfx
+	def_special CheckAsyncCodePartySize
+	def_special GenerateAsyncCode
+	def_special TestBattleOwnCode
+	def_special CheckHasLastAsyncCodeTrainer
 	def_special SetHiddenNature
 	def_special SetAbility
 	def_special CanTeachMoveBoxMon

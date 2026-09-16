@@ -1,6 +1,7 @@
 #include "global.h"
 #include "malloc.h"
 #include "apprentice.h"
+#include "async_code_battle.h"
 #include "battle.h"
 #include "battle_ai_util.h"
 #include "battle_anim.h"
@@ -16,6 +17,7 @@
 #include "daycare.h"
 #include "dexnav.h"
 #include "event_data.h"
+#include "constants/flags.h"
 #include "event_object_movement.h"
 #include "evolution_scene.h"
 #include "field_player_avatar.h"
@@ -34,6 +36,7 @@
 #include "naming_screen.h"
 #include "overworld.h"
 #include "party_menu.h"
+#include "nuzlocke.h"
 #include "pokedex.h"
 #include "pokeblock.h"
 #include "pokemon.h"
@@ -865,6 +868,14 @@ void CreateMonWithIVs(struct Pokemon *mon, enum Species species, u8 level, u32 p
     CalculateMonStats(mon);
 }
 
+u32 GetShinyOdds(void)
+{
+    if (FlagGet(FLAG_INCREASED_SHINY_RATE))
+        return SHINY_ODDS_INCREASED;
+
+    return SHINY_ODDS;
+}
+
 bool32 ComputePlayerShinyOdds(u32 personality, u32 value)
 {
     if (P_FLAG_FORCE_NO_SHINY != 0 && FlagGet(P_FLAG_FORCE_NO_SHINY))
@@ -892,13 +903,13 @@ bool32 ComputePlayerShinyOdds(u32 personality, u32 value)
     if (gDexNavSpecies)
         totalRerolls += CalculateDexNavShinyRolls();
 
-    while (GET_SHINY_VALUE(value, personality) >= SHINY_ODDS && totalRerolls > 0)
+    while (GET_SHINY_VALUE(value, personality) >= GetShinyOdds() && totalRerolls > 0)
     {
         personality = Random32();
         totalRerolls--;
     }
 
-    return GET_SHINY_VALUE(value, personality) < SHINY_ODDS;
+    return GET_SHINY_VALUE(value, personality) < GetShinyOdds();
 }
 
 void SetBoxMonIVs(struct BoxPokemon *mon, u8 fixedIV)
@@ -2525,7 +2536,7 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         case MON_DATA_IS_SHINY:
         {
             u32 shinyValue = GET_SHINY_VALUE(boxMon->otId, boxMon->personality);
-            retVal = (shinyValue < SHINY_ODDS) ^ boxMon->shinyModifier;
+            retVal = (shinyValue < GetShinyOdds()) ^ boxMon->shinyModifier;
             break;
         }
         case MON_DATA_HIDDEN_NATURE:
@@ -2536,6 +2547,9 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         }
         case MON_DATA_DAYS_SINCE_FORM_CHANGE:
             retVal = boxMon->daysSinceFormChange;
+            break;
+        case MON_DATA_IS_DEAD:
+            retVal = boxMon->isDead;
             break;
         default:
             break;
@@ -2589,6 +2603,7 @@ void SetMonData(struct Pokemon *mon, s32 field, const void *dataArg)
         SET16(mon->hp);
         hpLost = mon->maxHP - mon->hp;
         SetBoxMonData(&mon->box, MON_DATA_HP_LOST, &hpLost);
+        NuzlockeHandleFaint(mon);
         break;
     }
     case MON_DATA_HP_LOST:
@@ -2957,7 +2972,7 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
             u32 shinyValue = GET_SHINY_VALUE(boxMon->otId, boxMon->personality);
             bool32 isShiny;
             SET8(isShiny);
-            boxMon->shinyModifier = (shinyValue < SHINY_ODDS) ^ isShiny;
+            boxMon->shinyModifier = (shinyValue < GetShinyOdds()) ^ isShiny;
             break;
         }
         case MON_DATA_HIDDEN_NATURE:
@@ -2970,6 +2985,9 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         }
         case MON_DATA_DAYS_SINCE_FORM_CHANGE:
             SET8(boxMon->daysSinceFormChange);
+            break;
+        case MON_DATA_IS_DEAD:
+            SET8(boxMon->isDead);
             break;
         }
     }
@@ -5285,6 +5303,25 @@ u16 GetBattleBGM(void)
     {
         enum TrainerClassID trainerClass;
 
+        if (gBattleTypeFlags & BATTLE_TYPE_ASYNC_CODE_BATTLE)
+        {
+            static const u16 sAsyncBattleMusic[] =
+            {
+                MUS_VS_TRAINER, MUS_VS_GYM_LEADER, MUS_VS_CHAMPION, MUS_VS_RIVAL,
+                MUS_VS_ELITE_FOUR, MUS_VS_FRONTIER_BRAIN, MUS_VS_AQUA_MAGMA, MUS_VS_AQUA_MAGMA_LEADER,
+            };
+            // GetBattleBGM() runs from CreateBattleStartTask (src/battle_setup.c),
+            // right as the transition starts - well before AllocateBattleResources()
+            // (src/battle_util2.c) allocates gBattleResources->asyncCodeBattle and
+            // fills in its ->hash for THIS battle. Reading that field here would
+            // pick up whatever was left over from the previous async battle (or
+            // garbage on the very first one), picking the same track every time
+            // regardless of the actual code - the same early-timing pitfall
+            // GetTrainerPicFromId/GetTrainerMugshotColorFromId (include/data.h)
+            // already work around via this same pending-hash accessor.
+            return sAsyncBattleMusic[GetPendingAsyncCodeBattleHash() % ARRAY_COUNT(sAsyncBattleMusic)];
+        }
+
         if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_THEOJOSS)
             return MUS_RG_VS_CHAMPION;
 
@@ -6679,6 +6716,9 @@ void HealPokemon(struct Pokemon *mon)
 {
     u32 data;
 
+    if (IsMonDead(mon))
+        return;
+
     data = GetMonData(mon, MON_DATA_MAX_HP);
     SetMonData(mon, MON_DATA_HP, &data);
 
@@ -6691,6 +6731,9 @@ void HealPokemon(struct Pokemon *mon)
 void HealBoxPokemon(struct BoxPokemon *boxMon)
 {
     u32 data;
+
+    if (IsBoxMonDead(boxMon))
+        return;
 
     data = 0;
     SetBoxMonData(boxMon, MON_DATA_HP_LOST, &data);

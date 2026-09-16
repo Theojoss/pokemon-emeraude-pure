@@ -42,6 +42,7 @@
 #include "map_name_popup.h"
 #include "map_preview_screen.h"
 #include "match_call.h"
+#include "nuzlocke.h"
 #include "menu.h"
 #include "metatile_behavior.h"
 #include "mirage_tower.h"
@@ -393,6 +394,7 @@ static void (*const sMovementStatusHandler[])(struct LinkPlayerObjectEvent *, st
 void DoWhiteOut(void)
 {
     RunScriptImmediately(EventScript_WhiteOut);
+    NuzlockeHandleWhiteout();
     HealPlayerParty();
     Overworld_ResetStateAfterWhiteOut();
     SetWarpDestinationToLastHealLocation();

@@ -1,6 +1,7 @@
 #include "global.h"
 #include "debug.h"
 #include "malloc.h"
+#include "async_code_battle.h"
 #include "battle.h"
 #include "battle_special.h"
 #include "cable_club.h"
@@ -4590,13 +4591,214 @@ void EnterCode(void)
     DoNamingScreen(NAMING_SCREEN_CODE, gStringVar2, 0, 0, 0, CB2_ReturnToFieldContinueScript);
 }
 
+// Decoded by GetCodeFeedback, consumed by StartAsyncCodeBattle right after -
+// the naming screen (EnterCode) only leaves the typed code in gStringVar2,
+// so the decode result needs to be stashed somewhere between those two
+// specials. AsyncCodeBattle_Start() copies out of this the moment the battle
+// actually starts (see async_code_battle.c's own sPendingAsyncTrainer).
+static struct AsyncCodeBattleTrainer sDecodedAsyncCodeTrainer;
+static u32 sDecodedAsyncCodeHash;
+// Set the first time sDecodedAsyncCodeTrainer/Hash hold a real decoded
+// trainer this session (never cleared afterwards - stays TRUE across as many
+// "Réaffronter le dernier dresseur" refights as the player wants, right up
+// until a new code is decoded and overwrites it). Needed because a
+// zero-initialized hash of 0 is indistinguishable from a genuinely absent
+// trainer otherwise. Not save-persisted - resets on power-off like any other
+// static, which is fine: this is meant for "walk back in and retry right
+// after a loss", not a feature that needs to survive turning the game off.
+static bool8 sHasDecodedAsyncCodeTrainer = FALSE;
+
+// gSpecialVar_Result: 0 = invalid (typed something, but it doesn't decode),
+// 1 = valid, 2 = cancelled (nothing typed at all). Pressing B on
+// NAMING_SCREEN_CODE closes the screen outright with an empty destBuffer
+// (see CancelNamingScreenCode in src/naming_screen.c) instead of the usual
+// per-character backspace - so an empty gStringVar2 here means the player
+// asked to leave, not that they typed and confirmed nothing. Treating that
+// as "invalid" would scold them for trying to leave, so it gets its own
+// outcome instead (see CableClub_EventScript_AsyncCodeCancelled).
 void GetCodeFeedback(void)
 {
-    static const u8 sText_SampleCode[] = _("SampleCode");
-    if (!StringCompare(gStringVar2, sText_SampleCode))
-        gSpecialVar_Result = 1;
+    if (gStringVar2[0] == EOS)
+    {
+        gSpecialVar_Result = 2;
+        return;
+    }
+
+    if (AsyncCodeBattle_TryDecode(gStringVar2, &sDecodedAsyncCodeTrainer))
+    {
+        sDecodedAsyncCodeHash = AsyncCodeBattle_HashCode(gStringVar2);
+        sHasDecodedAsyncCodeTrainer = TRUE;
+        gSpecialVar_Result = TRUE;
+
+        // Built here, not as a static text + STR_VAR placeholder, for the
+        // same gStringVar4-clobbering reason as GenerateAsyncCode below -
+        // any msgbox shown between filling gStringVar4 and reading it back
+        // (via ShowFieldMessageStringVar4, see
+        // CableClub_EventScript_EnterFriendCode) would destroy it.
+        // trainerName is already game-charset encoded and EOS-terminated by
+        // AsyncCodeBattle_TryDecode (trailing '1' padding stripped), so it's
+        // directly printable as-is - same assumption battle_message.c's
+        // GetTrainerNameForNameId makes for this same field.
+        StringCopy(gStringVar4, COMPOUND_STRING("Ce code correspond au\ndresseur "));
+        StringAppend(gStringVar4, sDecodedAsyncCodeTrainer.trainerName);
+        StringAppend(gStringVar4, COMPOUND_STRING(".\pVeuillez entrer s'il vous\nplaît. Bon combat !"));
+    }
     else
-        gSpecialVar_Result = 0;
+    {
+        gSpecialVar_Result = FALSE;
+    }
+}
+
+// Backs the "Réaffronter le dernier dresseur" menu option
+// (CableClub_EventScript_RefightLastTrainer, data/scripts/cable_club.inc) -
+// gSpecialVar_Result is TRUE if a trainer has been decoded (via a real code
+// or the temporary test-own-code path) at least once this session, letting
+// the script skip straight to CableClub_EventScript_ProceedToArena and reuse
+// sDecodedAsyncCodeTrainer/Hash as-is, without re-typing or re-decoding
+// anything.
+void CheckHasLastAsyncCodeTrainer(void)
+{
+    gSpecialVar_Result = sHasDecodedAsyncCodeTrainer;
+}
+
+// Only ever called right after a GetCodeFeedback that returned TRUE (see
+// CableClub_EventScript_Colosseum) - sDecodedAsyncCodeTrainer/Hash are still
+// the ones GetCodeFeedback just decoded.
+void StartAsyncCodeBattle(void)
+{
+    AsyncCodeBattle_Start(&sDecodedAsyncCodeTrainer, sDecodedAsyncCodeHash);
+}
+
+// Called right before warping into BattleColosseum_2P[_Frlg] for a validated
+// code (see CableClub_EventScript_EnterFriendCode) - resolves the same
+// deterministic sprite pair BuildAsyncOpponentParty will use for the actual
+// battle mugshot, but here just for the OBJ_EVENT_GFX_VAR_F opponent object
+// event placed in that map (see its map.json), so the overworld NPC the
+// player sees walking in during the arrival cutscene actually matches the
+// trainer they're about to fight. sDecodedAsyncCodeTrainer/Hash are still
+// the ones GetCodeFeedback just decoded (same precondition as
+// StartAsyncCodeBattle, which runs later, once the cutscene finishes).
+void SetAsyncOpponentOverworldGfx(void)
+{
+    u16 owGfxId;
+    enum TrainerPicID picId;
+
+    GetAsyncBattleSpritePair(sDecodedAsyncCodeTrainer.sex, sDecodedAsyncCodeHash, &owGfxId, &picId);
+    VarSet(VAR_OBJ_GFX_ID_F, owGfxId);
+
+    // Companion object standing next to the opponent in the arena, showing
+    // their lead Pokémon - same VAR-backed OBJ_EVENT_GFX_VAR_x mechanism as
+    // the trainer sprite above, just a spare slot (E instead of F). No
+    // gender data is encoded in the code (struct AsyncCodeMon), so this
+    // always uses the male/genderless variant of the species' OW sprite.
+    VarSet(VAR_OBJ_GFX_ID_E, GetGraphicsIdForMon(sDecodedAsyncCodeTrainer.mons[0].species, sDecodedAsyncCodeTrainer.mons[0].shiny, FALSE));
+}
+
+static u8 sGeneratedAsyncCode[ASYNC_CODE_CHAR_COUNT + 1];
+
+// Lightweight party-size check only, touching neither gStringVar4 nor the
+// generated code - lets CableClub_EventScript_ConfirmGenerateCode
+// (data/scripts/cable_club.inc) skip straight to the "not enough Pokémon"
+// message instead of first explaining a code it's not actually about to
+// generate. GenerateAsyncCode below does this exact same check again right
+// before building the code for real - cheap, and keeps that function
+// self-contained rather than trusting a check done earlier in the script.
+void CheckAsyncCodePartySize(void)
+{
+    gSpecialVar_Result = (CalculatePlayerPartyCount() == ASYNC_CODE_MON_COUNT);
+}
+
+// Builds a code for the PLAYER's own current party/name/sex - the reverse of
+// EnterCode+GetCodeFeedback, for the player to read out (or write down) and
+// hand to a friend. Requires a full 6-mon party since the code always
+// encodes exactly ASYNC_CODE_MON_COUNT mons (see struct AsyncCodeBattleTrainer) -
+// gSpecialVar_Result is FALSE (nothing generated, gStringVar4 untouched) if
+// the party isn't exactly 6.
+void GenerateAsyncCode(void)
+{
+    struct AsyncCodeBattleTrainer trainer;
+    u32 i;
+
+    if (CalculatePlayerPartyCount() != ASYNC_CODE_MON_COUNT)
+    {
+        gSpecialVar_Result = FALSE;
+        return;
+    }
+
+    // '1' instead of any real space the player's own name might contain
+    // (e.g. "JEAN PAUL") - space isn't in sAsyncCodeCharset at all anymore
+    // (see async_code_battle.c), so a real space here would otherwise just
+    // silently mismap to 'A' the moment AsyncCodeBattle_Encode looks it up.
+    for (i = 0; i < ASYNC_CODE_NAME_LENGTH && gSaveBlock2Ptr->playerName[i] != EOS; i++)
+        trainer.trainerName[i] = (gSaveBlock2Ptr->playerName[i] == CHAR_SPACE) ? CHAR_1 : gSaveBlock2Ptr->playerName[i];
+    // Pad with '1' (CHAR_1), not space - AsyncCodeBattle_Encode reads all 7
+    // name slots regardless of the real name's length, and space isn't in
+    // sAsyncCodeCharset at all (see there for why) - a real, clearly-visible
+    // character the player can actually see and retype is less error-prone
+    // to copy by hand anyway. Not '0' - this font renders '0' and capital
+    // 'O' identically. AsyncCodeBattle_TryDecode strips trailing CHAR_1 back
+    // off so the name still displays as just "THEO", not "THEO111", to
+    // whoever receives the code.
+    for (; i < ASYNC_CODE_NAME_LENGTH; i++)
+        trainer.trainerName[i] = CHAR_1;
+    trainer.trainerName[ASYNC_CODE_NAME_LENGTH] = EOS;
+    trainer.sex = gSaveBlock2Ptr->playerGender;
+
+    for (i = 0; i < ASYNC_CODE_MON_COUNT; i++)
+    {
+        struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][i];
+        trainer.mons[i].species = GetMonData(mon, MON_DATA_SPECIES);
+        trainer.mons[i].shiny = IsMonShiny(mon);
+    }
+
+    AsyncCodeBattle_Encode(&trainer, sGeneratedAsyncCode);
+
+    // Both the intro line and the code itself have to be built into
+    // gStringVar4 in one shot here, not split across a msgbox (for the
+    // intro) + a separate special call (for the code): ShowFieldMessage -
+    // what both msgbox and ShowFieldMessageStringVar4 boil down to -
+    // unconditionally overwrites gStringVar4 with whatever text it's asked
+    // to show (src/field_message_box.c's StringExpandPlaceholders(gStringVar4, str)),
+    // even for a fully static string with no placeholders. A msgbox shown
+    // between filling gStringVar4 here and reading it back via
+    // ShowFieldMessageStringVar4 would clobber the code with its own text
+    // first - which is exactly what happened before this comment existed
+    // (the player saw the intro line twice instead of intro + code).
+    StringCopy(gStringVar4, COMPOUND_STRING("Voici votre code, notez-le\nbien pour le donner à un autre\ldresseur :\p"));
+    // Straight, unbroken 24-character line - no separators needed: space
+    // isn't in sAsyncCodeCharset at all anymore (see there for why), so
+    // there's no risk of a printed formatting character being mistaken for
+    // a real one, the way a plain space or even a '-' group separator would
+    // have been before that change. sGeneratedAsyncCode is already
+    // EOS-terminated by AsyncCodeBattle_Encode.
+    StringAppend(gStringVar4, sGeneratedAsyncCode);
+
+    gSpecialVar_Result = TRUE;
+}
+
+// Testing entry point - lets the player fight their own generated code
+// without needing a second console/friend to hand it to. Reuses
+// GenerateAsyncCode wholesale (own name/sex/party -> sGeneratedAsyncCode),
+// then immediately decodes that same code back into
+// sDecodedAsyncCodeTrainer/Hash exactly like a real GetCodeFeedback success
+// would, so the rest of the flow (CableClub_EventScript_ProceedToArena -
+// data/scripts/cable_club.inc) is identical either way. No longer wired into
+// the NPC's menu (its "Combattre mon propre code" multichoice entry was
+// removed once the real friend-to-friend code path was validated) - kept,
+// along with CableClub_EventScript_TestOwnCode[_Frlg], since it's still
+// useful for testing if this feature needs revisiting.
+// gSpecialVar_Result: FALSE if the party isn't exactly 6 (same as
+// GenerateAsyncCode), TRUE otherwise - decode of a code this function just
+// encoded itself can't fail.
+void TestBattleOwnCode(void)
+{
+    GenerateAsyncCode();
+    if (gSpecialVar_Result == FALSE)
+        return;
+
+    AsyncCodeBattle_TryDecode(sGeneratedAsyncCode, &sDecodedAsyncCodeTrainer);
+    sDecodedAsyncCodeHash = AsyncCodeBattle_HashCode(sGeneratedAsyncCode);
+    sHasDecodedAsyncCodeTrainer = TRUE;
 }
 
 void SetHiddenNature(void)

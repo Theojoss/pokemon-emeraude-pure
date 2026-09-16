@@ -530,6 +530,13 @@ static const struct MenuAction MultichoiceList_LinkServicesNoRecordBerry[] =
     {gText_Exit},
 };
 
+static const struct MenuAction MultichoiceList_AsyncCodeChoice[] =
+{
+    {COMPOUND_STRING("Générer mon code de combat")},
+    {COMPOUND_STRING("Entrer un code de combat")},
+    {COMPOUND_STRING("Réaffronter le dernier dresseur")},
+};
+
 static const struct MenuAction MultichoiceList_WirelessMinigame[] =
 {
     {COMPOUND_STRING("SAUT POKéMON")},
@@ -1209,6 +1216,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_SHARDS_YBG]                 = MULTICHOICE(MultichoiceList_ShardsYBG),
     [MULTI_SHARDS_RYBG]                = MULTICHOICE(MultichoiceList_ShardsRYBG),
     [MULTI_TOURNEY_WITH_RECORD]        = MULTICHOICE(MultichoiceList_TourneyWithRecord),
+    [MULTI_ASYNC_CODE_CHOICE]          = MULTICHOICE(MultichoiceList_AsyncCodeChoice),
     [MULTI_CABLE_CLUB_NO_RECORD_MIX]   = MULTICHOICE(MultichoiceList_LinkServicesNoRecordBerry),
     [MULTI_WIRELESS_NO_RECORD_BERRY]   = MULTICHOICE(MultichoiceList_LinkServicesNoRecordBerry),
     [MULTI_CABLE_CLUB_WITH_RECORD_MIX] = MULTICHOICE(MultichoiceList_LinkServicesNoBerry),

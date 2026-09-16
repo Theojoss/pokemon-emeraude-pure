@@ -28,6 +28,10 @@ EventScript_TooDark::
 	msgbox sText_TooDark, MSGBOX_SIGN
 	end
 
+EventScript_DexNavFeebasHint::
+	msgbox sText_DexNavFeebasHint, MSGBOX_SIGN
+	end
+
 sText_NotFoundNearby:
     .string "Introuvable dans les environs.\n"
     .string "Cherche ailleurs !$"
@@ -46,3 +50,7 @@ sText_LostSignal:
 sText_TooDark:
     .string "Il fait trop sombre pour\n"
     .string "chercher un Pokémon !$"
+
+sText_DexNavFeebasHint:
+    .string "Il semble se cacher sous l'eau.\n"
+    .string "Essaie de le pêcher avec une canne !$"

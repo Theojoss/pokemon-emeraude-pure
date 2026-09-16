@@ -1258,8 +1258,8 @@
 #define FLAG_0x4E6               0x4E6
 #define FLAG_0x4E7               0x4E7
 #define FLAG_0x4E8               0x4E8
-#define FLAG_0x4E9               0x4E9
-#define FLAG_0x4EA               0x4EA
+#define FLAG_HIDE_ASYNC_ARENA_OPPONENT    0x4E9 // Same flag as flags.h - async code-battle opponent NPC visibility in BattleColosseum_2P_Frlg
+#define FLAG_HIDE_LINK_ATTENDANT_FOR_ASYNC    0x4EA // Same flag as flags.h - Cable Club attendant visibility for BattleColosseum_2P_Frlg
 #define FLAG_0x4EB               0x4EB
 #define FLAG_0x4EC               0x4EC
 #define FLAG_0x4ED               0x4ED

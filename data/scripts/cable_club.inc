@@ -246,8 +246,8 @@ CableClub_Movement_PlayerApproachCounter:
 CableClub_EventScript_WelcomeToCableClub::
 	message CableClub_Text_WelcomeWhichCableClubService
 	waitmessage
-	delay 28
-	goto CableClub_EventScript_SelectCableClubRoom
+	waitbuttonpress
+	goto CableClub_EventScript_AsyncCodeChoice
 	end
 
 CableClub_EventScript_UnusedWelcomeToCableClub::
@@ -276,9 +276,135 @@ CableClub_EventScript_CableClubUnlockedRecordCorner::
 	case MULTI_B_PRESSED, CableClub_EventScript_AbortLink
 	end
 
+// Kept as a goto target for CableClub_EventScript_SelectCableClubRoom (now
+// unreachable from CableClub_EventScript_WelcomeToCableClub - see there) in
+// case anything else still points at it.
 CableClub_EventScript_Colosseum::
-	copyvar VAR_0x8007, VAR_LAST_TALKED
-	goto CableClub_EventScript_SelectBattleMode
+	goto CableClub_EventScript_AsyncCodeChoice
+	end
+
+CableClub_EventScript_AsyncCodeChoice::
+	multichoice 0, 0, MULTI_ASYNC_CODE_CHOICE, FALSE
+	switch VAR_RESULT
+	case 0, CableClub_EventScript_ConfirmGenerateCode
+	case 1, CableClub_EventScript_EnterFriendCode
+	case 2, CableClub_EventScript_RefightLastTrainer
+	case MULTI_B_PRESSED, CableClub_EventScript_AbortLink
+	end
+
+CableClub_EventScript_ConfirmGenerateCode::
+	special CheckAsyncCodePartySize
+	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_NotEnoughMonsForCode
+	msgbox CableClub_Text_CodeUsesCurrentTeam, MSGBOX_DEFAULT
+	goto CableClub_EventScript_GenerateCode
+	end
+
+CableClub_EventScript_EnterFriendCode::
+	special EnterCode
+	special GetCodeFeedback
+	goto_if_eq VAR_RESULT, 2, CableClub_EventScript_AsyncCodeCancelled
+	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_AsyncCodeInvalid
+	special ShowFieldMessageStringVar4
+	waitmessage
+	waitbuttonpress
+	goto CableClub_EventScript_ProceedToArena
+	end
+
+// No longer reachable from CableClub_EventScript_AsyncCodeChoice's menu (the
+// "(Test) Combattre mon propre code" option was removed once the real
+// friend-to-friend code path was validated) - kept, along with
+// TestBattleOwnCode (src/field_specials.c) and the debug menu's async
+// code-battle entries (src/debug.c), in case this feature needs revisiting.
+CableClub_EventScript_TestOwnCode::
+	special TestBattleOwnCode
+	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_NotEnoughMonsForCode
+	goto CableClub_EventScript_ProceedToArena
+	end
+
+// Lets the player fight the same opponent again without re-typing the code -
+// sDecodedAsyncCodeTrainer/Hash (src/field_specials.c) are still whatever the
+// last successful decode (real code or test-own-code) left them as, so this
+// just re-enters the same cutscene/battle flow a fresh code would.
+CableClub_EventScript_RefightLastTrainer::
+	special CheckHasLastAsyncCodeTrainer
+	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_NoLastTrainerToRefight
+	goto CableClub_EventScript_ProceedToArena
+	end
+
+CableClub_EventScript_NoLastTrainerToRefight::
+	msgbox CableClub_Text_NoLastTrainerToRefight, MSGBOX_DEFAULT
+	release
+	end
+
+// Same door/counter choreography as the real link battle flow
+// (CableClub_EventScript_EnterColosseum below) - every Pokémon Center 2F
+// sharing this attendant has an identical Link Room layout behind the
+// counter, which is what lets that script hardcode metatile/door
+// coordinates like this safely, and why it's safe to reuse here too.
+// Skips EnterColosseum's link-only steps (pre-link heal/save/bag-sync,
+// "please wait for the connection" messaging), AND - unlike EnterColosseum -
+// uses a plain warp/waitstate instead of SetCableClubWarp/DoCableClubWarp:
+// DoCableClubWarp's transition (src/field_screen_effect.c
+// Task_ReturnToFieldWirelessLink) blocks on IsLinkTaskFinished(), which only
+// ever clears once a real link/RFU partner responds - with no real link
+// established (no TryBattleLinkup anywhere in this flow), it hangs forever
+// (black screen, controls locked, music still playing - the exact bug this
+// replaced). A plain warp doesn't wait on anything link-related.
+CableClub_EventScript_ProceedToArena::
+	special SetAsyncOpponentOverworldGfx
+	setvar VAR_ASYNC_CODE_BATTLE_ARENA, 1
+	// This map's own shared CableClub_OnLoad/CableClub_OnFrame (top of this
+	// file) already know how to reopen the barrier and walk the player back
+	// out through it once VAR_CABLE_CLUB_STATE reads USING_SINGLE_BATTLE
+	// again on return - the exact same mechanism a real single battle uses.
+	// No need to reimplement that half of the round trip by hand.
+	setvar VAR_CABLE_CLUB_STATE, USING_SINGLE_BATTLE
+	call CableClub_EventScript_OpenDirectCornerBarrier
+	special DrawWholeMapView
+	playse SE_CLICK
+	delay 60
+	applymovement VAR_LAST_TALKED, Movement_AttendantFaceLeft
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
+	waitmovement 0
+	opendoor 9, 1
+	waitdooranim
+	applymovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
+	waitmovement 0
+	hideplayer
+	closedoor 9, 1
+	waitdooranim
+	release
+	special SetCableClubWarp
+	warp MAP_BATTLE_COLOSSEUM_2P, 6, 8
+	waitstate
+	end
+
+CableClub_EventScript_AsyncCodeInvalid::
+	msgbox CableClub_Text_AsyncCodeInvalidCode, MSGBOX_DEFAULT
+	release
+	end
+
+// Reached when OK is confirmed with nothing typed (see GetCodeFeedback) -
+// the only way to leave NAMING_SCREEN_CODE without a real code (no dedicated
+// cancel button exists on this screen). No error message - the player asked
+// to leave, not to submit a broken code.
+CableClub_EventScript_AsyncCodeCancelled::
+	release
+	end
+
+CableClub_EventScript_GenerateCode::
+	special GenerateAsyncCode
+	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_NotEnoughMonsForCode
+	special ShowFieldMessageStringVar4
+	waitmessage
+	waitbuttonpress
+	release
+	end
+
+CableClub_EventScript_NotEnoughMonsForCode::
+	msgbox CableClub_Text_NotEnoughMonsForCode, MSGBOX_DEFAULT
+	release
 	end
 
 CableClub_EventScript_SelectBattleMode::
@@ -820,19 +946,14 @@ EventScript_DoLinkRoomExit::
 	special ReturnFromLinkRoom
 	end
 
+// The real Union Room flow below (UnionRoomSelect onward) is unreachable
+// from here now - the Union Room isn't usable in this hack (no real link
+// partner), so this NPC just says so instead of offering to enter it.
 CableClub_EventScript_UnionRoomAttendant::
 	lock
 	faceplayer
-	setvar VAR_FRONTIER_FACILITY, FACILITY_UNION_ROOM
-	goto_if_unset FLAG_SYS_POKEDEX_GET, CableClub_EventScript_WirelessClubAdjustements
-	specialvar VAR_RESULT, IsBadEggInParty
-	goto_if_eq VAR_RESULT, TRUE, CableClub_EventScript_AbortLinkPlayerHasBadEgg
-	copyvar VAR_0x8007, VAR_LAST_TALKED
-	specialvar VAR_RESULT, IsWirelessAdapterConnected
-	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_UnionRoomAdapterNotConnected
-	message CableClub_Text_WelcomeUnionRoomEnter
-	waitmessage
-	goto CableClub_EventScript_UnionRoomSelect
+	msgbox CableClub_Text_UnionRoomNotAccessible, MSGBOX_DEFAULT
+	release
 	end
 
 CableClub_EventScript_UnionRoomSelect::
@@ -909,7 +1030,6 @@ CableClub_EventScript_UnionRoomAdapterNotConnected::
 CableClub_EventScript_WirelessClubAttendant::
 	lock
 	faceplayer
-	goto_if_unset FLAG_SYS_POKEDEX_GET, CableClub_EventScript_WirelessClubAdjustements
 	msgbox CableClub_Text_AskAboutLinking, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, CableClub_EventScript_DontAskAboutLinking
 	msgbox CableClub_Text_ExplainWirelessClub, MSGBOX_DEFAULT
@@ -917,7 +1037,6 @@ CableClub_EventScript_WirelessClubAttendant::
 	return
 
 CableClub_EventScript_DontAskAboutLinking::
-	msgbox CableClub_Text_HopeYouEnjoyWirelessSystem, MSGBOX_DEFAULT
 	release
 	return
 
@@ -925,7 +1044,6 @@ CableClub_EventScript_DirectCornerAttendant::
 	lock
 	faceplayer
 	setvar VAR_FRONTIER_FACILITY, FACILITY_MULTI_OR_EREADER  @ Set preemptively for multi battles, ignored otherwise
-	goto_if_unset FLAG_SYS_POKEDEX_GET, CableClub_EventScript_WirelessClubAdjustements
 	specialvar VAR_RESULT, IsBadEggInParty
 	goto_if_eq VAR_RESULT, TRUE, CableClub_EventScript_AbortLinkPlayerHasBadEgg
 	specialvar VAR_RESULT, IsWirelessAdapterConnected

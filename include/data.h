@@ -7,6 +7,8 @@
 #include "constants/pokeball.h"
 #include "difficulty.h"
 #include "debug.h"
+#include "async_code_battle.h"
+#include "battle_transition.h" // MUGSHOT_COLOR_COUNT, used by GetTrainerMugshotColorFromId below
 
 #define MAX_TRAINER_ITEMS 4
 
@@ -248,7 +250,8 @@ static inline bool32 IsSpecialTrainer(u16 trainerId)
 {
     if (trainerId == TRAINER_SECRET_BASE ||
         trainerId == TRAINER_LINK_OPPONENT ||
-        trainerId == TRAINER_UNION_ROOM)
+        trainerId == TRAINER_UNION_ROOM ||
+        trainerId == TRAINER_ASYNC_CODE_BATTLE)
     {
         return TRUE;
     }
@@ -314,6 +317,20 @@ static inline const u8 *GetTrainerNameFromId(u16 trainerId)
 
 static inline const enum TrainerPicID GetTrainerPicFromId(u16 trainerId)
 {
+    // TRAINER_ASYNC_CODE_BATTLE has no gTrainers[] entry to read (sentinel -
+    // see IsSpecialTrainer above) - its pic is deterministic from the code's
+    // hash instead (same GetAsyncBattleSpritePair used to build the party -
+    // see src/async_code_battle.c). Reads the PENDING trainer/hash
+    // (GetPendingAsyncCodeBattleTrainer/Hash), not gBattleResources->asyncCodeBattle:
+    // this is called from the VS mugshot transition, which runs on the
+    // overworld callback BEFORE CB2_InitBattle allocates gBattleResources.
+    if (trainerId == TRAINER_ASYNC_CODE_BATTLE)
+    {
+        u16 owGfxId;
+        enum TrainerPicID picId;
+        GetAsyncBattleSpritePair(GetPendingAsyncCodeBattleTrainer()->sex, GetPendingAsyncCodeBattleHash(), &owGfxId, &picId);
+        return picId;
+    }
     return GetTrainerStructFromId(trainerId)->trainerPic;
 }
 
@@ -339,6 +356,11 @@ static inline const bool32 DoesTrainerHaveMugshot(u16 trainerId)
 
 static inline const u8 GetTrainerMugshotColorFromId(u16 trainerId)
 {
+    // Same reasoning as GetTrainerPicFromId above - deterministic from the
+    // code's hash instead of a gTrainers[] lookup. MUGSHOT_COLOR_NONE (0) is
+    // skipped - that value means "no mugshot" elsewhere, not a real color.
+    if (trainerId == TRAINER_ASYNC_CODE_BATTLE)
+        return 1 + (GetPendingAsyncCodeBattleHash() % (MUGSHOT_COLOR_COUNT - 1));
     return GetTrainerStructFromId(trainerId)->mugshotColor;
 }
 

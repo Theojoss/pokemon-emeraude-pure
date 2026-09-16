@@ -59,6 +59,19 @@ gText_Birch_AreYouReady::
 	.string "dans le monde des POKéMON où\l"
 	.string "tu vivras de belles aventures,\l"
 	.string "remplies de rêves et d'amitiés!\p"
+	.string "$"
+
+gText_Birch_NuzlockeChallenge::
+	.string "Souhaites-tu activer le mode\n"
+	.string "NUZLOCKE?$"
+
+gText_Birch_ShinyRateChoice::
+	.string "Une dernière chose: veux-tu un taux\n"
+	.string "de rencontre chromatique augmenté\p"
+	.string "(1/2048) plutôt que le taux standard\n"
+	.string "(1/8192)?$"
+
+gText_Birch_Farewell::
 	.string "Bien, rejoins-moi plus tard.\n"
 	.string "Viens me voir au LABO POKéMON.\p"
 	.string "$"

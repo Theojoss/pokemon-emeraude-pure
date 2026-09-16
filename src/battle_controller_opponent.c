@@ -1,4 +1,5 @@
 #include "global.h"
+#include "async_code_battle.h"
 #include "battle.h"
 #include "battle_ai_switch.h"
 #include "battle_ai_util.h"
@@ -315,6 +316,10 @@ static u32 OpponentGetTrainerPicId(enum BattlerId battlerId)
     if (gBattleTypeFlags & BATTLE_TYPE_SECRET_BASE)
     {
         trainerPicId = GetSecretBaseTrainerPicIndex();
+    }
+    else if (gBattleTypeFlags & BATTLE_TYPE_ASYNC_CODE_BATTLE)
+    {
+        trainerPicId = gBattleResources->asyncCodeBattle->trainerPicId;
     }
     else if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_FRONTIER_BRAIN)
     {

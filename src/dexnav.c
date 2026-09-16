@@ -179,6 +179,15 @@ static const u32 sHiddenSearchIconGfx[] = INCGFX_U32("graphics/dexnav/hidden_sea
 static const u32 sOwnedIconGfx[] = INCGFX_U32("graphics/dexnav/owned_icon.png", ".4bpp.smol");
 static const u32 sHiddenMonIconGfx[] = INCGFX_U32("graphics/dexnav/hidden.png", ".4bpp.smol");
 
+// Species that are catchable on a map but never appear in its wild encounter tables
+// (e.g. Feebas' seeded fishing spots on Route 119). Shown in the Navidex for information
+// only - searching for them bails out with a dedicated hint instead of a fake encounter.
+static const u16 sDexNavSpecialWaterMons[][3] =
+{
+    {SPECIES_FEEBAS, MAP_GROUP(MAP_ROUTE119), MAP_NUM(MAP_ROUTE119)},
+    {NUM_SPECIES}
+};
+
 // strings
 static const u8 sText_DexNav_NoInfo[] = _("--------");
 static const u8 sText_DexNav_CaptureToSee[] = _("A capturer!");
@@ -847,6 +856,13 @@ static bool8 InitDexNavSearch(enum Species species, u32 environment)
 
     // assign non-objects to struct
     sDexNavSearchDataPtr->species = species;
+    // Feebas isn't in any wild table - it's only ever displayed, never actually searchable
+    if (species == SPECIES_FEEBAS)
+    {
+        DexNavSearchBail(EventScript_DexNavFeebasHint);
+        return TRUE;
+    }
+
     sDexNavSearchDataPtr->environment = environment;  //updated in DexNavTryGenerateMonLevel if hidden mon
     sDexNavSearchDataPtr->isHiddenMon = (environment == ENCOUNTER_TYPE_HIDDEN) ? TRUE : FALSE;
     sDexNavSearchDataPtr->monLevel = DexNavTryGenerateMonLevel(species, environment);
@@ -1937,6 +1953,16 @@ static void DexNavLoadEncounterData(void)
             if (species != SPECIES_NONE && !SpeciesInArray(species, 1))
                 sDexNavUiDataPtr->waterSpecies[waterIndex++] = waterMonsInfo->wildPokemon[i].species;
         }
+    }
+
+    // water mons not in the wild table (e.g. Feebas), shown for information only
+    for (i = 0; sDexNavSpecialWaterMons[i][0] != NUM_SPECIES; i++)
+    {
+        if (sDexNavSpecialWaterMons[i][1] == gSaveBlock1Ptr->location.mapGroup
+         && sDexNavSpecialWaterMons[i][2] == gSaveBlock1Ptr->location.mapNum
+         && waterIndex < WATER_WILD_COUNT
+         && !SpeciesInArray(sDexNavSpecialWaterMons[i][0], 1))
+            sDexNavUiDataPtr->waterSpecies[waterIndex++] = sDexNavSpecialWaterMons[i][0];
     }
 
     // hidden mons

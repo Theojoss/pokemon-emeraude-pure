@@ -576,6 +576,19 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .camouflageType = TYPE_PSYCHIC,
         .camouflageBlend = DEFAULT_CAMOUFLAGE_BLEND,
     },
+
+    [BATTLE_ENVIRONMENT_ASYNC_CODE_BATTLE] =
+    {
+        .name = _("Code Battle"),
+        .secretPowerAnimation = BUILDING_SECRET_POWER_ANIMATION,
+        .secretPowerEffect = BUILDING_SECRET_POWER_EFFECT,
+        .camouflageType = BUILDING_CAMOUFLAGE_TYPE,
+        .camouflageBlend = BUILDING_CAMOUFLAGE_BLEND,
+        .entry = ENVIRONMENT_ENTRY(Building),
+        .background = ENVIRONMENT_BACKGROUND(Stadium),
+        .palette = gBattleEnvironmentPalette_StadiumPhoebe, // same palette used by every Gym Leader battle (BATTLE_ENVIRONMENT_LEADER)
+        .battleIntroSlide = BUILDING_BATTLE_INTRO_SLIDE,
+    },
 };
 
 static const struct {

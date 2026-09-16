@@ -1,5 +1,5 @@
 CableClub_Text_WelcomeWhichCableClubService:
-    .string "Bienvenue au CLUB LINK POKéMON.\p"
+    .string "Bienvenue au CLUB CODES COMBAT.\p"
     .string "Lequel de nos services\n"
     .string "souhaiteriez-vous utiliser?$"
 
@@ -339,6 +339,28 @@ CableClub_Text_PlayWhichBattleMode:
     .string "A quel mode de combat\n"
     .string "voulez-vous jouer?$"
 
+CableClub_Text_CodeUsesCurrentTeam:
+    .string "Ce code prendra en compte les\n"
+    .string "POKéMON actuellement dans votre\l"
+    .string "équipe.\p"
+    .string "Il comportera 24 caractères,\n"
+    .string "sans espaces.$"
+
+CableClub_Text_AsyncCodeInvalidCode:
+    .string "Ce code ne correspond à aucun\n"
+    .string "dresseur…\l"
+    .string "Vérifiez qu'il est bien saisi.$"
+
+CableClub_Text_NotEnoughMonsForCode:
+    .string "Il vous faut une équipe complète\n"
+    .string "de 6 POKéMON pour générer un\l"
+    .string "code.$"
+
+CableClub_Text_NoLastTrainerToRefight:
+    .string "Vous n'avez encore affronté aucun\n"
+    .string "dresseur depuis la dernière fois\l"
+    .string "que vous avez chargé votre sauvegarde.$"
+
 CableClub_Text_AccessRecordCorner:
     .string "Voulez-vous accéder au CENTRE\n"
     .string "DE DONNEES?$"
@@ -385,6 +407,10 @@ CableClub_Text_ChooseGroupLeader:
     .string "Les autres joueurs devront ensuite\n"
     .string "choisir “JOINDRE”.$"
 
+CableClub_Text_UnionRoomNotAccessible:
+    .string "La SALLE UNION n'est pas\n"
+    .string "accessible dans ce jeu.$"
+
 CableClub_Text_WelcomeUnionRoomEnter:
     .string "Bienvenue à la SALLE UNION du\n"
     .string "CLUB SANS FIL POKéMON.\p"
@@ -425,60 +451,45 @@ CableClub_Text_FirstTimeRightThisWay:
 CableClub_Text_ExplainWirelessClubFirstTime:
     .string "Au niveau supérieur, il y a\n"
     .string "deux salles.\p"
-    .string "Tout d'abord, la salle à gauche\n"
-    .string "est la SALLE UNION.\p"
-    .string "Vous pouvez vous connecter avec\n"
-    .string "les DRESSEURS autour de vous\l"
-    .string "qui sont dans la SALLE UNION.\p"
-    .string "Vous pouvez parler, faire des\n"
-    .string "échanges ou combattre avec eux.\p"
-    .string "Ensuite, la salle à droite\n"
-    .string "est la SALLE LINK DIRECT. \p"
-    .string "Vous pouvez combattre ou faire\n"
-    .string "des échanges avec vos amis.\p"
-    .string "Si l'adaptateur sans fil n'est pas\n"
-    .string "utilisé, vous pouvez toujours vous\l"
-    .string "connecter avec un câble Game Link.\p"
-    .string "Si c'est le cas, allez directement\n"
-    .string "dans la SALLE LINK DIRECT.\p"
+    .string "La salle à gauche, la SALLE\n"
+    .string "UNION, n'est pas accessible\l"
+    .string "dans ce jeu.\p"
+    .string "La salle à droite est le\n"
+    .string "CLUB CODES COMBAT.\p"
+    .string "Vous pourrez y entrer un code\n"
+    .string "pour affronter l'équipe d'un\l"
+    .string "ami à distance.\p"
     .string "J'espère que vous apprécierez\n"
-    .string "le système sans fil.$"
+    .string "le CLUB CODES COMBAT.$"
 
 CableClub_Text_AskAboutLinking:
     .string "Bonjour {PLAYER}!\p"
     .string "Je suis ZADIA, je m'occupe du 1er\n"
     .string "étage du CENTRE POKéMON.\p"
     .string "Y a-t-il quelque chose que vous\n"
-    .string "aimeriez savoir sur la connexion?$"
+    .string "aimeriez savoir sur cet étage?$"
 
 CableClub_Text_ExplainWirelessClub:
-    .string "Laissez-moi vous décrire le\n"
-    .string "CLUB SANS FIL POKéMON.\p"
-    .string "Au niveau supérieur, il y a\n"
-    .string "deux salles.\p"
-    .string "Tout d'abord, la salle à gauche\n"
-    .string "est la SALLE UNION.\p"
-    .string "Vous pouvez vous connecter avec\n"
-    .string "les DRESSEURS autour de vous\l"
-    .string "qui sont dans la SALLE UNION.\p"
-    .string "Vous pouvez parler, faire des\n"
-    .string "échanges ou combattre avec eux.\p"
-    .string "Ensuite, la salle à droite\n"
-    .string "est la SALLE LINK DIRECT. \p"
-    .string "Vous pouvez combattre ou faire\n"
-    .string "des échanges avec vos amis.\p"
-    .string "Dans certains cas, vous ne\n"
-    .string "pourrez vous connecter avec\l"
-    .string "vos amis dans aucune des salles.\p"
-    .string "Si c'est le cas, rapprochez-vous\n"
-    .string "de vos amis.\p"
-    .string "Si l'adaptateur sans fil n'est pas\n"
-    .string "utilisé, vous pouvez toujours vous\l"
-    .string "connecter avec un câble Game Link.\p"
-    .string "Si c'est le cas, allez directement\n"
-    .string "dans la SALLE LINK DIRECT.\p"
+    .string "La salle à gauche, la SALLE\n"
+    .string "UNION, n'est pas accessible\l"
+    .string "dans ce jeu.\p"
+    .string "La salle à droite est le\n"
+    .string "CLUB CODES COMBAT.\p"
+    .string "Vous pourrez y entrer un code\n"
+    .string "pour affronter l'équipe d'un\l"
+    .string "dresseur à distance.\p"
+    .string "Ses POKéMONS auront le niveau\n"
+    .string "moyen des POKéMONs de votre\l"
+    .string "équipe.\p"
+    .string "Vous pouvez également générer\n"
+    .string "votre propre code pour le\l"
+    .string "partager à un autre dresseur.\p"
+    .string "Votre code prendra en compte\n"
+    .string "votre équipe actuelle.\p"
+    .string "Elle devra obligatoirement\n"
+    .string "contenir 6 POKéMONS.\p"
     .string "J'espère que vous apprécierez\n"
-    .string "le système sans fil.$"
+    .string "le CLUB CODES COMBAT.$"
 
 CableClub_Text_HopeYouEnjoyWirelessSystem:
     .string "J'espère que vous apprécierez\n"

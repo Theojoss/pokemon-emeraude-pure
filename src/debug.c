@@ -38,6 +38,7 @@
 #include "palette.h"
 #include "party_menu.h"
 #include "pokedex.h"
+#include "async_code_battle.h"
 #include "pokemon.h"
 #include "pokemon_icon.h"
 #include "pokemon_storage_system.h"
@@ -305,6 +306,11 @@ static void DebugAction_Party_ClearPokerus(u8 taskId);
 static void DebugAction_Party_ClearParty(u8 taskId);
 static void DebugAction_Party_SetParty(u8 taskId);
 static void DebugAction_Party_BattleSingle(u8 taskId);
+static void DebugAction_AsyncCodeBattleTest(u8 taskId);
+static void DebugAction_AsyncDeterminismTest(u8 taskId);
+static void DebugAction_AsyncCodeEntryTest(u8 taskId);
+static void DebugAction_AsyncCodeRoundTripTest(u8 taskId);
+static void CB2_AsyncCodeEntryTest_ShowResult(void);
 
 static void DebugAction_Trainers_ChooseFromMap(u8 taskId);
 static void DebugAction_Trainers_ChooseTrainer(u8 taskId, void *selection);
@@ -648,6 +654,10 @@ static const struct DebugMenuOption sDebugMenu_Actions_Party[] =
     { COMPOUND_STRING("Vider équipe"),    DebugAction_Party_ClearParty },
     { COMPOUND_STRING("Déf. équipe"),     DebugAction_Party_SetParty },
     { COMPOUND_STRING("Combat Débug"),    DebugAction_Party_BattleSingle },
+    { COMPOUND_STRING("Test Combat Code"), DebugAction_AsyncCodeBattleTest },
+    { COMPOUND_STRING("Test Détermin. Code"), DebugAction_AsyncDeterminismTest },
+    { COMPOUND_STRING("Test Saisie Code"), DebugAction_AsyncCodeEntryTest },
+    { COMPOUND_STRING("Test Aller-Retour Code"), DebugAction_AsyncCodeRoundTripTest },
     { NULL }
 };
 
@@ -5123,6 +5133,162 @@ static void DebugAction_Party_BattleSingle(u8 taskId)
     CalculateEnemyPartyCount();
     BattleSetup_StartTrainerBattle_Debug();
     Debug_DestroyMenu_Full(taskId);
+}
+
+// Temporary smoke test for the async code-battle feature (Phase 2/4 checkpoint) -
+// bypasses code decoding entirely and feeds AsyncCodeBattle_Start() a hardcoded
+// trainer directly, to verify the engine plumbing (party build, sprite, name,
+// no rewards, music) without any code-entry UI. Straight 6v6 now - no party
+// selection step needed (the player's whole current party is used as-is).
+static struct AsyncCodeBattleTrainer sDebugAsyncCodeBattleTrainer;
+
+static void DebugAction_AsyncCodeBattleTest(u8 taskId)
+{
+    static const u8 sTestName[] = _("TESTEUR");
+    static const enum Species sTestSpecies[ASYNC_CODE_MON_COUNT] =
+    {
+        SPECIES_GYARADOS, SPECIES_TYRANITAR, SPECIES_METAGROSS,
+        SPECIES_SALAMENCE, SPECIES_DRAGONITE, SPECIES_GARCHOMP,
+    };
+    u32 i;
+
+    memset(&sDebugAsyncCodeBattleTrainer, 0, sizeof(sDebugAsyncCodeBattleTrainer));
+    for (i = 0; sTestName[i] != EOS && i < ASYNC_CODE_NAME_LENGTH; i++)
+        sDebugAsyncCodeBattleTrainer.trainerName[i] = sTestName[i];
+    sDebugAsyncCodeBattleTrainer.trainerName[i] = EOS;
+    sDebugAsyncCodeBattleTrainer.sex = MALE;
+
+    for (i = 0; i < ASYNC_CODE_MON_COUNT; i++)
+    {
+        sDebugAsyncCodeBattleTrainer.mons[i].species = sTestSpecies[i];
+        sDebugAsyncCodeBattleTrainer.mons[i].shiny = (i == 0);
+    }
+
+    AsyncCodeBattle_Start(&sDebugAsyncCodeBattleTrainer, 424242);
+    Debug_DestroyMenu_Full(taskId);
+}
+
+// Shows, without starting any battle, exactly what BuildAsyncOpponentParty()
+// would deterministically derive for each of the 6 mons from the same fixed
+// hash (424242) the test battle above uses: held item + HP IV. Re-running
+// this (or the battle above) should always print the identical values -
+// that's the whole point of "deterministic per code", made directly
+// observable without needing Frisk/Trick or an IV-checker NPC.
+static void DebugAction_AsyncDeterminismTest(u8 taskId)
+{
+    static const enum Item sItems[] =
+    {
+        ITEM_NONE, ITEM_LEFTOVERS, ITEM_LIFE_ORB, ITEM_CHOICE_BAND, ITEM_CHOICE_SPECS,
+        ITEM_CHOICE_SCARF, ITEM_ASSAULT_VEST, ITEM_SITRUS_BERRY, ITEM_FOCUS_SASH,
+    };
+    u32 hash = 424242;
+    u32 i;
+
+    gStringVar4[0] = EOS;
+    for (i = 0; i < ASYNC_CODE_MON_COUNT; i++)
+    {
+        u32 monHash = hash ^ (i * 0x9E3779B9u);
+        u32 itemIndex = monHash % ARRAY_COUNT(sItems);
+        u32 hpIv = monHash & 0x1F;
+
+        if (i > 0)
+            StringAppend(gStringVar4, COMPOUND_STRING("\n"));
+        StringAppend(gStringVar4, GetItemName(sItems[itemIndex]));
+        StringAppend(gStringVar4, COMPOUND_STRING(" IV"));
+        ConvertIntToDecimalStringN(gStringVar1, hpIv, STR_CONV_MODE_LEFT_ALIGN, 2);
+        StringAppend(gStringVar4, gStringVar1);
+    }
+
+    Debug_DestroyMenu_Full_Script(taskId, Debug_ShowFieldMessageStringVar4);
+}
+
+// Phase 6 checkpoint (character version): a single continuous NAMING_SCREEN_CODE
+// screen (now resized to CODE_NAME_LENGTH=24 chars) instead of 18 separate
+// word-picks. Typing 24 random characters will almost always decode as
+// invalid (24-bit checksum) - expected, confirms the checksum rejection path.
+static void DebugAction_AsyncCodeEntryTest(u8 taskId)
+{
+    StringCopy(gStringVar2, COMPOUND_STRING(""));
+    DoNamingScreen(NAMING_SCREEN_CODE, gStringVar2, 0, 0, 0, CB2_AsyncCodeEntryTest_ShowResult);
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void CB2_AsyncCodeEntryTest_ShowResult(void)
+{
+    struct AsyncCodeBattleTrainer trainer;
+
+    if (AsyncCodeBattle_TryDecode(gStringVar2, &trainer))
+        StringCopy(gStringVar4, trainer.trainerName);
+    else
+        StringCopy(gStringVar4, COMPOUND_STRING("Code invalide"));
+
+    LockPlayerFieldControls();
+    FreezeObjectEvents();
+    ScriptContext_SetupScript(Debug_ShowFieldMessageStringVar4);
+    SetMainCallback2(CB2_ReturnToFieldContinueScript);
+}
+
+// Encodes a code from the player's own real save data (name/sex/party -
+// same construction as GenerateAsyncCode, src/field_specials.c) and
+// immediately decodes it back, entirely in C - no keyboard, no manual
+// retyping. Isolates whether a "code invalide"/"trouve pas" result when
+// re-entering a freshly generated code is an actual encode/decode bug or a
+// human typo, since this bypasses typing altogether.
+static void DebugAction_AsyncCodeRoundTripTest(u8 taskId)
+{
+    struct AsyncCodeBattleTrainer original;
+    struct AsyncCodeBattleTrainer decoded;
+    u8 code[ASYNC_CODE_CHAR_COUNT + 1];
+    u32 i;
+    bool8 mismatch = FALSE;
+
+    if (CalculatePlayerPartyCount() != ASYNC_CODE_MON_COUNT)
+    {
+        StringCopy(gStringVar4, COMPOUND_STRING("Il faut une équipe de 6\npour ce test."));
+        Debug_DestroyMenu_Full_Script(taskId, Debug_ShowFieldMessageStringVar4);
+        return;
+    }
+
+    for (i = 0; i < ASYNC_CODE_NAME_LENGTH && gSaveBlock2Ptr->playerName[i] != EOS; i++)
+        original.trainerName[i] = (gSaveBlock2Ptr->playerName[i] == CHAR_SPACE) ? CHAR_1 : gSaveBlock2Ptr->playerName[i];
+    for (; i < ASYNC_CODE_NAME_LENGTH; i++)
+        original.trainerName[i] = CHAR_1;
+    original.trainerName[ASYNC_CODE_NAME_LENGTH] = EOS;
+    original.sex = gSaveBlock2Ptr->playerGender;
+    for (i = 0; i < ASYNC_CODE_MON_COUNT; i++)
+    {
+        struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][i];
+        original.mons[i].species = GetMonData(mon, MON_DATA_SPECIES);
+        original.mons[i].shiny = IsMonShiny(mon);
+    }
+
+    AsyncCodeBattle_Encode(&original, code);
+
+    if (!AsyncCodeBattle_TryDecode(code, &decoded))
+    {
+        StringCopy(gStringVar4, COMPOUND_STRING("ECHEC: checksum rejeté\n"));
+        StringAppend(gStringVar4, code);
+        Debug_DestroyMenu_Full_Script(taskId, Debug_ShowFieldMessageStringVar4);
+        return;
+    }
+
+    if (decoded.sex != original.sex)
+        mismatch = TRUE;
+    for (i = 0; i < ASYNC_CODE_MON_COUNT; i++)
+    {
+        if (decoded.mons[i].species != original.mons[i].species || decoded.mons[i].shiny != original.mons[i].shiny)
+            mismatch = TRUE;
+    }
+
+    if (mismatch)
+        StringCopy(gStringVar4, COMPOUND_STRING("ECHEC: décodé != original"));
+    else
+    {
+        StringCopy(gStringVar4, COMPOUND_STRING("OK - code:\n"));
+        StringAppend(gStringVar4, code);
+    }
+
+    Debug_DestroyMenu_Full_Script(taskId, Debug_ShowFieldMessageStringVar4);
 }
 
 void CheckEWRAMCounters(struct ScriptContext *ctx)

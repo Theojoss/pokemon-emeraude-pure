@@ -1,6 +1,7 @@
 #include "global.h"
 #include "item_use.h"
 #include "battle.h"
+#include "nuzlocke.h"
 #include "battle_anim.h"
 #include "battle_stat_change.h"
 #include "battle_pyramid.h"
@@ -1161,6 +1162,12 @@ static u32 GetBallThrowableState(void)
         return BALL_THROW_UNABLE_SEMI_INVULNERABLE;
     else if (FlagGet(WE_FLAG_NO_CATCHING) || !IsAllowedToUseBag())
         return BALL_THROW_UNABLE_DISABLED_FLAG;
+    else if (IsNuzlockeActive() && !(gBattleTypeFlags & BATTLE_TYPE_TRAINER))
+    {
+        struct Pokemon *wildMon = GetBattlerMon(GetCatchingBattler());
+        if (!NuzlockeCanCatchPokemon(GetMonData(wildMon, MON_DATA_SPECIES), GetMonData(wildMon, MON_DATA_IS_SHINY)))
+            return BALL_THROW_UNABLE_NUZLOCKE;
+    }
 
     return BALL_THROW_ABLE;
 }
@@ -1173,6 +1180,7 @@ bool32 CanThrowBall(void)
 static const u8 sText_CantThrowPokeBall_TwoMons[] = _("Impossible de lancer une Ball!\nIl y a deux Pokémon!\p");
 static const u8 sText_CantThrowPokeBall_SemiInvulnerable[] = _("Impossible de lancer une Ball!\nIl n'y a aucun Pokémon!\p");
 static const u8 sText_CantThrowPokeBall_Disabled[] = _("Impossible d'utiliser\nles POKé BALLS!\p");
+static const u8 sText_CantThrowPokeBall_Nuzlocke[] = _("Défi Nuzlocke: tu ne peux capturer\nque le premier POKéMON de la zone!\p");
 void ItemUseInBattle_PokeBall(u8 taskId)
 {
     switch (GetBallThrowableState())
@@ -1208,6 +1216,12 @@ void ItemUseInBattle_PokeBall(u8 taskId)
             DisplayItemMessage(taskId, FONT_NORMAL, sText_CantThrowPokeBall_Disabled, CloseItemMessage);
         else
             DisplayItemMessageInBattlePyramid(taskId, sText_CantThrowPokeBall_Disabled, Task_CloseBattlePyramidBagMessage);
+        break;
+    case BALL_THROW_UNABLE_NUZLOCKE:
+        if (CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE)
+            DisplayItemMessage(taskId, FONT_NORMAL, sText_CantThrowPokeBall_Nuzlocke, CloseItemMessage);
+        else
+            DisplayItemMessageInBattlePyramid(taskId, sText_CantThrowPokeBall_Nuzlocke, Task_CloseBattlePyramidBagMessage);
         break;
     }
 }
@@ -1327,6 +1341,10 @@ bool32 CannotUseItemsInBattle(enum Item itemId, struct Pokemon *mon)
             failStr = sText_CantThrowPokeBall_Disabled;
             cannotUse = TRUE;
             break;
+        case BALL_THROW_UNABLE_NUZLOCKE:
+            failStr = sText_CantThrowPokeBall_Nuzlocke;
+            cannotUse = TRUE;
+            break;
         }
         break;
     case EFFECT_ITEM_INCREASE_ALL_STATS:
@@ -1364,7 +1382,7 @@ bool32 CannotUseItemsInBattle(enum Item itemId, struct Pokemon *mon)
             cannotUse = TRUE;
         break;
     case EFFECT_ITEM_REVIVE:
-        if (hp != 0)
+        if (hp != 0 || IsMonDead(mon))
             cannotUse = TRUE;
         break;
     case EFFECT_ITEM_RESTORE_PP:

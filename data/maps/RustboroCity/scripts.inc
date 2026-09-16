@@ -864,6 +864,7 @@ RustboroCity_EventScript_BattleMay::
 
 RustboroCity_EventScript_MayBrineyHint::
 	msgbox RustboroCity_Text_MayMrBrineyHint, MSGBOX_DEFAULT
+	msgbox RustboroCity_Text_MayCodeCombatPlug, MSGBOX_DEFAULT
 	call_if_eq VAR_0x8008, 0, RustboroCity_EventScript_RestoreBgm
 	releaseall
 	end
@@ -930,6 +931,7 @@ RustboroCity_EventScript_BattleBrendan::
 
 RustboroCity_EventScript_BrendanBrineyHint::
 	msgbox RustboroCity_Text_BrendanMrBrineyHint, MSGBOX_DEFAULT
+	msgbox RustboroCity_Text_BrendanCodeCombatPlug, MSGBOX_DEFAULT
 	call_if_eq VAR_0x8008, 0, RustboroCity_EventScript_RestoreBgm
 	releaseall
 	end
@@ -1173,6 +1175,20 @@ RustboroCity_Text_MayMrBrineyHint:
 	.string "alors tu ne le sais peut-être pas, mais\l"
 	.string "M. MARCO était un marin très réputé.$"
 
+RustboroCity_Text_MayCodeCombatPlug:
+	.string "FLORA: Au fait, tu as visité\n"
+	.string "l'étage des CENTRES POKéMON?\p"
+	.string "Il est possible d'y affronter\n"
+	.string "d'autres joueurs en rentrant\l"
+	.string "leur CODE COMBAT.\p"
+	.string "Si ton équipe contient\n"
+	.string "6 POKéMON, tu peux générer\l"
+	.string "ton propre code…\p"
+	.string "…et le partager à d'autres\n"
+	.string "joueurs pour qu'ils combattent\l"
+	.string "ton équipe.\p"
+	.string "Trop cool non?$"
+
 RustboroCity_Text_BrendanHiLetsRegister:
 	.string "BRICE: Oh, hé, {PLAYER}!\p"
 	.string "Ton POKéNAV est équipé du MATCH PHONE!\n"
@@ -1219,6 +1235,20 @@ RustboroCity_Text_BrendanMrBrineyHint:
 	.string "{PLAYER}, tu viens juste d'emménager ici,\n"
 	.string "alors tu ne le sais peut-être pas, mais\l"
 	.string "M. MARCO était un marin très respecté.$"
+
+RustboroCity_Text_BrendanCodeCombatPlug:
+	.string "BRICE: Au fait, tu as visité\n"
+	.string "l'étage des CENTRES POKéMON?\p"
+	.string "Il est possible d'y affronter\n"
+	.string "d'autres joueurs en rentrant\l"
+	.string "leur CODE COMBAT.\p"
+	.string "Si ton équipe contient\n"
+	.string "6 POKéMON, tu peux générer\l"
+	.string "ton propre code…\p"
+	.string "…et le partager à d'autres\n"
+	.string "joueurs pour qu'ils combattent\l"
+	.string "ton équipe.\p"
+	.string "Trop cool non?$"
 
 RustboroCity_Text_TunnelNearingCompletion:
 	.string "“Le tunnel qui permettra de gagner\n"

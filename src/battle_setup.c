@@ -1,4 +1,5 @@
 #include "global.h"
+#include "async_code_battle.h"
 #include "battle.h"
 #include "load_save.h"
 #include "battle_setup.h"
@@ -1475,6 +1476,15 @@ static void CB2_EndTrainerBattle(void)
          || FlagGet(FNPC_FLAG_HEAL_AFTER_FOLLOWER_BATTLE)))
             HealPlayerParty();
     }
+    else if (gBattleTypeFlags & BATTLE_TYPE_ASYNC_CODE_BATTLE)
+    {
+        RestorePartyAfterAsyncCodeBattle();
+        // Tells BattleColosseum_2P[_Frlg]'s own MAP_SCRIPT_ON_FRAME_TABLE
+        // (data/maps/BattleColosseum_2P[_Frlg]/scripts.inc) to walk the
+        // player back out automatically once field control returns, instead
+        // of leaving them to find the exit themselves.
+        VarSet(VAR_ASYNC_CODE_BATTLE_ARENA, 2);
+    }
 
     if (GetTrainerBattleMode() == TRAINER_BATTLE_EARLY_RIVAL)
     {
@@ -1499,7 +1509,8 @@ static void CB2_EndTrainerBattle(void)
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
         SetBattledTrainerFlag();
     }
-    else if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_SECRET_BASE)
+    else if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_SECRET_BASE
+          || TRAINER_BATTLE_PARAM.opponentA == TRAINER_ASYNC_CODE_BATTLE)
     {
         DowngradeBadPoison();
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
@@ -1556,10 +1567,55 @@ void BattleSetup_StartRematchBattle(void)
     gBattleTypeFlags = BATTLE_TYPE_TRAINER;
     if (GetTrainerBattleType(TRAINER_BATTLE_PARAM.opponentA) == TRAINER_BATTLE_TYPE_DOUBLES)
         gBattleTypeFlags |= BATTLE_TYPE_DOUBLE;
-    
+
     gMain.savedCallback = CB2_EndRematchBattle;
     DoTrainerBattle();
     ScriptContext_Stop();
+}
+
+// Async code-battle opponent: no trainer table lookup at all (see
+// IsSpecialTrainer/TRAINER_ASYNC_CODE_BATTLE) - the party, sprite and name are
+// already resolved (BuildAsyncOpponentParty, called from AllocateBattleResources)
+// by the time CB2_InitBattle actually needs them.
+//
+// Deliberately does NOT call DoTrainerBattle(): that helper calls
+// GetTrainerBattleTransition(), which indexes gTrainers[] via our sentinel id
+// and crashes (SanitizeTrainerId assert). B_TRANSITION_MUGSHOT is used
+// directly instead - GetTrainerPicFromId/GetTrainerMugshotColorFromId
+// (include/data.h) both special-case TRAINER_ASYNC_CODE_BATTLE to derive a
+// deterministic pic/color from the code's hash instead of indexing
+// gTrainers[]. Battle background comes from BATTLE_ENVIRONMENT_ASYNC_CODE_BATTLE
+// (src/battle_bg.c), picked automatically from BATTLE_TYPE_ASYNC_CODE_BATTLE.
+// Generic flavor text - this opponent has no authored personality to draw
+// from, so one fixed line each is used for every async code battle.
+// introTextA would normally show as an overworld speech bubble when the
+// trainer "sees" the player (GetIntroSpeechOfApproachingTrainer) - our flow
+// skips that overworld encounter entirely (see the arena cutscene in
+// data/maps/BattleColosseum_2P[_Frlg]/scripts.inc instead, which shows this
+// same line via its own msgbox rather than a speech bubble).
+static const u8 sText_AsyncBattleIntro[] = _("Alors comme ça tu veux me\ndéfier {PLAYER} ?");
+static const u8 sText_AsyncBattleVictory[] = _("Tu n'étais pas de taille…");
+// Shown via GetTrainerALoseText()/STRINGID_TRAINER1LOSETEXT when the async
+// opponent is the one who loses - defeatTextA was previously left unset
+// (NULL), which ReturnEmptyStringIfNull-style handling further down the
+// message pipeline rendered as a blank line instead of any text.
+static const u8 sText_AsyncBattleDefeat[] = _("Mince, on dirait que tu as plus\navancé dans le jeu que moi…");
+
+void BattleSetup_StartAsyncCodeBattle(void)
+{
+    // Straight 6v6 - the player's full current party is used as-is (no
+    // 3-of-6 reduction needed anymore). RestorePartyAfterAsyncCodeBattle()
+    // just heals it back up after the fight (no stakes to this battle).
+    gBattleTypeFlags = BATTLE_TYPE_TRAINER | BATTLE_TYPE_ASYNC_CODE_BATTLE;
+    TRAINER_BATTLE_PARAM.opponentA = TRAINER_ASYNC_CODE_BATTLE;
+    TRAINER_BATTLE_PARAM.introTextA = (u8 *)sText_AsyncBattleIntro;
+    TRAINER_BATTLE_PARAM.victoryText = (u8 *)sText_AsyncBattleVictory;
+    TRAINER_BATTLE_PARAM.defeatTextA = (u8 *)sText_AsyncBattleDefeat;
+    gNoOfApproachingTrainers = 0;
+    gMain.savedCallback = CB2_EndTrainerBattle;
+    CreateBattleStartTask(B_TRANSITION_MUGSHOT, 0);
+    IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
+    IncrementGameStat(GAME_STAT_TRAINER_BATTLES);
 }
 
 void ShowTrainerIntroSpeech(void)
