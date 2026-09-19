@@ -268,6 +268,13 @@ static const struct MenuAction MultichoiceList_GameCornerDolls[] =
     {COMPOUND_STRING("POUPEE ARCKO{CLEAR_TO 79}1000 JETONS")},
     {COMPOUND_STRING("POUP. POUSSIFEU{CLEAR_TO 94}1000 JET.")},
     {COMPOUND_STRING("POUPEE GOBOU{CLEAR_TO 79}1000 JETONS")},
+    {COMPOUND_STRING("AUTRES PRIX…")},
+};
+
+static const struct MenuAction MultichoiceList_GameCornerOtherPrizes[] =
+{
+    {COMPOUND_STRING("PORYGON{CLEAR_TO 79}5000 JETONS")},
+    {COMPOUND_STRING("TENUE T.ROCKET{CLEAR_TO 94}3000 JET.")},
     {gText_Exit},
 };
 
@@ -1191,6 +1198,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_STERN_DEEPSEA]              = MULTICHOICE(MultichoiceList_SternDeepSea),
     [MULTI_UNUSED_ASH_VENDOR]          = MULTICHOICE(MultichoiceList_UnusedAshVendor),
     [MULTI_GAME_CORNER_DOLLS]          = MULTICHOICE(MultichoiceList_GameCornerDolls),
+    [MULTI_GAME_CORNER_OTHER_PRIZES]   = MULTICHOICE(MultichoiceList_GameCornerOtherPrizes),
     [MULTI_GAME_CORNER_COINS]          = MULTICHOICE(MultichoiceList_GameCornerCoins),
     [MULTI_HOWS_FISHING]               = MULTICHOICE(MultichoiceList_HowsFishing),
     [MULTI_UNUSED_51]                  = MULTICHOICE(MultichoiceList_Exit),

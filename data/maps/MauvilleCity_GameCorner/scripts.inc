@@ -9,6 +9,7 @@ MauvilleCity_GameCorner_MapScripts::
 	.set TM_THUNDERBOLT_COINS, 4000
 	.set TM_ICE_BEAM_COINS, 4000
 	.set DOLL_COINS, 1000
+	.set PORYGON_COINS, 5000
 
 	.set COINS_PRICE_50,  1000
 	.set COINS_PRICE_500, 10000
@@ -106,31 +107,12 @@ MauvilleCity_GameCorner_EventScript_PrizeCornerDolls::
 	msgbox MauvilleCity_GameCorner_Text_ExchangeCoinsForPrizes, MSGBOX_DEFAULT
 	checkitem ITEM_COIN_CASE
 	goto_if_eq VAR_RESULT, FALSE, MauvilleCity_GameCorner_EventScript_PrizeCornerDollsRelease
-	call_if_outfitlocked OUTFIT_TEAM_ROCKET, MauvilleCity_GameCorner_EventScript_OfferTeamRocketOutfit
 	goto MauvilleCity_GameCorner_EventScript_ChooseDollPrizeMessage
 	end
 
 MauvilleCity_GameCorner_EventScript_PrizeCornerDollsRelease::
 	release
 	end
-
-MauvilleCity_GameCorner_EventScript_OfferTeamRocketOutfit::
-	msgbox MauvilleCity_GameCorner_Text_OfferTeamRocketOutfit, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_DeclineTeamRocketOutfit
-	checkcoins VAR_TEMP_2
-	goto_if_lt VAR_TEMP_2, TEAM_ROCKET_OUTFIT_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForOutfit
-	removecoins TEAM_ROCKET_OUTFIT_COINS
-	playse SE_SHOP
-	setvar VAR_0x8004, OUTFIT_TEAM_ROCKET
-	call Common_EventScript_ObtainedOutfit
-	return
-
-MauvilleCity_GameCorner_EventScript_DeclineTeamRocketOutfit::
-	return
-
-MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForOutfit::
-	msgbox MauvilleCity_GameCorner_Text_NotEnoughCoins, MSGBOX_DEFAULT
-	return
 
 MauvilleCity_GameCorner_EventScript_ChooseDollPrizeMessage::
 	message MauvilleCity_GameCorner_Text_WhichPrize
@@ -150,7 +132,15 @@ MauvilleCity_GameCorner_EventScript_ChooseDollPrize::
 	case 0, MauvilleCity_GameCorner_EventScript_TreeckoDoll
 	case 1, MauvilleCity_GameCorner_EventScript_TorchicDoll
 	case 2, MauvilleCity_GameCorner_EventScript_MudkipDoll
-	case 3, MauvilleCity_GameCorner_EventScript_CancelDollSelect
+	case 3, MauvilleCity_GameCorner_EventScript_ChooseOtherPrize
+	goto MauvilleCity_GameCorner_EventScript_CancelDollSelect
+	end
+
+MauvilleCity_GameCorner_EventScript_ChooseOtherPrize::
+	multichoice 12, 0, MULTI_GAME_CORNER_OTHER_PRIZES, FALSE
+	switch VAR_RESULT
+	case 0, MauvilleCity_GameCorner_EventScript_PorygonPrize
+	case 1, MauvilleCity_GameCorner_EventScript_TeamRocketOutfitPrize
 	goto MauvilleCity_GameCorner_EventScript_CancelDollSelect
 	end
 
@@ -234,6 +224,78 @@ MauvilleCity_GameCorner_EventScript_CancelDollSelect::
 	msgbox MauvilleCity_GameCorner_Text_OhIsThatSo, MSGBOX_DEFAULT
 	hidecoinsbox 0, 0
 	release
+	end
+
+MauvilleCity_GameCorner_EventScript_PorygonPrize::
+	bufferspeciesname STR_VAR_1, SPECIES_PORYGON
+	msgbox MauvilleCity_GameCorner_Text_SoYourChoiceIsX, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelDollSelect
+	checkcoins VAR_TEMP_2
+	goto_if_lt VAR_TEMP_2, PORYGON_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForPorygon
+	givemon SPECIES_PORYGON, 15
+	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PARTY, MauvilleCity_GameCorner_EventScript_GivePorygonToParty
+	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PC, MauvilleCity_GameCorner_EventScript_GivePorygonToPC
+	goto MauvilleCity_GameCorner_EventScript_NoRoomForPorygon
+	end
+
+MauvilleCity_GameCorner_EventScript_GivePorygonToParty::
+	removecoins PORYGON_COINS
+	updatecoinsbox 1, 1
+	playse SE_SHOP
+	bufferspeciesname STR_VAR_1, SPECIES_PORYGON
+	msgbox MauvilleCity_GameCorner_Text_ReceivedPrizeMon, MSGBOX_DEFAULT
+	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
+	call Common_EventScript_GetGiftMonPartySlot
+	call Common_EventScript_NameReceivedPartyMon
+	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
+	end
+
+MauvilleCity_GameCorner_EventScript_GivePorygonToPC::
+	removecoins PORYGON_COINS
+	updatecoinsbox 1, 1
+	playse SE_SHOP
+	bufferspeciesname STR_VAR_1, SPECIES_PORYGON
+	msgbox MauvilleCity_GameCorner_Text_SentPrizeMonToPC, MSGBOX_DEFAULT
+	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
+	call Common_EventScript_NameReceivedBoxMon
+	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
+	end
+
+MauvilleCity_GameCorner_EventScript_NoRoomForPorygon::
+	msgbox gText_NoMoreRoomForPokemon, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
+	end
+
+MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForPorygon::
+	msgbox MauvilleCity_GameCorner_Text_NotEnoughCoins, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
+	end
+
+MauvilleCity_GameCorner_EventScript_TeamRocketOutfitPrize::
+	checkoutfitflag OUTFIT_TEAM_ROCKET
+	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_GameCorner_EventScript_AlreadyHaveTeamRocketOutfit
+	msgbox MauvilleCity_GameCorner_Text_SoYourChoiceIsTeamRocketOutfit, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelDollSelect
+	checkcoins VAR_TEMP_2
+	goto_if_lt VAR_TEMP_2, TEAM_ROCKET_OUTFIT_COINS, MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForOutfit
+	removecoins TEAM_ROCKET_OUTFIT_COINS
+	updatecoinsbox 1, 1
+	playse SE_SHOP
+	setvar VAR_0x8004, OUTFIT_TEAM_ROCKET
+	call Common_EventScript_ObtainedOutfit
+	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
+	end
+
+MauvilleCity_GameCorner_EventScript_AlreadyHaveTeamRocketOutfit::
+	msgbox MauvilleCity_GameCorner_Text_AlreadyHaveTeamRocketOutfit, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
+	end
+
+MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForOutfit::
+	msgbox MauvilleCity_GameCorner_Text_NotEnoughCoins, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
 	end
 
 MauvilleCity_GameCorner_EventScript_PrizeCornerTMs::
@@ -685,11 +747,20 @@ MauvilleCity_GameCorner_Text_ExchangeCoinsForPrizes:
 	.string "Vous pouvez échanger vos JETONS\n"
 	.string "contre les prix à gagner ici.$"
 
-MauvilleCity_GameCorner_Text_OfferTeamRocketOutfit:
-	.string "Psst… J'ai aussi une TENUE TEAM\n"
-	.string "ROCKET planquée sous le comptoir.\p"
-	.string "Je vous la laisse pour 3000 JETONS.\n"
-	.string "Ça vous intéresse?$"
+MauvilleCity_GameCorner_Text_ReceivedPrizeMon:
+	.string "Merci!\n"
+	.string "Voici votre {STR_VAR_1}!$"
+
+MauvilleCity_GameCorner_Text_SentPrizeMonToPC:
+	.string "Merci! Votre {STR_VAR_1} a été\n"
+	.string "envoyé sur votre PC.$"
+
+MauvilleCity_GameCorner_Text_SoYourChoiceIsTeamRocketOutfit:
+	.string "Vous choisissez la TENUE TEAM\n"
+	.string "ROCKET?$"
+
+MauvilleCity_GameCorner_Text_AlreadyHaveTeamRocketOutfit:
+	.string "Vous possédez déjà cette tenue!$"
 
 MauvilleCity_GameCorner_Text_WhichPrize:
 	.string "Quel prix souhaiteriez-vous recevoir?$"
